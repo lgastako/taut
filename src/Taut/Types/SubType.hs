@@ -1,5 +1,6 @@
 module Taut.Types.SubType
        ( SubType
+       , empty
        , make
        ) where
 
@@ -10,3 +11,6 @@ newtype SubType = SubType Text
 
 make :: Text -> SubType
 make = SubType
+
+empty :: SubType
+empty = make ""
