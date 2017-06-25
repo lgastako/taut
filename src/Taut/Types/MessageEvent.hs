@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveTraversable #-}
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TemplateHaskell    #-}
@@ -56,7 +57,7 @@ data MessageEvent a = MessageEvent
   , _ts         :: Timestamp
   , _type       :: MessageType
   , _user       :: UserId
-  } deriving (Functor)
+  } deriving (Functor, Foldable, Traversable)
 
 deriving instance Eq   a => Eq   (MessageEvent a)
 deriving instance Ord  a => Ord  (MessageEvent a)
@@ -77,17 +78,25 @@ empty :: MessageEvent ()
 empty =
   make
     ChannelId.empty
-    Nothing            -- editInfo
-    Nothing            -- eventTs
-    Nothing            -- hidden
-    Nothing            -- isStarred
-    ()                 -- payload
-    Nothing            -- pinned
-    Nothing            -- reactions
+    editInfoEmpty
+    eventTsEmpty
+    hiddenEmpty
+    isStarredEmpty
+    payloadEmpty
+    pinnedEmpty
+    reactionsEmpty
     SubType.empty
     Timestamp.empty
     MessageType.empty
     UserId.empty
+  where
+    editInfoEmpty  = Nothing
+    eventTsEmpty   = Nothing
+    hiddenEmpty    = Nothing
+    isStarredEmpty = Nothing
+    payloadEmpty   = ()
+    pinnedEmpty    = Nothing
+    reactionsEmpty = Nothing
 
 make :: ChannelId
         -> Maybe EditInfo
