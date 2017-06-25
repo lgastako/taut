@@ -1,9 +1,11 @@
+{-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TemplateHaskell    #-}
 module Taut.Types.MessageEvent
        ( MessageEvent
        , channel
        , edited
+       , empty
        , eventTs
        , hidden
        , isStarred
@@ -17,24 +19,29 @@ module Taut.Types.MessageEvent
        , user
        ) where
 
-import Control.Lens           ( (&)
-                              , (.~)
-                              , (??)
-                              , DefName( TopName )
-                              , lensField
-                              , lensRules
-                              , makeLensesWith
-                              )
-import Language.Haskell.TH    ( mkName
-                              , nameBase
-                              )
-import Taut.Types.ChannelId   ( ChannelId )
-import Taut.Types.EditInfo    ( EditInfo )
-import Taut.Types.MessageType ( MessageType )
-import Taut.Types.Reaction    ( Reaction )
-import Taut.Types.SubType     ( SubType )
-import Taut.Types.Timestamp   ( Timestamp )
-import Taut.Types.UserId      ( UserId )
+import           Control.Lens                          ( (&)
+                                                       , (.~)
+                                                       , (??)
+                                                       , DefName( TopName )
+                                                       , lensField
+                                                       , lensRules
+                                                       , makeLensesWith
+                                                       )
+import           Language.Haskell.TH                   ( mkName
+                                                       , nameBase
+                                                       )
+import           Taut.Types.ChannelId                  ( ChannelId )
+import qualified Taut.Types.ChannelId   as ChannelId
+import           Taut.Types.EditInfo                   ( EditInfo )
+import           Taut.Types.MessageType                ( MessageType )
+import qualified Taut.Types.MessageType as MessageType
+import           Taut.Types.Reaction                   ( Reaction )
+import           Taut.Types.SubType                    ( SubType )
+import qualified Taut.Types.SubType     as SubType
+import           Taut.Types.Timestamp                  ( Timestamp )
+import qualified Taut.Types.Timestamp   as Timestamp
+import           Taut.Types.UserId                     ( UserId )
+import qualified Taut.Types.UserId      as UserId
 
 data MessageEvent a = MessageEvent
   { _channel    :: ChannelId
@@ -49,10 +56,10 @@ data MessageEvent a = MessageEvent
   , _ts         :: Timestamp
   , _type       :: MessageType
   , _user       :: UserId
-  }
+  } deriving (Functor)
 
-deriving instance Eq a   => Eq   (MessageEvent a)
-deriving instance Ord a  => Ord  (MessageEvent a)
+deriving instance Eq   a => Eq   (MessageEvent a)
+deriving instance Ord  a => Ord  (MessageEvent a)
 deriving instance Read a => Read (MessageEvent a)
 deriving instance Show a => Show (MessageEvent a)
 
@@ -64,6 +71,23 @@ makeLensesWith ?? ''MessageEvent $ lensRules
                                                         "_is_starred" -> "isStarred"
                                                         "_pinned_to"  -> "pinnedTo"
                                                         other -> drop 1 other) ])
+
+
+empty :: MessageEvent ()
+empty =
+  make
+    ChannelId.empty
+    Nothing            -- editInfo
+    Nothing            -- eventTs
+    Nothing            -- hidden
+    Nothing            -- isStarred
+    ()                 -- payload
+    Nothing            -- pinned
+    Nothing            -- reactions
+    SubType.empty
+    Timestamp.empty
+    MessageType.empty
+    UserId.empty
 
 make :: ChannelId
         -> Maybe EditInfo

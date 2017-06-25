@@ -1,13 +1,16 @@
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.EditInfo
        ( EditInfo
+       , empty
        , ts
        , user
        ) where
 
-import Control.Lens         ( makeLenses )
-import Taut.Types.Timestamp ( Timestamp )
-import Taut.Types.UserId    ( UserId )
+import           Control.Lens                      ( makeLenses )
+import           Taut.Types.Timestamp              ( Timestamp )
+import qualified Taut.Types.Timestamp as Timestamp
+import           Taut.Types.UserId                 ( UserId )
+import qualified Taut.Types.UserId    as UserId
 
 data EditInfo = EditInfo
   { _ts   :: Timestamp
@@ -15,3 +18,9 @@ data EditInfo = EditInfo
   } deriving (Eq, Ord, Read, Show)
 
 makeLenses ''EditInfo
+
+empty :: EditInfo
+empty =
+  EditInfo
+    Timestamp.empty
+    UserId.empty

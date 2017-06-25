@@ -1,5 +1,6 @@
 module Taut.Types.ChannelId
        ( ChannelId
+       , empty
        , make
        ) where
 
@@ -10,3 +11,6 @@ newtype ChannelId = ChannelId Text
 
 make :: Text -> ChannelId
 make = ChannelId
+
+empty :: ChannelId
+empty = ChannelId "CH0PST1CK"

@@ -1,5 +1,6 @@
 module Taut.Types.UserId
        ( UserId
+       , empty
        , make
        ) where
 
@@ -10,3 +11,6 @@ newtype UserId = UserId Text
 
 make :: Text -> UserId
 make = UserId
+
+empty :: UserId
+empty = make "UD3ADB33F"

@@ -1,5 +1,6 @@
 module Taut.Types.Timestamp
        ( Timestamp
+       , empty
        , make
        , fromSlackText
        ) where
@@ -17,3 +18,6 @@ make = Timestamp
 
 fromSlackText :: Text -> Timestamp
 fromSlackText = Timestamp . posixSecondsToUTCTime . fromInteger . read . Text.unpack
+
+empty :: Timestamp
+empty = fromSlackText "0"

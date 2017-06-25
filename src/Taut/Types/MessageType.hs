@@ -1,5 +1,6 @@
 module Taut.Types.MessageType
        ( MessageType
+       , empty
        , make
        , message
        ) where
@@ -14,3 +15,6 @@ make = MessageType
 
 message :: MessageType
 message = MessageType "message"
+
+empty :: MessageType
+empty = message
