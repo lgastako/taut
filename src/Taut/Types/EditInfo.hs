@@ -17,7 +17,14 @@ data EditInfo = EditInfo
   , _user :: UserId
   } deriving (Eq, Ord, Read, Show)
 
-makeLenses ''EditInfo
+makeLenses ''EditInfo -- TODO: rename user to userId
+
+instance Monoid EditInfo where
+  mempty = empty
+  (EditInfo tsA userA) `mappend` (EditInfo tsB userB) = EditInfo ts' user'
+    where
+      ts'   = tsA   `mappend` tsB
+      user' = userA `mappend` userB
 
 empty :: EditInfo
 empty =

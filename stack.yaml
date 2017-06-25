@@ -5,6 +5,12 @@ flags: {}
 extra-package-dbs: []
 
 packages:
-- '.'
+- location: '.'
+- location:
+    git: https://github.com/haskell/unix.git
+    commit: fcaa530a8fdd3897353bdf246752a91d675aad46
+  extra-dep: true
 
-extra-deps: []
+extra-deps:
+- time-1.8.0.2
+- directory-1.3.1.1

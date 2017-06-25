@@ -1,10 +1,11 @@
-{-# LANGUAGE DeriveTraversable #-}
-{-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DeriveAnyClass     #-}
+{-# LANGUAGE DeriveFunctor      #-}
+{-# LANGUAGE DeriveTraversable  #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TemplateHaskell    #-}
 module Taut.Types.MessageEvent
        ( MessageEvent
-       , channel
+       , channelId
        , edited
        , empty
        , eventTs
@@ -17,7 +18,7 @@ module Taut.Types.MessageEvent
        , subType
        , ts
        , type_
-       , user
+       , userId
        ) where
 
 import           Control.Lens                          ( (&)
@@ -57,7 +58,7 @@ data MessageEvent a = MessageEvent
   , _ts         :: Timestamp
   , _type       :: MessageType
   , _user       :: UserId
-  } deriving (Functor, Foldable, Traversable)
+  } deriving (Functor, Foldable, Traversable) -- Monoid
 
 deriving instance Eq   a => Eq   (MessageEvent a)
 deriving instance Ord  a => Ord  (MessageEvent a)
@@ -71,6 +72,8 @@ makeLensesWith ?? ''MessageEvent $ lensRules
                                                         "_event_ts"   -> "eventTs"
                                                         "_is_starred" -> "isStarred"
                                                         "_pinned_to"  -> "pinnedTo"
+                                                        "_channel"    -> "channelId"
+                                                        "_user"       -> "userId"
                                                         other -> drop 1 other) ])
 
 

@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveAnyClass #-}
 module Taut.Types.ChannelId
        ( ChannelId
        , empty
@@ -8,6 +9,10 @@ import Data.Text ( Text )
 
 newtype ChannelId = ChannelId Text
   deriving (Eq, Ord, Read, Show)
+
+instance Monoid ChannelId where
+  mempty = empty
+  (ChannelId a) `mappend` (ChannelId b) = ChannelId (a `mappend` b)
 
 make :: Text -> ChannelId
 make = ChannelId
