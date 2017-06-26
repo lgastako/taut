@@ -1,10 +1,14 @@
+{-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.UserId
        ( UserId
        , empty
        , make
        ) where
 
-import Data.Text ( Text )
+import Data.Aeson.TH ( defaultOptions
+                     , deriveJSON
+                     )
+import Data.Text     ( Text )
 
 newtype UserId = UserId Text
   deriving (Eq, Ord, Read, Show)
@@ -18,3 +22,5 @@ make = UserId
 
 empty :: UserId
 empty = make "UD3ADB33F"
+
+$(deriveJSON defaultOptions ''UserId)

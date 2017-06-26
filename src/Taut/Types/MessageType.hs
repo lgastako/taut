@@ -1,3 +1,4 @@
+{-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.MessageType
        ( MessageType
        , empty
@@ -5,7 +6,10 @@ module Taut.Types.MessageType
        , message
        ) where
 
-import Data.Text ( Text )
+import Data.Aeson.TH ( defaultOptions
+                     , deriveJSON
+                     )
+import Data.Text     ( Text )
 
 newtype MessageType = MessageType Text
   deriving (Eq, Ord, Read, Show)
@@ -18,3 +22,5 @@ message = MessageType "message"
 
 empty :: MessageType
 empty = message
+
+$(deriveJSON defaultOptions ''MessageType)

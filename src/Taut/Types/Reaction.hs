@@ -8,6 +8,9 @@ module Taut.Types.Reaction
        ) where
 
 import Control.Lens      ( makeLenses )
+import Data.Aeson.TH     ( defaultOptions
+                         , deriveJSON
+                         )
 import Data.Text         ( Text )
 import Taut.Types.UserId ( UserId )
 
@@ -23,3 +26,5 @@ makeLenses ''Reaction
 
 make :: ReactionName -> Int -> [UserId] -> Reaction
 make = Reaction
+
+$(deriveJSON defaultOptions ''Reaction)

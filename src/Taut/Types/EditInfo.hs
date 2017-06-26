@@ -7,6 +7,9 @@ module Taut.Types.EditInfo
        ) where
 
 import           Control.Lens                      ( makeLenses )
+import           Data.Aeson.TH                     ( defaultOptions
+                                                   , deriveJSON
+                                                   )
 import           Taut.Types.Timestamp              ( Timestamp )
 import qualified Taut.Types.Timestamp as Timestamp
 import           Taut.Types.UserId                 ( UserId )
@@ -31,3 +34,5 @@ empty =
   EditInfo
     Timestamp.empty
     UserId.empty
+
+$(deriveJSON defaultOptions ''EditInfo)

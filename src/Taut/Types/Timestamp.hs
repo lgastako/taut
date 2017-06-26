@@ -1,3 +1,4 @@
+{-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.Timestamp
        ( Timestamp
        , empty
@@ -5,6 +6,10 @@ module Taut.Types.Timestamp
        , fromSlackText
        ) where
 
+import           Data.Aeson                    ()
+import           Data.Aeson.TH                 ( defaultOptions
+                                               , deriveJSON
+                                               )
 import           Data.Text                     ( Text )
 import qualified Data.Text             as Text
 import           Data.Time.Calendar            ( Day )
@@ -47,3 +52,5 @@ fromSlackText = Timestamp . posixSecondsToUTCTime . fromInteger . read . Text.un
 
 empty :: Timestamp
 empty = fromSlackText "0"
+
+$(deriveJSON defaultOptions ''Timestamp)

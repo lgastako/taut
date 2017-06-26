@@ -1,3 +1,4 @@
+{-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE DeriveAnyClass #-}
 module Taut.Types.ChannelId
        ( ChannelId
@@ -5,7 +6,10 @@ module Taut.Types.ChannelId
        , make
        ) where
 
-import Data.Text ( Text )
+import Data.Aeson.TH ( defaultOptions
+                     , deriveJSON
+                     )
+import Data.Text     ( Text )
 
 newtype ChannelId = ChannelId Text
   deriving (Eq, Ord, Read, Show)
@@ -18,4 +22,6 @@ make :: Text -> ChannelId
 make = ChannelId
 
 empty :: ChannelId
-empty = ChannelId "CH0PST1CK"
+empty = make "CH0PST1CK"
+
+$(deriveJSON defaultOptions ''ChannelId)

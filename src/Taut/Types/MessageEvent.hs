@@ -29,6 +29,9 @@ import           Control.Lens                          ( (&)
                                                        , lensRules
                                                        , makeLensesWith
                                                        )
+import           Data.Aeson.TH                         ( defaultOptions
+                                                       , deriveJSON
+                                                       )
 import           Language.Haskell.TH                   ( mkName
                                                        , nameBase
                                                        )
@@ -76,6 +79,8 @@ makeLensesWith ?? ''MessageEvent $ lensRules
                                                         "_user"       -> "userId"
                                                         other -> drop 1 other) ])
 
+
+$(deriveJSON defaultOptions ''MessageEvent)
 
 empty :: MessageEvent ()
 empty =
