@@ -1,3 +1,5 @@
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveFunctor      #-}
 {-# LANGUAGE DeriveTraversable  #-}
@@ -29,9 +31,19 @@ import           Control.Lens                          ( (&)
                                                        , lensRules
                                                        , makeLensesWith
                                                        )
-import           Data.Aeson.TH                         ( defaultOptions
-                                                       , deriveJSON
+import           Data.Aeson                            ( FromJSON
+                                                       , ToJSON
+                                                       , genericParseJSON
+                                                       , genericToJSON
+                                                       , parseJSON
+                                                       , toJSON
                                                        )
+import           Data.Aeson.TH                         ( defaultOptions
+                                                       , fieldLabelModifier
+                                                       )
+import           Data.Maybe                            ( fromMaybe )
+import           Data.Text                             ( Text )
+import           GHC.Generics                          ( Generic )
 import           Language.Haskell.TH                   ( mkName
                                                        , nameBase
                                                        )
@@ -49,7 +61,7 @@ import           Taut.Types.UserId                     ( UserId )
 import qualified Taut.Types.UserId      as UserId
 
 data MessageEvent a = MessageEvent
-  { _channel    :: ChannelId
+  { _channelId  :: ChannelId
   , _edited     :: Maybe EditInfo
   , _eventTs    :: Maybe Timestamp
   , _hidden     :: Maybe Bool
@@ -60,13 +72,8 @@ data MessageEvent a = MessageEvent
   , _subType    :: SubType
   , _ts         :: Timestamp
   , _type       :: MessageType
-  , _user       :: UserId
-  } deriving (Functor, Foldable, Traversable) -- Monoid
-
-deriving instance Eq   a => Eq   (MessageEvent a)
-deriving instance Ord  a => Ord  (MessageEvent a)
-deriving instance Read a => Read (MessageEvent a)
-deriving instance Show a => Show (MessageEvent a)
+  , _userId     :: UserId
+  } deriving (Functor, Foldable, Generic, Traversable)
 
 makeLensesWith ?? ''MessageEvent $ lensRules
   & lensField .~ (\_ _ n -> let name = nameBase n
@@ -75,12 +82,29 @@ makeLensesWith ?? ''MessageEvent $ lensRules
                                                         "_event_ts"   -> "eventTs"
                                                         "_is_starred" -> "isStarred"
                                                         "_pinned_to"  -> "pinnedTo"
-                                                        "_channel"    -> "channelId"
-                                                        "_user"       -> "userId"
-                                                        other -> drop 1 other) ])
+                                                        other         -> drop 1 other) ])
 
+fieldPairs :: [(String, String)]
+fieldPairs = [ ("_channelId", "channel")
+             , ("_userId",    "user")
+             ]
 
-$(deriveJSON defaultOptions ''MessageEvent)
+fromField :: String -> String
+fromField field = fromMaybe (drop 1 field) $ lookup field fieldPairs
+
+toField :: String -> String
+toField _field = error "MessageEvent.toField not implemented."
+
+instance ToJSON (MessageEvent Text) where
+  toJSON    = genericToJSON    defaultOptions { fieldLabelModifier = toField }
+
+instance FromJSON (MessageEvent Text) where
+  parseJSON = genericParseJSON defaultOptions { fieldLabelModifier = fromField }
+
+deriving instance Eq   a => Eq   (MessageEvent a)
+deriving instance Ord  a => Ord  (MessageEvent a)
+deriving instance Read a => Read (MessageEvent a)
+deriving instance Show a => Show (MessageEvent a)
 
 empty :: MessageEvent ()
 empty =
