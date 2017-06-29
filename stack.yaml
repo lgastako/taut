@@ -6,7 +6,11 @@ extra-package-dbs: []
 
 packages:
 - location: "."
-- location: ./infinity
+- location:
+    git: git@github.com:SuperpowersCorp/infinity.git
+    commit: 0920706758aa7f71a80cde1f08c241c992f560b
+  extra-dep: true
 - location: ./spc-luthor
+  extra-dep: true
 
 extra-deps: []
