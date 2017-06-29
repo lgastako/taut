@@ -11,7 +11,7 @@ import Prelude       hiding ( null )
 import Data.Aeson.TH        ( defaultOptions
                             , deriveJSON
                             )
-import Data.Text            ( Text )
+import Infinity
 
 newtype SubType = SubType Text
   deriving (Eq, Ord, Read, Show)

@@ -5,7 +5,7 @@ module Taut.Examples
 import           Control.Lens                            ( (&)
                                                          , (.~)
                                                          )
-import           Data.Text                               ( Text )
+import           Infinity
 import           Taut
 import           Taut.Types.MessageEvent                 ( payload )
 import qualified Taut.Types.MessageEvent as MessageEvent

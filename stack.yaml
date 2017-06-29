@@ -6,5 +6,7 @@ extra-package-dbs: []
 
 packages:
 - location: "."
+- location: ./infinity
+- location: ./spc-luthor
 
 extra-deps: []

@@ -23,41 +23,41 @@ module Taut.Types.MessageEvent
        , userId
        ) where
 
-import           Control.Lens                          ( (&)
-                                                       , (.~)
-                                                       , (??)
-                                                       , DefName( TopName )
-                                                       , lensField
-                                                       , lensRules
-                                                       , makeLensesWith
-                                                       )
-import           Data.Aeson                            ( FromJSON
-                                                       , ToJSON
-                                                       , genericParseJSON
-                                                       , genericToJSON
-                                                       , parseJSON
-                                                       , toJSON
-                                                       )
-import           Data.Aeson.TH                         ( defaultOptions
-                                                       , fieldLabelModifier
-                                                       )
-import           Data.Maybe                            ( fromMaybe )
-import           Data.Text                             ( Text )
-import           GHC.Generics                          ( Generic )
-import           Language.Haskell.TH                   ( mkName
-                                                       , nameBase
-                                                       )
-import           Taut.Types.ChannelId                  ( ChannelId )
+import           Prelude                               hiding ( error )
+
+import           Control.Lens                                 ( (&)
+                                                              , (.~)
+                                                              , (??)
+                                                              , DefName( TopName )
+                                                              , lensField
+                                                              , lensRules
+                                                              , makeLensesWith
+                                                              )
+import           Data.Aeson                                   ( FromJSON
+                                                              , ToJSON
+                                                              , genericParseJSON
+                                                              , genericToJSON
+                                                              , parseJSON
+                                                              , toJSON
+                                                              )
+import           Data.Aeson.TH                                ( defaultOptions
+                                                              , fieldLabelModifier
+                                                              )
+import           Infinity
+import           Language.Haskell.TH                          ( mkName
+                                                              , nameBase
+                                                              )
+import           Taut.Types.ChannelId                         ( ChannelId )
 import qualified Taut.Types.ChannelId   as ChannelId
-import           Taut.Types.EditInfo                   ( EditInfo )
-import           Taut.Types.MessageType                ( MessageType )
+import           Taut.Types.EditInfo                          ( EditInfo )
+import           Taut.Types.MessageType                       ( MessageType )
 import qualified Taut.Types.MessageType as MessageType
-import           Taut.Types.Reaction                   ( Reaction )
-import           Taut.Types.SubType                    ( SubType )
+import           Taut.Types.Reaction                          ( Reaction )
+import           Taut.Types.SubType                           ( SubType )
 import qualified Taut.Types.SubType     as SubType
-import           Taut.Types.Timestamp                  ( Timestamp )
+import           Taut.Types.Timestamp                         ( Timestamp )
 import qualified Taut.Types.Timestamp   as Timestamp
-import           Taut.Types.UserId                     ( UserId )
+import           Taut.Types.UserId                            ( UserId )
 import qualified Taut.Types.UserId      as UserId
 
 data MessageEvent a = MessageEvent

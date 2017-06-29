@@ -9,7 +9,7 @@ module Taut.Types.MessageType
 import Data.Aeson.TH ( defaultOptions
                      , deriveJSON
                      )
-import Data.Text     ( Text )
+import Infinity
 
 newtype MessageType = MessageType Text
   deriving (Eq, Ord, Read, Show)

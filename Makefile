@@ -13,8 +13,12 @@ hlint:
 setup:
 	stack setup
 
+watch:
+	stack build --fast --file-watch
+
 b: build
 hl: hlint
 i: install
 r: run
 s: setup
+w: watch

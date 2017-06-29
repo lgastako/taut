@@ -11,7 +11,7 @@ import Control.Lens      ( makeLenses )
 import Data.Aeson.TH     ( defaultOptions
                          , deriveJSON
                          )
-import Data.Text         ( Text )
+import Infinity
 import Taut.Types.UserId ( UserId )
 
 data Reaction = Reaction

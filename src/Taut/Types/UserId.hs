@@ -8,7 +8,7 @@ module Taut.Types.UserId
 import Data.Aeson.TH ( defaultOptions
                      , deriveJSON
                      )
-import Data.Text     ( Text )
+import Infinity
 
 newtype UserId = UserId Text
   deriving (Eq, Ord, Read, Show)

@@ -1,7 +1,7 @@
 name:                taut
 version:             0.1.0.0
--- synopsis:
--- description:
+synopsis:            Slack but tighter.
+description:         You got taut.
 homepage:            https://github.com/superpowerscorp/taut#readme
 license:             BSD3
 license-file:        LICENSE
@@ -17,17 +17,26 @@ library
   hs-source-dirs:      src
   exposed-modules:     Taut
                      , Taut.Examples
+                     , Taut.Types.ChannelAggregate
                      , Taut.Types.ChannelId
+                     , Taut.Types.ChannelName
+                     , Taut.Types.ChannelSet
                      , Taut.Types.EditInfo
                      , Taut.Types.MessageEvent
                      , Taut.Types.MessageType
                      , Taut.Types.Reaction
                      , Taut.Types.SubType
                      , Taut.Types.Timestamp
+                     , Taut.Types.UserAggregate
                      , Taut.Types.UserId
+                     , Taut.Types.UserName
+                     , Taut.Types.UserSet
   build-depends:       aeson
                      , base                       >= 4.7 && < 5
+                     , containers
                      , lens
+                     , infinity
+                     , spc-luthor
                      , template-haskell
                      , text
                      , time
@@ -42,7 +51,10 @@ test-suite taut-test
   main-is:             Spec.hs
   build-depends:       aeson
                      , base
+                     , containers
                      , lens
+                     , infinity
+                     , spc-luthor
                      , taut
                      , template-haskell
                      , text

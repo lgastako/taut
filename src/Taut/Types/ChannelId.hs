@@ -1,5 +1,6 @@
+{-# LANGUAGE DeriveAnyClass  #-}
+{-# LANGUAGE DeriveGeneric   #-}
 {-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE DeriveAnyClass #-}
 module Taut.Types.ChannelId
        ( ChannelId
        , empty
@@ -9,10 +10,10 @@ module Taut.Types.ChannelId
 import Data.Aeson.TH ( defaultOptions
                      , deriveJSON
                      )
-import Data.Text     ( Text )
+import Infinity
 
 newtype ChannelId = ChannelId Text
-  deriving (Eq, Ord, Read, Show)
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance Monoid ChannelId where
   mempty = empty
