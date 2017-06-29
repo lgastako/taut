@@ -23,8 +23,6 @@ module Taut.Types.MessageEvent
        , userId
        ) where
 
-import           Prelude                               hiding ( error )
-
 import           Control.Lens                                 ( (&)
                                                               , (.~)
                                                               , (??)
@@ -43,7 +41,7 @@ import           Data.Aeson                                   ( FromJSON
 import           Data.Aeson.TH                                ( defaultOptions
                                                               , fieldLabelModifier
                                                               )
-import           Infinity
+import           Infinity                              hiding ( error )
 import           Language.Haskell.TH                          ( mkName
                                                               , nameBase
                                                               )

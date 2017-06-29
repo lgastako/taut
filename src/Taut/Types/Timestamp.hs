@@ -6,20 +6,17 @@ module Taut.Types.Timestamp
        , fromSlackText
        ) where
 
-import           Prelude                       hiding ( error )
-
-import           Data.Aeson                           ()
-import           Data.Aeson.TH                        ( defaultOptions
-                                                      , deriveJSON
-                                                      )
-import           Data.Text                            ( Text )
+import           Data.Aeson                    ()
+import           Data.Aeson.TH                 ( defaultOptions
+                                               , deriveJSON
+                                               )
+import           Data.Text                     ( Text )
 import qualified Data.Text             as Text
-import           Data.Time.Calendar                   ( Day )
-import           Data.Time.Clock                      ( DiffTime
-                                                      , UTCTime( UTCTime )
-                                                      )
-import           Data.Time.Clock.POSIX                ( posixSecondsToUTCTime )
-import           Infinity
+import           Data.Time.Calendar            ( Day )
+import           Data.Time.Clock               ( DiffTime
+                                               , UTCTime( UTCTime )
+                                               )
+import           Data.Time.Clock.POSIX         ( posixSecondsToUTCTime )
 
 newtype Timestamp = Timestamp UTCTime
   deriving (Eq, Ord, Read, Show)
