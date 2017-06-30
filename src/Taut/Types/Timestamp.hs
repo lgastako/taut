@@ -48,7 +48,11 @@ make :: UTCTime -> Timestamp
 make = Timestamp
 
 fromSlackText :: Text -> Timestamp
-fromSlackText = Timestamp . posixSecondsToUTCTime . fromInteger . read . Text.unpack
+fromSlackText = Timestamp
+  . posixSecondsToUTCTime
+  . realToFrac
+  . (read :: String -> Double)
+  . Text.unpack
 
 empty :: Timestamp
 empty = fromSlackText "0"

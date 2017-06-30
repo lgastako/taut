@@ -8,7 +8,7 @@ packages:
 - location: "."
 - location:
     git: git@github.com:SuperpowersCorp/infinity.git
-    commit: 0920706758aa7f71a80cde1f08c241c992f560b
+    commit: 0519411e11a98c6944a355c7bf979dc15f4838e9
   extra-dep: true
 - location: ./spc-luthor
   extra-dep: true
