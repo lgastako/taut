@@ -34,6 +34,7 @@ library
                      , Taut.Types.UserSet
   build-depends:       aeson
                      , base                       >= 4.7 && < 5
+                     , cassava
                      , containers
                      , lens
                      , infinity

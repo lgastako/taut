@@ -4,6 +4,7 @@ module Taut.Types.Timestamp
        , empty
        , make
        , fromSlackText
+       , toText
        ) where
 
 import           Data.Aeson                    ()

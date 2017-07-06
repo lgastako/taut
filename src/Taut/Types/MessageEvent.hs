@@ -22,37 +22,41 @@ module Taut.Types.MessageEvent
        , userId
        ) where
 
-import Prelude                hiding ( null )
+import           Prelude                             hiding ( null )
 
-import Control.Lens                  ( (&)
-                                     , (.~)
-                                     , (??)
-                                     , DefName( TopName )
-                                     , lensField
-                                     , lensRules
-                                     , makeLensesWith
-                                     )
-import Data.Aeson                    ( FromJSON
-                                     , ToJSON
-                                     , genericParseJSON
-                                     , genericToJSON
-                                     , parseJSON
-                                     , toJSON
-                                     )
-import Data.Aeson.TH                 ( defaultOptions
-                                     , fieldLabelModifier
-                                     )
-import Infinity               hiding ( error )
-import Language.Haskell.TH           ( mkName
-                                     , nameBase
-                                     )
-import Taut.Types.ChannelId          ( ChannelId )
-import Taut.Types.EditInfo           ( EditInfo )
-import Taut.Types.MessageType        ( MessageType )
-import Taut.Types.Reaction           ( Reaction )
-import Taut.Types.SubType            ( SubType )
-import Taut.Types.Timestamp          ( Timestamp )
-import Taut.Types.UserId             ( UserId )
+import           Control.Lens                               ( (&)
+                                                            , (.~)
+                                                            , (??)
+                                                            , DefName( TopName )
+                                                            , lensField
+                                                            , lensRules
+                                                            , makeLensesWith
+                                                            )
+import           Data.Aeson                                 ( FromJSON
+                                                            , ToJSON
+                                                            , genericParseJSON
+                                                            , genericToJSON
+                                                            , parseJSON
+                                                            , toJSON
+                                                            )
+import           Data.Aeson.TH                              ( defaultOptions
+                                                            , fieldLabelModifier
+                                                            )
+import           Data.Csv                                   ( ToRecord( toRecord ) )
+import qualified Data.Csv               as Csv
+import           Infinity                            hiding ( error )
+import           Language.Haskell.TH                        ( mkName
+                                                            , nameBase
+                                                            )
+import           Taut.Types.ChannelId                       ( ChannelId )
+import qualified Taut.Types.ChannelId   as ChannelId
+import           Taut.Types.EditInfo                        ( EditInfo )
+import           Taut.Types.MessageType                     ( MessageType )
+import           Taut.Types.Reaction                        ( Reaction )
+import           Taut.Types.SubType                         ( SubType )
+import qualified Taut.Types.SubType     as SubType
+import           Taut.Types.Timestamp                       ( Timestamp )
+import           Taut.Types.UserId                          ( UserId )
 
 data MessageEvent a = MessageEvent
   { _channelId  :: ChannelId
@@ -102,6 +106,16 @@ deriving instance Eq   a => Eq   (MessageEvent a)
 deriving instance Ord  a => Ord  (MessageEvent a)
 deriving instance Read a => Read (MessageEvent a)
 deriving instance Show a => Show (MessageEvent a)
+
+instance ToRecord (MessageEvent Text) where
+  toRecord (MessageEvent chanId _ _ _ _ payload _ _ subType ts type_ userId) =
+    Csv.record [ Csv.toField (ChannelId.toText chanId)
+               , Csv.toField payload
+               , Csv.toField (SubType.toText subType)
+               , Csv.toField ts
+               , Csv.toField type_
+               , Csv.toField userId
+               ]
 
 make :: ChannelId
         -> Maybe EditInfo

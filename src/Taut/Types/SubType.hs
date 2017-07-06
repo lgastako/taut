@@ -4,6 +4,7 @@ module Taut.Types.SubType
        , empty
        , make
        , null
+       , toText
        ) where
 
 import Prelude       hiding ( null )
@@ -26,5 +27,8 @@ null :: SubType -> Bool
 null subType
   | subType == empty = True
   | otherwise        = False
+
+toText :: SubType -> Text
+toText (SubType s) = s
 
 $(deriveJSON defaultOptions ''SubType)
