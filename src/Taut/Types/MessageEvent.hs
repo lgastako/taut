@@ -97,7 +97,7 @@ toField :: String -> String
 toField field = fromMaybe ("_" ++ field) $ lookup field reverseFieldPairs
 
 instance ToJSON (MessageEvent Text) where
-  toJSON    = genericToJSON    defaultOptions { fieldLabelModifier = toField }
+  toJSON = genericToJSON defaultOptions { fieldLabelModifier = toField }
 
 instance FromJSON (MessageEvent Text) where
   parseJSON = genericParseJSON defaultOptions { fieldLabelModifier = fromField }
@@ -108,13 +108,13 @@ deriving instance Read a => Read (MessageEvent a)
 deriving instance Show a => Show (MessageEvent a)
 
 instance ToRecord (MessageEvent Text) where
-  toRecord (MessageEvent chanId _ _ _ _ payload _ _ subType ts type_ userId) =
+  toRecord (MessageEvent chanId _ _ _ _ payload' _ _ subType' ts' type_' userId') =
     Csv.record [ Csv.toField (ChannelId.toText chanId)
-               , Csv.toField payload
-               , Csv.toField (SubType.toText subType)
-               , Csv.toField ts
-               , Csv.toField type_
-               , Csv.toField userId
+               , Csv.toField payload'
+               , Csv.toField (SubType.toText subType')
+               , Csv.toField ts'
+               , Csv.toField type_'
+               , Csv.toField userId'
                ]
 
 make :: ChannelId

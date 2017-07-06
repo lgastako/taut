@@ -1,11 +1,13 @@
 module Taut.Types.MessageEvents
        ( onlyMessages
+       , toCSV
        , withPayloads
        ) where
 
 import           Prelude                            hiding ( null )
 
 import           Control.Lens                              ( (^.) )
+import qualified Data.Csv                as Csv
 import           Infinity
 import           Taut.Types.MessageEvent                   ( MessageEvent
                                                            , payload
@@ -28,3 +30,6 @@ withPayloads = foldr add []
 
 onlyMessages :: [MessageEvent a] -> [MessageEvent a]
 onlyMessages = filter (SubType.null . (^. subType))
+
+toCSV :: [MessageEvent Text] -> LByteString
+toCSV = Csv.encode

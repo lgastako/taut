@@ -3,22 +3,36 @@
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.ChannelId
        ( ChannelId
-       , make
+       , cidText
+       , fromText
        , toText
        ) where
 
-import Data.Aeson.TH ( defaultOptions
-                     , deriveJSON
-                     )
+import Control.Lens       ( Iso'
+                          , iso
+                          )
+import Data.Aeson.TH      ( defaultOptions
+                          , deriveJSON
+                          )
+import Data.Csv           ( ToField
+                          , toField
+                          )
+import Data.Text.Encoding ( encodeUtf8 )
 import Infinity
 
 newtype ChannelId = ChannelId Text
   deriving (Eq, Generic, Ord, Read, Show)
 
-make :: Text -> ChannelId
-make = ChannelId
+instance ToField ChannelId where
+  toField = encodeUtf8 . toText
+
+fromText :: Text -> ChannelId
+fromText = ChannelId
 
 toText :: ChannelId -> Text
 toText (ChannelId u) = u
+
+cidText :: Iso' ChannelId Text
+cidText = iso toText fromText
 
 $(deriveJSON defaultOptions ''ChannelId)

@@ -2,20 +2,37 @@
 module Taut.Types.MessageType
        ( MessageType
        , empty
-       , make
+       , fromText
        , message
+       , typeText
        ) where
 
-import Data.Aeson.TH ( defaultOptions
-                     , deriveJSON
-                     )
+import Control.Lens       ( Iso'
+                          , iso
+                          )
+import Data.Aeson.TH      ( defaultOptions
+                          , deriveJSON
+                          )
+import Data.Csv           ( ToField
+                          , toField
+                          )
+import Data.Text.Encoding ( encodeUtf8 )
 import Infinity
 
 newtype MessageType = MessageType Text
   deriving (Eq, Ord, Read, Show)
 
-make :: Text -> MessageType
-make = MessageType
+instance ToField MessageType where
+  toField (MessageType t) = encodeUtf8 t
+
+fromText :: Text -> MessageType
+fromText = MessageType
+
+toText :: MessageType -> Text
+toText (MessageType t) = t
+
+typeText :: Iso' MessageType Text
+typeText = iso toText fromText
 
 message :: MessageType
 message = MessageType "message"

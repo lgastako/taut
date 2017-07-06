@@ -36,8 +36,8 @@ library
                      , base                       >= 4.7 && < 5
                      , cassava
                      , containers
-                     , lens
                      , infinity
+                     , lens
                      , spc-luthor
                      , template-haskell
                      , text
@@ -53,9 +53,10 @@ test-suite taut-test
   main-is:             Spec.hs
   build-depends:       aeson
                      , base
+                     , cassava
                      , containers
-                     , lens
                      , infinity
+                     , lens
                      , spc-luthor
                      , taut
                      , template-haskell

@@ -1,22 +1,36 @@
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.UserId
        ( UserId
-       , make
+       , fromText
        , toText
+       , uidText
        ) where
 
-import Data.Aeson.TH ( defaultOptions
-                     , deriveJSON
-                     )
+import Control.Lens       ( Iso'
+                          , iso
+                          )
+import Data.Aeson.TH      ( defaultOptions
+                          , deriveJSON
+                          )
+import Data.Csv           ( ToField
+                          , toField
+                          )
+import Data.Text.Encoding ( encodeUtf8 )
 import Infinity
 
 newtype UserId = UserId Text
   deriving (Eq, Ord, Read, Show)
 
-make :: Text -> UserId
-make = UserId
+instance ToField UserId where
+  toField = encodeUtf8 . toText
+
+fromText :: Text -> UserId
+fromText = UserId
 
 toText :: UserId -> Text
 toText (UserId u) = u
+
+uidText :: Iso' UserId Text
+uidText = iso toText fromText
 
 $(deriveJSON defaultOptions ''UserId)
