@@ -42,7 +42,7 @@ import           Data.Aeson                                 ( FromJSON
 import           Data.Aeson.TH                              ( defaultOptions
                                                             , fieldLabelModifier
                                                             )
-import           Data.Csv                                   ( ToRecord( toRecord ) )
+import           Data.Csv                                   ( ToNamedRecord( toNamedRecord ) )
 import qualified Data.Csv               as Csv
 import           Infinity                            hiding ( error )
 import           Language.Haskell.TH                        ( mkName
@@ -107,15 +107,15 @@ deriving instance Ord  a => Ord  (MessageEvent a)
 deriving instance Read a => Read (MessageEvent a)
 deriving instance Show a => Show (MessageEvent a)
 
-instance ToRecord (MessageEvent Text) where
-  toRecord (MessageEvent chanId _ _ _ _ payload' _ _ subType' ts' type_' userId') =
-    Csv.record [ Csv.toField (ChannelId.toText chanId)
-               , Csv.toField payload'
-               , Csv.toField (SubType.toText subType')
-               , Csv.toField ts'
-               , Csv.toField type_'
-               , Csv.toField userId'
-               ]
+instance ToNamedRecord (MessageEvent Text) where
+  toNamedRecord (MessageEvent chanId _ _ _ _ payload' _ _ subType' ts' type_' userId') =
+    Csv.namedRecord [ ("channelId", Csv.toField (ChannelId.toText chanId))
+                    , ("userId",    Csv.toField userId')
+                    , ("payload",   Csv.toField payload')
+                    , ("type",      Csv.toField type_')
+                    , ("subType",   Csv.toField (SubType.toText subType'))
+                    , ("ts",        Csv.toField ts')
+                    ]
 
 make :: ChannelId
         -> Maybe EditInfo

@@ -14,7 +14,7 @@ import qualified Taut.Types.UserId       as UserId
 exampleMsg1 :: MessageEvent Text
 exampleMsg1 =
   MessageEvent.make
-    (ChannelId.make "CH0PST1CK")
+    (ChannelId.fromText "CH0PST1CK")
     Nothing
     Nothing
     Nothing
@@ -25,4 +25,4 @@ exampleMsg1 =
     SubType.empty
     Timestamp.empty
     MessageType.empty
-    (UserId.make "UDEADBEEF")
+    (UserId.fromText "UDEADBEEF")

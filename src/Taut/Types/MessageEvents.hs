@@ -8,6 +8,7 @@ import           Prelude                            hiding ( null )
 
 import           Control.Lens                              ( (^.) )
 import qualified Data.Csv                as Csv
+import qualified Data.Vector             as Vector
 import           Infinity
 import           Taut.Types.MessageEvent                   ( MessageEvent
                                                            , payload
@@ -32,4 +33,12 @@ onlyMessages :: [MessageEvent a] -> [MessageEvent a]
 onlyMessages = filter (SubType.null . (^. subType))
 
 toCSV :: [MessageEvent Text] -> LByteString
-toCSV = Csv.encode
+toCSV = Csv.encodeByName header
+  where
+    header = Vector.fromList [ "channelId"
+                             , "userId"
+                             , "payload"
+                             , "type"
+                             , "subType"
+                             , "ts"
+                             ]
