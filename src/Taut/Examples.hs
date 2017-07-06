@@ -2,13 +2,27 @@ module Taut.Examples
        ( exampleMsg1
        ) where
 
-import           Control.Lens                            ( (&)
-                                                         , (.~)
-                                                         )
 import           Infinity
 import           Taut
-import           Taut.Types.MessageEvent                 ( payload )
+import qualified Taut.Types.ChannelId    as ChannelId
 import qualified Taut.Types.MessageEvent as MessageEvent
+import qualified Taut.Types.MessageType  as MessageType
+import qualified Taut.Types.SubType      as SubType
+import qualified Taut.Types.Timestamp    as Timestamp
+import qualified Taut.Types.UserId       as UserId
 
 exampleMsg1 :: MessageEvent Text
-exampleMsg1 = MessageEvent.empty & payload .~ "Example message #1."
+exampleMsg1 =
+  MessageEvent.make
+    (ChannelId.make "CH0PST1CK")
+    Nothing
+    Nothing
+    Nothing
+    Nothing
+    "Example message #1."
+    Nothing
+    Nothing
+    SubType.empty
+    Timestamp.empty
+    MessageType.empty
+    (UserId.make "UDEADBEEF")

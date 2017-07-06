@@ -13,18 +13,18 @@ module Taut
     , UserName
     , UserId
     , UserSet
-    , justMessages
+    , withPayloads
+    , onlyMessages
     ) where
 
-import Control.Lens                ( (^.) )
-import Infinity
 import Taut.Types.ChannelAggregate ( ChannelAggregate )
 import Taut.Types.ChannelId        ( ChannelId )
 import Taut.Types.ChannelName      ( ChannelName )
 import Taut.Types.ChannelSet       ( ChannelSet )
 import Taut.Types.EditInfo         ( EditInfo )
-import Taut.Types.MessageEvent     ( MessageEvent
-                                   , payload
+import Taut.Types.MessageEvent     ( MessageEvent )
+import Taut.Types.MessageEvents    ( onlyMessages
+                                   , withPayloads
                                    )
 import Taut.Types.MessageType      ( MessageType )
 import Taut.Types.Reaction         ( Reaction )
@@ -35,12 +35,3 @@ import Taut.Types.UserId           ( UserId )
 import Taut.Types.UserName         ( UserName )
 import Taut.Types.UserSet          ( UserSet )
 
-justMessages :: [MessageEvent (Maybe Text)] -> [MessageEvent Text]
-justMessages = foldr add []
-  where
-    add e acc =
-      case e ^. payload of
-        Just text -> m:acc
-          where
-            m = const text <$> e
-        Nothing -> acc

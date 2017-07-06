@@ -1,5 +1,5 @@
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE FlexibleInstances  #-}
 {-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveFunctor      #-}
 {-# LANGUAGE DeriveTraversable  #-}
@@ -9,7 +9,6 @@ module Taut.Types.MessageEvent
        ( MessageEvent
        , channelId
        , edited
-       , empty
        , eventTs
        , hidden
        , isStarred
@@ -23,40 +22,37 @@ module Taut.Types.MessageEvent
        , userId
        ) where
 
-import           Control.Lens                                 ( (&)
-                                                              , (.~)
-                                                              , (??)
-                                                              , DefName( TopName )
-                                                              , lensField
-                                                              , lensRules
-                                                              , makeLensesWith
-                                                              )
-import           Data.Aeson                                   ( FromJSON
-                                                              , ToJSON
-                                                              , genericParseJSON
-                                                              , genericToJSON
-                                                              , parseJSON
-                                                              , toJSON
-                                                              )
-import           Data.Aeson.TH                                ( defaultOptions
-                                                              , fieldLabelModifier
-                                                              )
-import           Infinity                              hiding ( error )
-import           Language.Haskell.TH                          ( mkName
-                                                              , nameBase
-                                                              )
-import           Taut.Types.ChannelId                         ( ChannelId )
-import qualified Taut.Types.ChannelId   as ChannelId
-import           Taut.Types.EditInfo                          ( EditInfo )
-import           Taut.Types.MessageType                       ( MessageType )
-import qualified Taut.Types.MessageType as MessageType
-import           Taut.Types.Reaction                          ( Reaction )
-import           Taut.Types.SubType                           ( SubType )
-import qualified Taut.Types.SubType     as SubType
-import           Taut.Types.Timestamp                         ( Timestamp )
-import qualified Taut.Types.Timestamp   as Timestamp
-import           Taut.Types.UserId                            ( UserId )
-import qualified Taut.Types.UserId      as UserId
+import Prelude                hiding ( null )
+
+import Control.Lens                  ( (&)
+                                     , (.~)
+                                     , (??)
+                                     , DefName( TopName )
+                                     , lensField
+                                     , lensRules
+                                     , makeLensesWith
+                                     )
+import Data.Aeson                    ( FromJSON
+                                     , ToJSON
+                                     , genericParseJSON
+                                     , genericToJSON
+                                     , parseJSON
+                                     , toJSON
+                                     )
+import Data.Aeson.TH                 ( defaultOptions
+                                     , fieldLabelModifier
+                                     )
+import Infinity               hiding ( error )
+import Language.Haskell.TH           ( mkName
+                                     , nameBase
+                                     )
+import Taut.Types.ChannelId          ( ChannelId )
+import Taut.Types.EditInfo           ( EditInfo )
+import Taut.Types.MessageType        ( MessageType )
+import Taut.Types.Reaction           ( Reaction )
+import Taut.Types.SubType            ( SubType )
+import Taut.Types.Timestamp          ( Timestamp )
+import Taut.Types.UserId             ( UserId )
 
 data MessageEvent a = MessageEvent
   { _channelId  :: ChannelId
@@ -103,30 +99,6 @@ deriving instance Eq   a => Eq   (MessageEvent a)
 deriving instance Ord  a => Ord  (MessageEvent a)
 deriving instance Read a => Read (MessageEvent a)
 deriving instance Show a => Show (MessageEvent a)
-
-empty :: MessageEvent ()
-empty =
-  make
-    ChannelId.empty
-    editInfoEmpty
-    eventTsEmpty
-    hiddenEmpty
-    isStarredEmpty
-    payloadEmpty
-    pinnedEmpty
-    reactionsEmpty
-    SubType.empty
-    Timestamp.empty
-    MessageType.empty
-    UserId.empty
-  where
-    editInfoEmpty  = Nothing
-    eventTsEmpty   = Nothing
-    hiddenEmpty    = Nothing
-    isStarredEmpty = Nothing
-    payloadEmpty   = ()
-    pinnedEmpty    = Nothing
-    reactionsEmpty = Nothing
 
 make :: ChannelId
         -> Maybe EditInfo
