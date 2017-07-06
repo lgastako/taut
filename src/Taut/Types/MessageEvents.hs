@@ -6,7 +6,7 @@ module Taut.Types.MessageEvents
 import           Prelude                            hiding ( null )
 
 import           Control.Lens                              ( (^.) )
-import           Infinity                           hiding ( error )
+import           Infinity
 import           Taut.Types.MessageEvent                   ( MessageEvent
                                                            , payload
                                                            , subType

@@ -83,11 +83,14 @@ fieldPairs = [ ("_channelId", "channel")
              , ("_userId",    "user")
              ]
 
+reverseFieldPairs :: [(String, String)]
+reverseFieldPairs = [(b, a) | (a, b) <- fieldPairs]
+
 fromField :: String -> String
 fromField field = fromMaybe (drop 1 field) $ lookup field fieldPairs
 
 toField :: String -> String
-toField _field = error "MessageEvent.toField not implemented."
+toField field = fromMaybe ("_" ++ field) $ lookup field reverseFieldPairs
 
 instance ToJSON (MessageEvent Text) where
   toJSON    = genericToJSON    defaultOptions { fieldLabelModifier = toField }
