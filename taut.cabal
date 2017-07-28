@@ -58,6 +58,7 @@ test-suite taut-test
                      , containers
                      , infinity
                      , lens
+                     , QuickCheck
                      , spc-luthor
                      , taut
                      , template-haskell
