@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleContexts #-}
 module Taut.Functions
        ( byChannel
        , chronoByChan
@@ -41,13 +42,12 @@ chronoByChan = Map.map chronological . byChannel
 
 replyWindows :: (Eq a, Ord a) =>
                 Int -> [MessageEvent a] -> Map (MessageEvent a) [MessageEvent a]
-replyWindows n msgs =
+replyWindows n =
   Map.fromList             -- Map (MessageEvent a) [MessageEvent a]
   . mconcat                -- [(MessageEvent a, [MessageEvent a])]
   . Map.elems              -- [[(MessageEvent a, [MessageEvent a])]]
   . Map.map chanToWin      -- Map ChannelId [(MessageEvent a, [MessageEvent a])]
   . chronoByChan           -- Map ChannelId [MessageEvent a]
-  $ msgs
   where
     chanToWin :: [MessageEvent a] -> [(MessageEvent a, [MessageEvent a])]
     chanToWin ms =
@@ -65,8 +65,12 @@ replyWindows n msgs =
         win          = takeWin . filter ((/= target ^. userId) . (^. userId)) . init $ ms
         takeWin xs   = foldl' (const . drop 1) xs (drop n xs)
 
-userReplyWindows :: Map (MessageEvent a) [MessageEvent a] -> Map UserId (Map (MessageEvent a) [MessageEvent a])
-userReplyWindows _replyWindows = undefined
+userReplyWindows :: Ord a =>
+                    Map (MessageEvent a) [MessageEvent a] ->
+                    Map UserId (Map (MessageEvent a) [MessageEvent a])
+userReplyWindows = Map.foldrWithKey add Map.empty
+  where
+    add k v = Map.insertWith mappend (k ^. userId) (Map.singleton k v)
 
 userReplyDocs :: Map UserId (Map (MessageEvent Text) [MessageEvent Text]) -> Map UserId Text
 userReplyDocs = userReplyDocsWith id

@@ -17,6 +17,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Taut
                      , Taut.Examples
+                     , Taut.Functions
                      , Taut.Types.ChannelAggregate
                      , Taut.Types.ChannelId
                      , Taut.Types.ChannelName
