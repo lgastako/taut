@@ -1,13 +1,16 @@
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.Reaction
        ( Reaction
+       , count
        , make
        , name
-       , count
+       , summary
        , users
        ) where
 
-import Control.Lens      ( makeLenses )
+import Control.Lens      ( (^.)
+                         , makeLenses
+                         )
 import Data.Aeson.TH     ( defaultOptions
                          , deriveJSON
                          )
@@ -26,5 +29,8 @@ makeLenses ''Reaction
 
 make :: ReactionName -> Int -> [UserId] -> Reaction
 make = Reaction
+
+summary :: Reaction -> Text
+summary r = r ^. name <> " (" <> tshow (r ^. count) <> ")"
 
 $(deriveJSON defaultOptions ''Reaction)
