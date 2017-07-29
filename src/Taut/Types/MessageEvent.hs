@@ -16,6 +16,8 @@ module Taut.Types.MessageEvent
        , payload
        , pinnedTo
        , reactions
+       , reactionCount
+       , reactionsSummary
        , subType
        , ts
        , type_
@@ -27,6 +29,7 @@ import           Prelude                             hiding ( null )
 import           Control.Lens                               ( (&)
                                                             , (.~)
                                                             , (??)
+                                                            , (^.)
                                                             , DefName( TopName )
                                                             , lensField
                                                             , lensRules
@@ -44,6 +47,7 @@ import           Data.Aeson.TH                              ( defaultOptions
                                                             )
 import           Data.Csv                                   ( ToNamedRecord( toNamedRecord ) )
 import qualified Data.Csv               as Csv
+import qualified Data.Text              as Text
 import           Infinity                            hiding ( error )
 import           Language.Haskell.TH                        ( mkName
                                                             , nameBase
@@ -53,6 +57,7 @@ import qualified Taut.Types.ChannelId   as ChannelId
 import           Taut.Types.EditInfo                        ( EditInfo )
 import           Taut.Types.MessageType                     ( MessageType )
 import           Taut.Types.Reaction                        ( Reaction )
+import qualified Taut.Types.Reaction    as Reaction
 import           Taut.Types.SubType                         ( SubType )
 import qualified Taut.Types.SubType     as SubType
 import           Taut.Types.Timestamp                       ( Timestamp )
@@ -131,3 +136,10 @@ make :: ChannelId
         -> UserId
         -> MessageEvent a
 make = MessageEvent
+
+reactionCount :: MessageEvent a -> Int
+reactionCount = sum . map (^. Reaction.count) . fromMaybe [] . (^. reactions)
+
+reactionsSummary :: MessageEvent a -> Text
+reactionsSummary =
+  Text.intercalate ", " . map Reaction.summary . fromMaybe [] . (^. reactions)
