@@ -1,6 +1,7 @@
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.EditInfo
        ( EditInfo
+       , from
        , ts
        , user
        ) where
@@ -18,5 +19,8 @@ data EditInfo = EditInfo
   } deriving (Eq, Ord, Read, Show)
 
 makeLenses ''EditInfo -- TODO: rename user to userId
+
+from :: (Timestamp, UserId) -> EditInfo
+from = uncurry EditInfo
 
 $(deriveJSON defaultOptions ''EditInfo)
