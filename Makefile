@@ -5,6 +5,9 @@ build:
 	stack build
 
 clean:
+	stack clean
+
+dist-clean:
 	\rm -rf .stack-work
 
 hlint:
