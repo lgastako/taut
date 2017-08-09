@@ -1,12 +1,23 @@
 module Taut
-    ( ChannelId
+    ( ApiAppId(ApiAppId)
+    , AvatarHash(AvatarHash)
+    , ChannelDetail
+    , ChannelId
     , ChannelName
     , EditInfo
     , MessageEvent
     , MessageType
+    , Purpose(Purpose)
+    , Profile(Profile)
     , Reaction
+    , RealName
+    , RealNameNormalized
     , SubType
+    , TeamId
     , Timestamp
+    , Topic(Topic)
+    , UrlText(UrlText)
+    , UserDetail
     , UserName
     , UserId
     , channelName
@@ -19,27 +30,26 @@ module Taut
     , withPayloads
     ) where
 
-import Taut.Types.ChannelId     ( ChannelId
-                                , cidText
-                                )
-import Taut.Types.ChannelName   ( ChannelName
-                                , channelName
-                                )
-import Taut.Types.EditInfo      ( EditInfo )
-import Taut.Types.MessageEvent  ( MessageEvent )
-import Taut.Types.MessageEvents ( onlyMessages
-                                , toCSV
-                                , withPayloads
-                                )
-import Taut.Types.MessageType   ( MessageType )
-import Taut.Types.Reaction      ( Reaction )
-import Taut.Types.SubType       ( SubType )
-import Taut.Types.Timestamp     ( Timestamp
-                                , slackTimeText
-                                , utcTime
-                                )
-import Taut.Types.UserId        ( UserId )
-import Taut.Types.UserName      ( UserName
-                                , userName
-                                )
+import Taut.Types.ApiAppId
+import Taut.Types.AvatarHash
+import Taut.Types.Channel.Purpose
+import Taut.Types.Channel.Topic
+import Taut.Types.ChannelDetail
+import Taut.Types.ChannelId
+import Taut.Types.ChannelName
+import Taut.Types.EditInfo
+import Taut.Types.MessageEvent
+import Taut.Types.MessageEvents
+import Taut.Types.MessageType
+import Taut.Types.Reaction
+import Taut.Types.RealName
+import Taut.Types.RealNameNormalized
+import Taut.Types.SubType
+import Taut.Types.TeamId
+import Taut.Types.Timestamp
+import Taut.Types.UrlText
+import Taut.Types.User.Profile
+import Taut.Types.UserDetail
+import Taut.Types.UserId
+import Taut.Types.UserName
 

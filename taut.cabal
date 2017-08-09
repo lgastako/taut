@@ -18,17 +18,29 @@ library
   exposed-modules:     Taut
                      , Taut.Examples
                      , Taut.Functions
+                     , Taut.Types.ApiAppId
+                     , Taut.Types.AvatarHash
+                     , Taut.Types.ChannelDetail
                      , Taut.Types.ChannelId
                      , Taut.Types.ChannelName
+                     , Taut.Types.Channel.Purpose
+                     , Taut.Types.Channel.Topic
                      , Taut.Types.EditInfo
                      , Taut.Types.MessageEvent
                      , Taut.Types.MessageEvents
                      , Taut.Types.MessageType
                      , Taut.Types.Reaction
+                     , Taut.Types.RealName
+                     , Taut.Types.RealNameNormalized
                      , Taut.Types.SubType
+                     , Taut.Types.TeamId
                      , Taut.Types.Timestamp
+                     , Taut.Types.Title
+                     , Taut.Types.UrlText
+                     , Taut.Types.UserDetail
                      , Taut.Types.UserId
                      , Taut.Types.UserName
+                     , Taut.Types.User.Profile
   build-depends:       aeson
                      , base                       >= 4.7 && < 5
                      , cassava
