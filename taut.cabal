@@ -18,10 +18,8 @@ library
   exposed-modules:     Taut
                      , Taut.Examples
                      , Taut.Functions
-                     , Taut.Types.ChannelAggregate
                      , Taut.Types.ChannelId
                      , Taut.Types.ChannelName
-                     , Taut.Types.ChannelSet
                      , Taut.Types.EditInfo
                      , Taut.Types.MessageEvent
                      , Taut.Types.MessageEvents
@@ -29,10 +27,8 @@ library
                      , Taut.Types.Reaction
                      , Taut.Types.SubType
                      , Taut.Types.Timestamp
-                     , Taut.Types.UserAggregate
                      , Taut.Types.UserId
                      , Taut.Types.UserName
-                     , Taut.Types.UserSet
   build-depends:       aeson
                      , base                       >= 4.7 && < 5
                      , cassava
