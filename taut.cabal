@@ -37,8 +37,13 @@ library
                      , base                       >= 4.7 && < 5
                      , cassava
                      , containers
+                     , derive
                      , infinity
                      , lens
+                     -- We need to depend on QuickCheck here if we want to
+                     -- export arbitrary instances (which we do).
+                     , QuickCheck
+                     , quickcheck-instances
                      , spc-luthor
                      , template-haskell
                      , text
@@ -53,13 +58,17 @@ test-suite taut-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
+  other-modules:       Taut.FunctionsSpec
+                     , Taut.Types.TimestampSpec
   build-depends:       aeson
                      , base
                      , cassava
                      , containers
+                     , derive
                      , infinity
                      , lens
                      , QuickCheck
+                     , quickcheck-instances
                      , spc-luthor
                      , taut
                      , template-haskell

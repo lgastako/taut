@@ -7,12 +7,19 @@ module Taut.Types.SubType
        , toText
        ) where
 
-import Prelude       hiding ( null )
+import Prelude                   hiding ( null )
 
-import Data.Aeson.TH        ( defaultOptions
-                            , deriveJSON
-                            )
+import Data.Aeson.TH                    ( defaultOptions
+                                        , deriveJSON
+                                        )
+import Data.DeriveTH                    ( derive
+                                        , makeArbitrary
+                                        )
 import Infinity
+import Test.QuickCheck                  ( Arbitrary
+                                        , arbitrary
+                                        )
+import Test.QuickCheck.Instances        ()
 
 newtype SubType = SubType Text
   deriving (Eq, Ord, Read, Show)
@@ -32,3 +39,5 @@ toText :: SubType -> Text
 toText (SubType s) = s
 
 $(deriveJSON defaultOptions ''SubType)
+
+derive makeArbitrary ''SubType

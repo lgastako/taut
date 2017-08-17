@@ -10,24 +10,31 @@ module Taut.Types.Timestamp
        , utcTime
        ) where
 
-import           Control.Lens                  ( Iso'
-                                               , iso
-                                               )
-import           Data.Aeson                    ()
-import           Data.Aeson.TH                 ( defaultOptions
-                                               , deriveJSON
-                                               )
-import           Data.Csv                      ( ToField
-                                               , toField
-                                               )
-import           Data.Text                     ( Text )
-import qualified Data.Text             as Text
-import           Data.Text.Encoding            ( encodeUtf8 )
-import           Data.Time.Clock               ( UTCTime )
-import           Data.Time.Clock.POSIX         ( posixSecondsToUTCTime
-                                               , utcTimeToPOSIXSeconds
-                                               )
-import           Text.Printf                   ( printf )
+import           Control.Lens                      ( Iso'
+                                                   , iso
+                                                   )
+import           Data.Aeson                        ()
+import           Data.Aeson.TH                     ( defaultOptions
+                                                   , deriveJSON
+                                                   )
+import           Data.Csv                          ( ToField
+                                                   , toField
+                                                   )
+import           Data.DeriveTH                     ( derive
+                                                   , makeArbitrary
+                                                   )
+import           Data.Text                         ( Text )
+import qualified Data.Text                 as Text
+import           Data.Text.Encoding                ( encodeUtf8 )
+import           Data.Time.Clock                   ( UTCTime )
+import           Data.Time.Clock.POSIX             ( posixSecondsToUTCTime
+                                                   , utcTimeToPOSIXSeconds
+                                                   )
+import           Test.QuickCheck                   ( Arbitrary
+                                                   , arbitrary
+                                                   )
+import           Test.QuickCheck.Instances         ()
+import           Text.Printf                       ( printf )
 
 newtype Timestamp = Timestamp UTCTime
   deriving (Eq, Ord, Read, Show)
@@ -65,3 +72,5 @@ empty :: Timestamp
 empty = fromSlackTimeText "0"
 
 $(deriveJSON defaultOptions ''Timestamp)
+
+derive makeArbitrary ''Timestamp

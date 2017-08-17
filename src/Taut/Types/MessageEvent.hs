@@ -47,6 +47,9 @@ import           Data.Aeson.TH                              ( defaultOptions
                                                             )
 import           Data.Csv                                   ( ToNamedRecord( toNamedRecord ) )
 import qualified Data.Csv               as Csv
+import           Data.DeriveTH                              ( derive
+                                                            , makeArbitrary
+                                                            )
 import qualified Data.Text              as Text
 import           Infinity                            hiding ( error )
 import           Language.Haskell.TH                        ( mkName
@@ -62,6 +65,9 @@ import           Taut.Types.SubType                         ( SubType )
 import qualified Taut.Types.SubType     as SubType
 import           Taut.Types.Timestamp                       ( Timestamp )
 import           Taut.Types.UserId                          ( UserId )
+import           Test.QuickCheck                            ( Arbitrary
+                                                            , arbitrary
+                                                            )
 
 data MessageEvent a = MessageEvent
   { _channelId  :: ChannelId
@@ -143,3 +149,5 @@ reactionCount = sum . map (^. Reaction.count) . fromMaybe [] . (^. reactions)
 reactionsSummary :: MessageEvent a -> Text
 reactionsSummary =
   Text.intercalate ", " . map Reaction.summary . fromMaybe [] . (^. reactions)
+
+derive makeArbitrary ''MessageEvent

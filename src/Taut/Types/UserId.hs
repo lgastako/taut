@@ -6,17 +6,24 @@ module Taut.Types.UserId
        , uidText
        ) where
 
-import Control.Lens       ( Iso'
-                          , iso
-                          )
-import Data.Aeson.TH      ( defaultOptions
-                          , deriveJSON
-                          )
-import Data.Csv           ( ToField
-                          , toField
-                          )
-import Data.Text.Encoding ( encodeUtf8 )
+import Control.Lens              ( Iso'
+                                 , iso
+                                 )
+import Data.Aeson.TH             ( defaultOptions
+                                 , deriveJSON
+                                 )
+import Data.Csv                  ( ToField
+                                 , toField
+                                 )
+import Data.DeriveTH             ( derive
+                                 , makeArbitrary
+                                 )
+import Data.Text.Encoding        ( encodeUtf8 )
 import Infinity
+import Test.QuickCheck           ( Arbitrary
+                                 , arbitrary
+                                 )
+import Test.QuickCheck.Instances ()
 
 newtype UserId = UserId Text
   deriving (Eq, Ord, Read, Show)
@@ -34,3 +41,5 @@ uidText :: Iso' UserId Text
 uidText = iso toText fromText
 
 $(deriveJSON defaultOptions ''UserId)
+
+derive makeArbitrary ''UserId

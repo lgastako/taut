@@ -1,3 +1,4 @@
+{-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE DeriveGeneric #-}
 module Taut.Types.ChannelSet
@@ -17,6 +18,7 @@ import           Taut.Types.MessageEvent                    ( MessageEvent
                                                             )
 import qualified Taut.Types.MessageType      as MessageType
 import qualified Taut.Types.SubType          as SubType
+import           Test.QuickCheck.Instances                  ()
 
 data ChannelSet a = ChannelSet (Map ChannelId (ChannelAggregate a))
   deriving (Eq, Functor, Generic, Ord, Read, Show)

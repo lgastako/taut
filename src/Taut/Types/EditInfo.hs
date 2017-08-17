@@ -10,8 +10,14 @@ import Control.Lens         ( makeLenses )
 import Data.Aeson.TH        ( defaultOptions
                             , deriveJSON
                             )
+import Data.DeriveTH        ( derive
+                            , makeArbitrary
+                            )
 import Taut.Types.Timestamp ( Timestamp )
 import Taut.Types.UserId    ( UserId )
+import Test.QuickCheck      ( Arbitrary
+                            , arbitrary
+                            )
 
 data EditInfo = EditInfo
   { _ts   :: Timestamp
@@ -24,3 +30,5 @@ from :: (Timestamp, UserId) -> EditInfo
 from = uncurry EditInfo
 
 $(deriveJSON defaultOptions ''EditInfo)
+
+derive makeArbitrary ''EditInfo

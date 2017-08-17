@@ -7,13 +7,20 @@ module Taut.Types.ChannelName
        , toText
        ) where
 
-import Control.Lens  ( Iso'
-                     , iso
-                     )
-import Data.Aeson.TH ( defaultOptions
-                     , deriveJSON
-                     )
+import Control.Lens              ( Iso'
+                                 , iso
+                                 )
+import Data.Aeson.TH             ( defaultOptions
+                                 , deriveJSON
+                                 )
+import Data.DeriveTH             ( derive
+                                 , makeArbitrary
+                                 )
 import Infinity
+import Test.QuickCheck           ( Arbitrary
+                                 , arbitrary
+                                 )
+import Test.QuickCheck.Instances ()
 
 newtype ChannelName = ChannelName Text
   deriving (Eq, Generic, Ord, Read, Show)
@@ -28,3 +35,5 @@ channelName :: Iso' ChannelName Text
 channelName = iso toText fromText
 
 $(deriveJSON defaultOptions ''ChannelName)
+
+derive makeArbitrary ''ChannelName

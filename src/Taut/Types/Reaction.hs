@@ -14,8 +14,14 @@ import Control.Lens      ( (^.)
 import Data.Aeson.TH     ( defaultOptions
                          , deriveJSON
                          )
+import Data.DeriveTH     ( derive
+                         , makeArbitrary
+                         )
 import Infinity
 import Taut.Types.UserId ( UserId )
+import Test.QuickCheck   ( Arbitrary
+                         , arbitrary
+                         )
 
 data Reaction = Reaction
   { _name  :: ReactionName
@@ -34,3 +40,5 @@ summary :: Reaction -> Text
 summary r = r ^. name <> " (" <> tshow (r ^. count) <> ")"
 
 $(deriveJSON defaultOptions ''Reaction)
+
+derive makeArbitrary ''Reaction
