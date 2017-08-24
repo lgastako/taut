@@ -82,7 +82,7 @@ data MessageEvent a = MessageEvent
   , _ts         :: Timestamp
   , _type       :: MessageType
   , _userId     :: UserId
-  } deriving (Functor, Foldable, Generic, Traversable)
+  } deriving (Eq, Functor, Foldable, Generic, Ord, Read, Show, Traversable)
 
 makeLensesWith ?? ''MessageEvent $ lensRules
   & lensField .~ (\_ _ n -> let name = nameBase n
@@ -112,11 +112,6 @@ instance ToJSON (MessageEvent Text) where
 
 instance FromJSON (MessageEvent Text) where
   parseJSON = genericParseJSON defaultOptions { fieldLabelModifier = fromField }
-
-deriving instance Eq   a => Eq   (MessageEvent a)
-deriving instance Ord  a => Ord  (MessageEvent a)
-deriving instance Read a => Read (MessageEvent a)
-deriving instance Show a => Show (MessageEvent a)
 
 instance ToNamedRecord (MessageEvent Text) where
   toNamedRecord (MessageEvent chanId _ _ _ _ payload' _ _ subType' ts' type_' userId') =
