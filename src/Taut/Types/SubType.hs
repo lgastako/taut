@@ -4,11 +4,15 @@ module Taut.Types.SubType
        , empty
        , make
        , null
+       , subText
        , toText
        ) where
 
 import Prelude                   hiding ( null )
 
+import Control.Lens                     ( Iso'
+                                        , iso
+                                        )
 import Data.Aeson.TH                    ( defaultOptions
                                         , deriveJSON
                                         )
@@ -37,6 +41,9 @@ null subType
 
 toText :: SubType -> Text
 toText (SubType s) = s
+
+subText :: Iso' SubType Text
+subText = iso toText make
 
 $(deriveJSON defaultOptions ''SubType)
 

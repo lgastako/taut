@@ -13,7 +13,9 @@ module Taut
     , cidText
     , onlyMessages
     , slackTimeText
+    , subText
     , toCSV
+    , uidText
     , userName
     , utcTime
     , withPayloads
@@ -33,12 +35,16 @@ import Taut.Types.MessageEvents ( onlyMessages
                                 )
 import Taut.Types.MessageType   ( MessageType )
 import Taut.Types.Reaction      ( Reaction )
-import Taut.Types.SubType       ( SubType )
+import Taut.Types.SubType       ( SubType
+                                , subText
+                                )
 import Taut.Types.Timestamp     ( Timestamp
                                 , slackTimeText
                                 , utcTime
                                 )
-import Taut.Types.UserId        ( UserId )
+import Taut.Types.UserId        ( UserId
+                                , uidText
+                                )
 import Taut.Types.UserName      ( UserName
                                 , userName
                                 )
