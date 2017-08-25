@@ -4,9 +4,9 @@ module Taut.Types.Timestamp
        , empty
        , fromUTCTime
        , fromSlackTimeText
+       , slackTimeText
        , toSlackTimeText
        , toUTCTime
-       , slackTimeText
        , utcTime
        ) where
 

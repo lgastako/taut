@@ -16,7 +16,6 @@ import Data.Aeson.TH             ( defaultOptions
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
-import Data.Text                 ( Text )
 import Infinity
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary

@@ -55,12 +55,15 @@ test-suite taut-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   other-modules:       Taut.FunctionsSpec
+                     , Taut.Types.MessageEventSpec
                      , Taut.Types.TimestampSpec
   build-depends:       aeson
+                     , aeson-pretty
                      , base
                      , cassava
                      , containers
                      , derive
+                     , hspec
                      , infinity
                      , lens
                      , QuickCheck

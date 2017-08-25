@@ -1,4 +1,4 @@
-module Taut.Types.FunctionsSpec ( main, spec ) where
+module Taut.FunctionsSpec ( main, spec ) where
 
 import qualified Data.Map                as Map
 import           Infinity
