@@ -6,6 +6,7 @@ module Taut
     , MessageType
     , Reaction
     , SubType
+    , TeamId
     , Timestamp
     , UserName
     , UserId
@@ -14,6 +15,7 @@ module Taut
     , onlyMessages
     , slackTimeText
     , subText
+    , tidText
     , toCSV
     , uidText
     , userName
@@ -37,6 +39,9 @@ import Taut.Types.MessageType   ( MessageType )
 import Taut.Types.Reaction      ( Reaction )
 import Taut.Types.SubType       ( SubType
                                 , subText
+                                )
+import Taut.Types.TeamId        ( TeamId
+                                , tidText
                                 )
 import Taut.Types.Timestamp     ( Timestamp
                                 , slackTimeText

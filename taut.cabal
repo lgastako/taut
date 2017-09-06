@@ -26,6 +26,7 @@ library
                      , Taut.Types.MessageType
                      , Taut.Types.Reaction
                      , Taut.Types.SubType
+                     , Taut.Types.TeamId
                      , Taut.Types.Timestamp
                      , Taut.Types.UserId
                      , Taut.Types.UserName
