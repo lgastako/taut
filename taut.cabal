@@ -33,6 +33,7 @@ library
                      , base                       >= 4.7 && < 5
                      , cassava
                      , containers
+                     , data-default
                      , derive
                      , infinity
                      , lens
@@ -62,6 +63,7 @@ test-suite taut-test
                      , base
                      , cassava
                      , containers
+                     , data-default
                      , derive
                      , hspec
                      , infinity

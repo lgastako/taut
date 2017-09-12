@@ -1,7 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.MessageType
        ( MessageType
-       , empty
        , fromText
        , message
        , typeText
@@ -16,6 +15,7 @@ import Data.Aeson.TH             ( defaultOptions
 import Data.Csv                  ( ToField
                                  , toField
                                  )
+import Data.Default              ( Default( def ) )
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
@@ -32,6 +32,9 @@ newtype MessageType = MessageType Text
 instance ToField MessageType where
   toField (MessageType t) = encodeUtf8 t
 
+instance Default MessageType where
+  def = message
+
 fromText :: Text -> MessageType
 fromText = MessageType
 
@@ -43,9 +46,6 @@ typeText = iso toText fromText
 
 message :: MessageType
 message = MessageType "message"
-
-empty :: MessageType
-empty = message
 
 $(deriveJSON defaultOptions ''MessageType)
 

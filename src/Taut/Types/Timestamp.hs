@@ -1,7 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.Timestamp
        ( Timestamp
-       , empty
        , fromUTCTime
        , fromSlackTimeText
        , slackTimeText
@@ -20,6 +19,7 @@ import           Data.Aeson.TH                     ( defaultOptions
 import           Data.Csv                          ( ToField
                                                    , toField
                                                    )
+import           Data.Default                      ( Default( def ) )
 import           Data.DeriveTH                     ( derive
                                                    , makeArbitrary
                                                    )
@@ -41,6 +41,9 @@ newtype Timestamp = Timestamp UTCTime
 
 instance ToField Timestamp where
   toField = encodeUtf8 . toSlackTimeText
+
+instance Default Timestamp where
+  def = fromSlackTimeText "0"
 
 fromUTCTime :: UTCTime -> Timestamp
 fromUTCTime = Timestamp
@@ -67,9 +70,6 @@ utcTime = iso toUTCTime fromUTCTime
 
 slackTimeText :: Iso' Timestamp Text
 slackTimeText = iso toSlackTimeText fromSlackTimeText
-
-empty :: Timestamp
-empty = fromSlackTimeText "0"
 
 $(deriveJSON defaultOptions ''Timestamp)
 

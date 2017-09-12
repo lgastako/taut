@@ -1,5 +1,6 @@
 module Taut.FunctionsSpec ( main, spec ) where
 
+import           Data.Default                            ( Default( def ) )
 import qualified Data.Map                as Map
 import           Infinity
 import           Taut.Functions                          ( replyWindows )
@@ -7,7 +8,6 @@ import qualified Taut.Types.ChannelId    as ChannelId
 import           Taut.Types.MessageEvent                 ( MessageEvent )
 import qualified Taut.Types.MessageEvent as MessageEvent
 import qualified Taut.Types.MessageType  as MessageType
-import qualified Taut.Types.SubType      as SubType
 import qualified Taut.Types.Timestamp    as Timestamp
 import qualified Taut.Types.UserId       as UserId
 import           Test.Hspec                              ( Spec
@@ -70,5 +70,5 @@ exampleMsgs = [msg1, msg2, msg3, msg4]
     isS    = Nothing
     pin    = Nothing
     reac   = Nothing
-    sub    = SubType.empty
+    sub    = def
     typ    = MessageType.message

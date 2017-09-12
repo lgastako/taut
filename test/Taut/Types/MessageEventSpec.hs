@@ -63,7 +63,7 @@ spec = describe "MessageEvent" $ do
       let rt = eitherDecode . encode $ msg1
       rt `shouldBe` (Right msg1)
 
-    it "should roundtrip successfully" $ property $
+    it "should roundtrip arbitrary messages successfully" $ property $
       roundTripSuccessfully
 
 roundTripSuccessfully :: [MessageEvent Text] -> Bool

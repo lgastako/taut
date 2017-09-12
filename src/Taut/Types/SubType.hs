@@ -1,7 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.SubType
        ( SubType
-       , empty
        , make
        , null
        , subText
@@ -16,6 +15,7 @@ import Control.Lens                     ( Iso'
 import Data.Aeson.TH                    ( defaultOptions
                                         , deriveJSON
                                         )
+import Data.Default                     ( Default( def ) )
 import Data.DeriveTH                    ( derive
                                         , makeArbitrary
                                         )
@@ -28,16 +28,16 @@ import Test.QuickCheck.Instances        ()
 newtype SubType = SubType Text
   deriving (Eq, Ord, Read, Show)
 
+instance Default SubType where
+  def = make ""
+
 make :: Text -> SubType
 make = SubType
 
-empty :: SubType
-empty = make ""
-
 null :: SubType -> Bool
 null subType
-  | subType == empty = True
-  | otherwise        = False
+  | subType == def = True
+  | otherwise      = False
 
 toText :: SubType -> Text
 toText (SubType s) = s
