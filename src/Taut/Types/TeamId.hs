@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric   #-}
 module Taut.Types.TeamId
        ( TeamId
        , fromText
@@ -26,7 +27,7 @@ import Test.QuickCheck           ( Arbitrary
 import Test.QuickCheck.Instances ()
 
 newtype TeamId = TeamId Text
-  deriving (Eq, Ord, Read, Show)
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance ToField TeamId where
   toField = encodeUtf8 . toText

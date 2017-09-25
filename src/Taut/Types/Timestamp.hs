@@ -1,3 +1,5 @@
+{-# LANGUAGE DeriveAnyClass  #-}
+{-# LANGUAGE DeriveGeneric   #-}
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.Timestamp
        ( Timestamp
@@ -30,6 +32,7 @@ import           Data.Time.Clock                   ( UTCTime )
 import           Data.Time.Clock.POSIX             ( posixSecondsToUTCTime
                                                    , utcTimeToPOSIXSeconds
                                                    )
+import GHC.Generics (Generic)
 import           Test.QuickCheck                   ( Arbitrary
                                                    , arbitrary
                                                    )
@@ -37,7 +40,7 @@ import           Test.QuickCheck.Instances         ()
 import           Text.Printf                       ( printf )
 
 newtype Timestamp = Timestamp UTCTime
-  deriving (Eq, Ord, Read, Show)
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance ToField Timestamp where
   toField = encodeUtf8 . toSlackTimeText
