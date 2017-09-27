@@ -40,7 +40,7 @@ chronological = sortOn (^. ts)
 chronoByChan :: [MessageEvent a] -> Map ChannelId [MessageEvent a]
 chronoByChan = Map.map chronological . byChannel
 
-replyWindows :: (Eq a, Ord a) =>
+replyWindows :: Ord a =>
                 Int -> [MessageEvent a] -> Map (MessageEvent a) [MessageEvent a]
 replyWindows n =
   Map.fromList             -- Map (MessageEvent a) [MessageEvent a]
