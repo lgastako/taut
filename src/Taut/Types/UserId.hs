@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric   #-}
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.UserId
        ( UserId
@@ -19,6 +20,7 @@ import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
 import Data.Text.Encoding        ( encodeUtf8 )
+import GHC.Generics              ( Generic )
 import Infinity
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
@@ -26,7 +28,7 @@ import Test.QuickCheck           ( Arbitrary
 import Test.QuickCheck.Instances ()
 
 newtype UserId = UserId Text
-  deriving (Eq, Ord, Read, Show)
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance ToField UserId where
   toField = encodeUtf8 . toText
