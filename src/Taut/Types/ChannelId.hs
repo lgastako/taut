@@ -31,7 +31,7 @@ import Test.QuickCheck           ( Arbitrary
 import Test.QuickCheck.Instances ()
 
 newtype ChannelId = ChannelId Text
-  deriving (Eq, Generic, Ord, Read, Show, ToJSONKey, FromJSONKey)
+  deriving (Eq, Generic, Ord, Read, Show, FromJSONKey, ToJSONKey)
 
 instance ToField ChannelId where
   toField = encodeUtf8 . toText

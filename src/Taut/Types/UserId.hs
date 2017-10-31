@@ -32,7 +32,7 @@ import Test.QuickCheck           ( Arbitrary
 import Test.QuickCheck.Instances ()
 
 newtype UserId = UserId Text
-  deriving (Eq, Generic, Ord, Read, Show, ToJSONKey, FromJSONKey)
+  deriving (Eq, Generic, Ord, Read, Show, FromJSONKey, ToJSONKey)
 
 instance ToField UserId where
   toField = encodeUtf8 . toText

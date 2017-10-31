@@ -31,7 +31,7 @@ import Test.QuickCheck           ( Arbitrary
 import Test.QuickCheck.Instances ()
 
 newtype TeamId = TeamId Text
-  deriving (Eq, Generic, Ord, Read, Show, ToJSONKey, FromJSONKey)
+  deriving (Eq, Generic, Ord, Read, Show, FromJSONKey, ToJSONKey)
 
 instance ToField TeamId where
   toField = encodeUtf8 . toText
