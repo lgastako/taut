@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveGeneric   #-}
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 module Taut.Types.UserId
        ( UserId
        , fromText
@@ -12,6 +13,9 @@ import Control.Lens              ( Iso'
                                  )
 import Data.Aeson.TH             ( defaultOptions
                                  , deriveJSON
+                                 )
+import Data.Aeson.Types          ( FromJSONKey
+                                 , ToJSONKey
                                  )
 import Data.Csv                  ( ToField
                                  , toField
@@ -28,7 +32,7 @@ import Test.QuickCheck           ( Arbitrary
 import Test.QuickCheck.Instances ()
 
 newtype UserId = UserId Text
-  deriving (Eq, Generic, Ord, Read, Show)
+  deriving (Eq, Generic, Ord, Read, Show, ToJSONKey, FromJSONKey)
 
 instance ToField UserId where
   toField = encodeUtf8 . toText

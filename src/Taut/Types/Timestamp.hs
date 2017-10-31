@@ -31,7 +31,7 @@ import           Data.Time.Clock                   ( UTCTime )
 import           Data.Time.Clock.POSIX             ( posixSecondsToUTCTime
                                                    , utcTimeToPOSIXSeconds
                                                    )
-import GHC.Generics (Generic)
+import           GHC.Generics                      ( Generic )
 import           Test.QuickCheck                   ( Arbitrary
                                                    , arbitrary
                                                    )
