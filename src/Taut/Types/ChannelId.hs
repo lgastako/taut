@@ -24,6 +24,7 @@ import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
 import Data.Text.Encoding        ( encodeUtf8 )
+import GHC.Generics              ( Generic )
 import Infinity
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
