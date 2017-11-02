@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric   #-}
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.SubType
        ( SubType
@@ -19,6 +20,7 @@ import Data.Default                     ( Default( def ) )
 import Data.DeriveTH                    ( derive
                                         , makeArbitrary
                                         )
+import GHC.Generics                     ( Generic )
 import Infinity
 import Test.QuickCheck                  ( Arbitrary
                                         , arbitrary
@@ -26,7 +28,7 @@ import Test.QuickCheck                  ( Arbitrary
 import Test.QuickCheck.Instances        ()
 
 newtype SubType = SubType Text
-  deriving (Eq, Ord, Read, Show)
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance Default SubType where
   def = make ""
