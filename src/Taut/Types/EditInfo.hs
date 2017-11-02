@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric   #-}
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.EditInfo
        ( EditInfo
@@ -13,6 +14,7 @@ import Data.Aeson.TH        ( defaultOptions
 import Data.DeriveTH        ( derive
                             , makeArbitrary
                             )
+import GHC.Generics         ( Generic )
 import Taut.Types.Timestamp ( Timestamp )
 import Taut.Types.UserId    ( UserId )
 import Test.QuickCheck      ( Arbitrary
@@ -22,7 +24,7 @@ import Test.QuickCheck      ( Arbitrary
 data EditInfo = EditInfo
   { _ts   :: Timestamp
   , _user :: UserId
-  } deriving (Eq, Ord, Read, Show)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''EditInfo -- TODO: rename user to userId
 

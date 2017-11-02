@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric   #-}
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.MessageType
        ( MessageType
@@ -20,6 +21,7 @@ import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
 import Data.Text.Encoding        ( encodeUtf8 )
+import GHC.Generics              ( Generic )
 import Infinity
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
@@ -27,7 +29,7 @@ import Test.QuickCheck           ( Arbitrary
 import Test.QuickCheck.Instances ()
 
 newtype MessageType = MessageType Text
-  deriving (Eq, Ord, Read, Show)
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance ToField MessageType where
   toField (MessageType t) = encodeUtf8 t

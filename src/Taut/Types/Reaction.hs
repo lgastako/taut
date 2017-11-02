@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric   #-}
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.Reaction
        ( Reaction
@@ -17,6 +18,7 @@ import Data.Aeson.TH     ( defaultOptions
 import Data.DeriveTH     ( derive
                          , makeArbitrary
                          )
+import GHC.Generics      ( Generic )
 import Infinity
 import Taut.Types.UserId ( UserId )
 import Test.QuickCheck   ( Arbitrary
@@ -27,7 +29,7 @@ data Reaction = Reaction
   { _name  :: ReactionName
   , _count :: Int
   , _users :: [UserId]
-  } deriving (Eq, Ord, Read, Show)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 type ReactionName = Text
 
