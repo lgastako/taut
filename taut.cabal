@@ -15,18 +15,27 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
+                     , staging
   exposed-modules:     Taut
                      , Taut.Examples
                      , Taut.Functions
+                     , Taut.Types.ButtonPayload
                      , Taut.Types.ChannelId
                      , Taut.Types.ChannelName
                      , Taut.Types.EditInfo
+                     , Taut.Types.Message
+                     , Taut.Types.Message.Attachment
+                     , Taut.Types.Message.Attachment.Action
+                     , Taut.Types.Message.Attachment.Action.Confirm
+                     , Taut.Types.Message.Attachment.Field
                      , Taut.Types.MessageEvent
                      , Taut.Types.MessageEvents
                      , Taut.Types.MessageType
+                     , Taut.Types.OauthToken
                      , Taut.Types.Reaction
                      , Taut.Types.SubType
                      , Taut.Types.TeamId
+                     , Taut.Types.TeamName
                      , Taut.Types.Timestamp
                      , Taut.Types.UserId
                      , Taut.Types.UserName
