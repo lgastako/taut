@@ -1,9 +1,9 @@
-{-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE DeriveGeneric   #-}
+{-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.TeamName
        ( TeamName
-       , teamName
        , fromText
+       , teamName
        , toText
        ) where
 

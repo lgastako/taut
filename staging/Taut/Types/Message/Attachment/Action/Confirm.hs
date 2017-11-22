@@ -1,12 +1,12 @@
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric   #-}
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.Message.Attachment.Action.Confirm
-       ( Confirm(Confirm)
+       ( Confirm( Confirm )
+       , dismissText
+       , okText
        , text
        , title
-       , dismissText
-       , okText)
-       where
+       ) where
 
 import Control.Lens     ( makeLenses )
 import Data.Aeson       ( FromJSON( parseJSON )
@@ -24,10 +24,10 @@ import Data.Text        ( Text )
 import GHC.Generics     ( Generic )
 
 data Confirm = Confirm
-  { _title :: Text
-  , _text :: Text
-  , _okText :: Text
-  , _dismissText :: Text
+  { _dismissText :: Text
+  , _okText      :: Text
+  , _title       :: Text
+  , _text        :: Text
   } deriving (Generic, Show)
 
 makeLenses ''Confirm
@@ -37,7 +37,6 @@ instance ToJSON Confirm where
 
 instance FromJSON Confirm where
   parseJSON = genericParseJSON customOptions
-
 
 customOptions :: Options
 customOptions = defaultOptions

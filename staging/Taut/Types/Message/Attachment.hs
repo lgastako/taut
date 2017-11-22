@@ -1,29 +1,32 @@
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric   #-}
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.Message.Attachment
-       ( Attachment(Attachment)
-       , fallback
-       , color
-       , pretext
-       , attachmentType
+       ( Attachment( Attachment )
+       , Color( ColorCode
+              , Danger
+              , Good
+              , Warning
+              )
        , actions
+       , attachmentType
        , authorName
        , authorLink
        , authorIcon
        , callbackId
-       , title
-       , titleLink
-       , text
+       , color
+       , empty
+       , fallback
        , fields
-       , imageUrl
-       , thumbUrl
        , footer
        , footerIcon
+       , imageUrl
+       , pretext
+       , text
+       , thumbUrl
+       , title
+       , titleLink
        , ts
-       , Color(Good, Warning, Danger, ColorCode)
-       , empty
-       )
-       where
+       ) where
 
 import           Control.Lens                                  ( makeLenses )
 import           Data.Aeson                                    ( FromJSON( parseJSON )
@@ -46,10 +49,11 @@ import           Taut.Types.Message.Attachment.Action          ( Action )
 import           Taut.Types.Message.Attachment.Field           ( Field )
 import           Taut.Types.Timestamp                          ( Timestamp )
 
-data Color = Good
-           | Warning
-           | Danger
-           | ColorCode Text
+data Color
+  = Good
+  | Warning
+  | Danger
+  | ColorCode Text
   deriving (Show)
 
 instance ToJSON Color where
@@ -57,32 +61,32 @@ instance ToJSON Color where
   toJSON x = Aeson.String . Text.toLower . Text.pack . show $ x
 
 instance FromJSON Color where
-  parseJSON (Aeson.String s) = case s of
-    "good" -> return Good
-    "warning" -> return Warning
-    "danger" -> return Danger
-    color -> return $ ColorCode color
+  parseJSON (Aeson.String s) = return $ case s of
+    "good"    -> Good
+    "warning" -> Warning
+    "danger"  -> Danger
+    color     -> ColorCode color
   parseJSON invalid = typeMismatch "Color" invalid
 
+-- TODO: order fields after checking usages
 data Attachment a = Attachment
-  { _fallback       :: Maybe Text
-  , _color          :: Maybe Color
-  , _pretext        :: Maybe Text
+  { _actions        :: Maybe [Action]
   , _attachmentType :: Maybe Text
-  , _actions        :: Maybe [Action]
   , _authorName     :: Maybe Text
   , _authorLink     :: Maybe Text
   , _authorIcon     :: Maybe Text
---  , _callbackId     :: Maybe CallbackId
   , _callbackId     :: Maybe a
-  , _title          :: Maybe Text
-  , _titleLink      :: Maybe Text
-  , _text           :: Maybe Text
+  , _color          :: Maybe Color
+  , _fallback       :: Maybe Text
   , _fields         :: Maybe [Field]
-  , _imageUrl       :: Maybe Text
-  , _thumbUrl       :: Maybe Text
   , _footer         :: Maybe Text
   , _footerIcon     :: Maybe Text
+  , _imageUrl       :: Maybe Text
+  , _pretext        :: Maybe Text
+  , _text           :: Maybe Text
+  , _thumbUrl       :: Maybe Text
+  , _title          :: Maybe Text
+  , _titleLink      :: Maybe Text
   , _ts             :: Maybe Timestamp
   } deriving (Generic, Show)
 
@@ -97,27 +101,27 @@ instance FromJSON a => FromJSON (Attachment a) where
 customOptions :: Options
 customOptions = defaultOptions
   { fieldLabelModifier = camelTo2 '_' . drop 1
-  , omitNothingFields = True
+  , omitNothingFields  = True
   }
 
 empty :: Attachment a
 empty = Attachment
-  { _fallback = Nothing
-  , _color = Nothing
-  , _pretext = Nothing
+  { _actions        = Nothing
   , _attachmentType = Nothing
-  , _actions = Nothing
-  , _authorName = Nothing
-  , _authorLink = Nothing
-  , _authorIcon = Nothing
-  , _callbackId = Nothing
-  , _title = Nothing
-  , _titleLink = Nothing
-  , _text = Nothing
-  , _fields = Nothing
-  , _imageUrl = Nothing
-  , _thumbUrl = Nothing
-  , _footer = Nothing
-  , _footerIcon = Nothing
-  , _ts = Nothing
+  , _authorIcon     = Nothing
+  , _authorLink     = Nothing
+  , _authorName     = Nothing
+  , _callbackId     = Nothing
+  , _color          = Nothing
+  , _fallback       = Nothing
+  , _fields         = Nothing
+  , _footer         = Nothing
+  , _footerIcon     = Nothing
+  , _imageUrl       = Nothing
+  , _pretext        = Nothing
+  , _text           = Nothing
+  , _thumbUrl       = Nothing
+  , _title          = Nothing
+  , _titleLink      = Nothing
+  , _ts             = Nothing
   }
