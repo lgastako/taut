@@ -1,18 +1,20 @@
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric   #-}
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.Message.Attachment.Action
-       ( ButtonStyle(Default, Primary, Danger)
-       , ActionType(Button)
-       , Action(Action)
+       ( Action( Action )
+       , ActionType( Button )
+       , ButtonStyle( Default
+                    , Primary
+                    , Danger
+                    )
+       , button
        , confirm
        , name
+       , style
        , text
        , type'
-       , style
        , value
-       , button
-       )
-       where
+       ) where
 
 import           Control.Applicative                                   ( (<|>) )
 import           Control.Lens                                          ( makeLenses )
@@ -46,9 +48,10 @@ import           Taut.Types.Message.Attachment.Action.Confirm          ( Confirm
 (.:??) :: FromJSON a => Object -> Text -> Parser (Maybe a)
 (.:??) v t = v .:? t <|> return Nothing
 
-data ButtonStyle = Default
-                 | Primary
-                 | Danger
+data ButtonStyle
+  = Danger
+  | Default
+  | Primary
   deriving (Generic, Show)
 
 instance ToJSON ButtonStyle where
@@ -77,9 +80,9 @@ instance FromJSON ActionType where
 data Action = Action
   { _confirm :: Maybe Confirm
   , _name    :: Text
+  , _style   :: Maybe ButtonStyle
   , _text    :: Maybe Text
   , _type'   :: ActionType
-  , _style   :: Maybe ButtonStyle
   , _value   :: Text
   } deriving (Generic, Show)
 
@@ -88,27 +91,24 @@ makeLenses ''Action
 button :: Text -> Text ->  Text -> Action
 button name' text' value' = Action
   { _confirm = Nothing
-  , _name = name'
-  , _text = Just text'
-  , _type' = Button
-  , _style = Nothing
-  , _value = value'
+  , _name    = name'
+  , _style   = Nothing
+  , _text    = Just text'
+  , _type'   = Button
+  , _value   = value'
   }
 
 instance ToJSON Action where
-  toJSON = genericToJSON customActionOptions
+  toJSON = genericToJSON defaultOptions
+    { fieldLabelModifier = camelTo2 '_' . drop 1 . filter (/= '\'')
+    , omitNothingFields  = True
+    }
 
 instance FromJSON Action where
   parseJSON = withObject "Action" $ \v -> Action
         <$> v .:?? "confirm"
         <*> v .:   "name"
+        <*> v .:?? "style"
         <*> v .:?? "text"
         <*> v .:   "type"
-        <*> v .:?? "style"
         <*> v .:   "value"
-
-customActionOptions :: Options
-customActionOptions = defaultOptions
-  { fieldLabelModifier = camelTo2 '_' . drop 1 . filter (/= '\'')
-  , omitNothingFields = True
-  }

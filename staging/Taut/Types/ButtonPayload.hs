@@ -1,30 +1,29 @@
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric   #-}
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.ButtonPayload
-       ( Team(Team)
-       , teamId
-       , teamDomain
-       , Channel(Channel)
+       ( ButtonPayload( ButtonPayload )
+       , Channel( Channel )
+       , Team( Team )
+       , User( User )
+       , actions
+       , actionTs
+       , attachmentId
+       , callbackId
+       , channel
        , channelId
        , channelName
-       , User(User)
-       , userId
-       , userName
-       , ButtonPayload(ButtonPayload)
-       , actions
-       , callbackId
-       , team
-       , channel
-       , user
-       , actionTs
        , messageTs
-       , attachmentId
-       , token
-       , triggerId
        , originalMessage
        , responseUrl
-       )
-       where
+       , team
+       , teamDomain
+       , teamId
+       , token
+       , triggerId
+       , userId
+       , userName
+       , user
+       ) where
 
 import Control.Lens                         ( makeLenses )
 import Data.Aeson                           ( FromJSON
@@ -49,80 +48,68 @@ import Taut.Types.UserId                    ( UserId )
 import Taut.Types.UserName                  ( UserName )
 
 data Team = Team
-  { _teamId :: TeamId
-  , _teamDomain :: Text
-  }
-  deriving (Generic, Show)
+  { _teamDomain :: Text
+  , _teamId     :: TeamId
+  } deriving (Generic, Show)
+
 makeLenses ''Team
 
-customTeamOptions :: Options
-customTeamOptions = defaultOptions
-  { fieldLabelModifier = camelTo2 '_' . drop 5
-  }
-
 instance FromJSON Team where
-  parseJSON = genericParseJSON customTeamOptions
+  parseJSON = genericParseJSON defaultOptions
+    { fieldLabelModifier = camelTo2 '_' . drop 5
+    }
 
 data Channel = Channel
-  { _channelId :: ChannelId
+  { _channelId   :: ChannelId
   , _channelName :: ChannelName
-  }
-  deriving (Generic, Show)
+  } deriving (Generic, Show)
+
 makeLenses ''Channel
 
-customChannelOptions :: Options
-customChannelOptions = defaultOptions
-  { fieldLabelModifier = camelTo2 '_' . drop 8
-  }
-
 instance FromJSON Channel where
-  parseJSON = genericParseJSON customChannelOptions
+  parseJSON = genericParseJSON defaultOptions
+    { fieldLabelModifier = camelTo2 '_' . drop 8
+    }
 
 data User = User
-  { _userId :: UserId
+  { _userId   :: UserId
   , _userName :: UserName
-  }
-  deriving (Generic, Show)
+  } deriving (Generic, Show)
+
 makeLenses ''User
 
-customUserOptions :: Options
-customUserOptions = defaultOptions
-  { fieldLabelModifier = camelTo2 '_' . drop 5
-  }
-
 instance FromJSON User where
-  parseJSON = genericParseJSON customUserOptions
+  parseJSON = genericParseJSON defaultOptions
+    { fieldLabelModifier = camelTo2 '_' . drop 5
+    }
 
 newtype TriggerId = TriggerId Text
-                    deriving (Show, Generic)
+  deriving (Show, Generic)
 
 instance FromJSON TriggerId
 
 data ButtonPayload a = ButtonPayload
-  { _actions :: [Action]
-  , _callbackId :: a
-  , _team :: Team
-  , _channel :: Channel
-  , _user :: User
-  , _actionTs :: Text
-  , _messageTs :: Text
-  , _attachmentId :: Text
-  , _token :: OauthToken
+  { _actions         :: [Action]
+  , _actionTs        :: Text
+  , _attachmentId    :: Text
+  , _callbackId      :: a
+  , _channel         :: Channel
+  , _messageTs       :: Text
   , _originalMessage :: Message a
-  , _responseUrl :: Text
-  , _triggerId :: Maybe TriggerId
-  }
-  deriving (Show, Generic)
+  , _responseUrl     :: Text
+  , _team            :: Team
+  , _token           :: OauthToken
+  , _triggerId       :: Maybe TriggerId
+  , _user            :: User
+  } deriving (Show, Generic)
+
 makeLenses ''ButtonPayload
 
 instance FromJSON a => FromJSON (ButtonPayload a) where
-  parseJSON = genericParseJSON customOptions
-
-customOptions :: Options
-customOptions = defaultOptions
-  { fieldLabelModifier = camelTo2 '_' . drop 1
-  , omitNothingFields = True
-  }
+  parseJSON = genericParseJSON defaultOptions
+    { fieldLabelModifier = camelTo2 '_' . drop 1
+    , omitNothingFields  = True
+    }
 
 {-
 -- An instance to use it with Servant

@@ -1,10 +1,10 @@
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric   #-}
 {-# LANGUAGE TemplateHaskell #-}
 module Taut.Types.OauthToken
        ( OauthToken
        , fromText
-       , toText
        , tidText
+       , toText
        ) where
 
 import Control.Lens              ( Iso'
