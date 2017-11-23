@@ -52,7 +52,7 @@ data ButtonStyle
   = Danger
   | Default
   | Primary
-  deriving (Generic, Show)
+  deriving (Eq, Ord, Generic, Read, Show)
 
 instance ToJSON ButtonStyle where
   toJSON = genericToJSON customUnionTypeOptions
@@ -66,7 +66,7 @@ customUnionTypeOptions = defaultOptions
   }
 
 data ActionType = Button
-  deriving (Generic, Show)
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance ToJSON ActionType where
   toJSON _ = Aeson.String "button"
@@ -84,7 +84,7 @@ data Action = Action
   , _text    :: Maybe Text
   , _type'   :: ActionType
   , _value   :: Text
-  } deriving (Generic, Show)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Action
 

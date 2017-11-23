@@ -50,7 +50,7 @@ import Taut.Types.UserName                  ( UserName )
 data Team = Team
   { _teamDomain :: Text
   , _teamId     :: TeamId
-  } deriving (Generic, Show)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Team
 
@@ -62,7 +62,7 @@ instance FromJSON Team where
 data Channel = Channel
   { _channelId   :: ChannelId
   , _channelName :: ChannelName
-  } deriving (Generic, Show)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Channel
 
@@ -74,7 +74,7 @@ instance FromJSON Channel where
 data User = User
   { _userId   :: UserId
   , _userName :: UserName
-  } deriving (Generic, Show)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''User
 
@@ -84,7 +84,7 @@ instance FromJSON User where
     }
 
 newtype TriggerId = TriggerId Text
-  deriving (Show, Generic)
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance FromJSON TriggerId
 
@@ -101,7 +101,7 @@ data ButtonPayload a = ButtonPayload
   , _token           :: OauthToken
   , _triggerId       :: Maybe TriggerId
   , _user            :: User
-  } deriving (Show, Generic)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''ButtonPayload
 

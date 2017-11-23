@@ -54,7 +54,7 @@ data Color
   | Warning
   | Danger
   | ColorCode Text
-  deriving (Show)
+  deriving (Eq, Ord, Read, Show)
 
 instance ToJSON Color where
   toJSON (ColorCode code) = Aeson.String code
@@ -68,7 +68,6 @@ instance FromJSON Color where
     color     -> ColorCode color
   parseJSON invalid = typeMismatch "Color" invalid
 
--- TODO: order fields after checking usages
 data Attachment a = Attachment
   { _actions        :: Maybe [Action]
   , _attachmentType :: Maybe Text
@@ -85,10 +84,10 @@ data Attachment a = Attachment
   , _pretext        :: Maybe Text
   , _text           :: Maybe Text
   , _thumbUrl       :: Maybe Text
-  , _title          :: Maybe Text
   , _titleLink      :: Maybe Text
+  , _title          :: Maybe Text
   , _ts             :: Maybe Timestamp
-  } deriving (Generic, Show)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Attachment
 

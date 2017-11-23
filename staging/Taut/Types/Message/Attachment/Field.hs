@@ -26,7 +26,7 @@ data Field = Field
   { _short :: Bool
   , _title :: Text
   , _value :: Text
-  } deriving (Generic, Show)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Field
 

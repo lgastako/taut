@@ -48,7 +48,7 @@ import Taut.Types.OauthToken         ( OauthToken )
 import Taut.Types.UserName           ( UserName )
 
 data Parse = Full | None
-  deriving (Generic, Show)
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance ToJSON Parse where
   toJSON = genericToJSON customUnionTypeOptions
@@ -80,7 +80,7 @@ data Message a = Message
   , _unfurlLinks    :: Maybe Bool
   , _unfurlMedia    :: Maybe Bool
   , _username       :: Maybe UserName
-  } deriving (Show, Generic)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Message
 

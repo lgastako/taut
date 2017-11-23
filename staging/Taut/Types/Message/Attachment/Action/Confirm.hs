@@ -28,7 +28,7 @@ data Confirm = Confirm
   , _okText      :: Text
   , _title       :: Text
   , _text        :: Text
-  } deriving (Generic, Show)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Confirm
 
