@@ -32,14 +32,14 @@ data Confirm = Confirm
 
 makeLenses ''Confirm
 
-instance ToJSON Confirm where
-  toJSON = genericToJSON customOptions
-
 instance FromJSON Confirm where
-  parseJSON = genericParseJSON customOptions
+  parseJSON = genericParseJSON confirmOptions
 
-customOptions :: Options
-customOptions = defaultOptions
+instance ToJSON Confirm where
+  toJSON = genericToJSON confirmOptions
+
+confirmOptions :: Options
+confirmOptions = defaultOptions
   { fieldLabelModifier = camelTo2 '_' . drop 1
   , omitNothingFields = True
   }

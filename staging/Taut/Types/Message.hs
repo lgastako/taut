@@ -48,16 +48,16 @@ import Taut.Types.OauthToken         ( OauthToken )
 import Taut.Types.UserName           ( UserName )
 
 data Parse = Full | None
-  deriving (Eq, Generic, Ord, Read, Show)
-
-instance ToJSON Parse where
-  toJSON = genericToJSON customUnionTypeOptions
+  deriving (Enum, Eq, Generic, Ord, Read, Show)
 
 instance FromJSON Parse where
-  parseJSON = genericParseJSON customUnionTypeOptions
+  parseJSON = genericParseJSON parseOptions
 
-customUnionTypeOptions :: Options
-customUnionTypeOptions = defaultOptions
+instance ToJSON Parse where
+  toJSON = genericToJSON parseOptions
+
+parseOptions :: Options
+parseOptions = defaultOptions
   { constructorTagModifier = fmap toLower
   }
 
@@ -84,14 +84,14 @@ data Message a = Message
 
 makeLenses ''Message
 
-instance ToJSON a => ToJSON (Message a) where
-  toJSON = genericToJSON customOptions
-
 instance FromJSON a => FromJSON (Message a) where
-  parseJSON = genericParseJSON customOptions
+  parseJSON = genericParseJSON messageOptions
 
-customOptions :: Options
-customOptions = defaultOptions
+instance ToJSON a => ToJSON (Message a) where
+  toJSON = genericToJSON messageOptions
+
+messageOptions :: Options
+messageOptions = defaultOptions
   { fieldLabelModifier = camelTo2 '_' . drop 1 . filter (/='\'')
   , omitNothingFields = True
   }

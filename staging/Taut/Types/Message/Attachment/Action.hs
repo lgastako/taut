@@ -52,30 +52,30 @@ data ButtonStyle
   = Danger
   | Default
   | Primary
-  deriving (Eq, Ord, Generic, Read, Show)
-
-instance ToJSON ButtonStyle where
-  toJSON = genericToJSON customUnionTypeOptions
+  deriving (Enum, Eq, Ord, Generic, Read, Show)
 
 instance FromJSON ButtonStyle where
-  parseJSON = genericParseJSON customUnionTypeOptions
+  parseJSON = genericParseJSON buttonStyleOptions
 
-customUnionTypeOptions :: Options
-customUnionTypeOptions = defaultOptions
+instance ToJSON ButtonStyle where
+  toJSON = genericToJSON buttonStyleOptions
+
+buttonStyleOptions :: Options
+buttonStyleOptions = defaultOptions
   { constructorTagModifier = fmap toLower
   }
 
 data ActionType = Button
   deriving (Eq, Generic, Ord, Read, Show)
 
-instance ToJSON ActionType where
-  toJSON _ = Aeson.String "button"
-
 instance FromJSON ActionType where
   parseJSON (Aeson.String s) = case s of
     "button" -> return Button
     e -> fail $ "Invalid ActionType: " ++ Text.unpack e
   parseJSON invalid = typeMismatch "ActionType" invalid
+
+instance ToJSON ActionType where
+  toJSON _ = Aeson.String "button"
 
 data Action = Action
   { _confirm :: Maybe Confirm
@@ -98,12 +98,6 @@ button name' text' value' = Action
   , _value   = value'
   }
 
-instance ToJSON Action where
-  toJSON = genericToJSON defaultOptions
-    { fieldLabelModifier = camelTo2 '_' . drop 1 . filter (/= '\'')
-    , omitNothingFields  = True
-    }
-
 instance FromJSON Action where
   parseJSON = withObject "Action" $ \v -> Action
         <$> v .:?? "confirm"
@@ -112,3 +106,9 @@ instance FromJSON Action where
         <*> v .:?? "text"
         <*> v .:   "type"
         <*> v .:   "value"
+
+instance ToJSON Action where
+  toJSON = genericToJSON defaultOptions
+    { fieldLabelModifier = camelTo2 '_' . drop 1 . filter (/= '\'')
+    , omitNothingFields  = True
+    }

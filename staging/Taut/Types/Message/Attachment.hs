@@ -50,15 +50,11 @@ import           Taut.Types.Message.Attachment.Field           ( Field )
 import           Taut.Types.Timestamp                          ( Timestamp )
 
 data Color
-  = Good
-  | Warning
+  = ColorCode Text
   | Danger
-  | ColorCode Text
+  | Good
+  | Warning
   deriving (Eq, Ord, Read, Show)
-
-instance ToJSON Color where
-  toJSON (ColorCode code) = Aeson.String code
-  toJSON x = Aeson.String . Text.toLower . Text.pack . show $ x
 
 instance FromJSON Color where
   parseJSON (Aeson.String s) = return $ case s of
@@ -67,6 +63,10 @@ instance FromJSON Color where
     "danger"  -> Danger
     color     -> ColorCode color
   parseJSON invalid = typeMismatch "Color" invalid
+
+instance ToJSON Color where
+  toJSON (ColorCode code) = Aeson.String code
+  toJSON x = Aeson.String . Text.toLower . Text.pack . show $ x
 
 data Attachment a = Attachment
   { _actions        :: Maybe [Action]
@@ -91,14 +91,14 @@ data Attachment a = Attachment
 
 makeLenses ''Attachment
 
-instance ToJSON a => ToJSON (Attachment a) where
-  toJSON = genericToJSON customOptions
-
 instance FromJSON a => FromJSON (Attachment a) where
-  parseJSON = genericParseJSON customOptions
+  parseJSON = genericParseJSON attachmentOptions
 
-customOptions :: Options
-customOptions = defaultOptions
+instance ToJSON a => ToJSON (Attachment a) where
+  toJSON = genericToJSON attachmentOptions
+
+attachmentOptions :: Options
+attachmentOptions = defaultOptions
   { fieldLabelModifier = camelTo2 '_' . drop 1
   , omitNothingFields  = True
   }
