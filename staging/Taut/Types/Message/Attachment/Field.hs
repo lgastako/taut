@@ -30,14 +30,14 @@ data Field = Field
 
 makeLenses ''Field
 
-instance ToJSON Field where
-  toJSON = genericToJSON customOptions
-
 instance FromJSON Field where
-  parseJSON = genericParseJSON customOptions
+  parseJSON = genericParseJSON fieldOptions
 
-customOptions :: Options
-customOptions = defaultOptions
+instance ToJSON Field where
+  toJSON = genericToJSON fieldOptions
+
+fieldOptions :: Options
+fieldOptions = defaultOptions
   { fieldLabelModifier = camelTo2 '_' . drop 1
   , omitNothingFields  = True
   }

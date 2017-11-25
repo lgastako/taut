@@ -63,10 +63,17 @@ library
 
 test-suite taut-test
   type:                exitcode-stdio-1.0
-  hs-source-dirs:      test
+  hs-source-dirs:      test test-staging
   main-is:             Spec.hs
   other-modules:       Taut.FunctionsSpec
+                     , Taut.Types.ButtonPayload.Arbitrary
+                     , Taut.Types.ButtonPayloadSpec
                      , Taut.Types.MessageEventSpec
+                     , Taut.Types.Message.Arbitrary
+                     , Taut.Types.Message.Attachment.Action.Arbitrary
+                     , Taut.Types.Message.Attachment.Action.Confirm.Arbitrary
+                     , Taut.Types.Message.Attachment.Arbitrary
+                     , Taut.Types.Message.Attachment.Field.Arbitrary
                      , Taut.Types.TimestampSpec
   build-depends:       aeson
                      , aeson-pretty

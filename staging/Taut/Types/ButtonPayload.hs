@@ -4,6 +4,7 @@ module Taut.Types.ButtonPayload
        ( ButtonPayload( ButtonPayload )
        , Channel( Channel )
        , Team( Team )
+       , TriggerId( TriggerId )
        , User( User )
        , actions
        , actionTs
@@ -27,9 +28,12 @@ module Taut.Types.ButtonPayload
 
 import Control.Lens                         ( makeLenses )
 import Data.Aeson                           ( FromJSON
+                                            , ToJSON
                                             , defaultOptions
                                             , genericParseJSON
+                                            , genericToJSON
                                             , parseJSON
+                                            , toJSON
                                             )
 import Data.Aeson.Types                     ( Options( fieldLabelModifier
                                                      , omitNothingFields
@@ -55,9 +59,15 @@ data Team = Team
 makeLenses ''Team
 
 instance FromJSON Team where
-  parseJSON = genericParseJSON defaultOptions
-    { fieldLabelModifier = camelTo2 '_' . drop 5
-    }
+  parseJSON = genericParseJSON teamOptions
+
+instance ToJSON Team where
+  toJSON = genericToJSON teamOptions
+
+teamOptions :: Options
+teamOptions = defaultOptions
+  { fieldLabelModifier = camelTo2 '_' . drop 5
+  }
 
 data Channel = Channel
   { _channelId   :: ChannelId
@@ -67,9 +77,15 @@ data Channel = Channel
 makeLenses ''Channel
 
 instance FromJSON Channel where
-  parseJSON = genericParseJSON defaultOptions
-    { fieldLabelModifier = camelTo2 '_' . drop 8
-    }
+  parseJSON = genericParseJSON channelOptions
+
+instance ToJSON Channel where
+  toJSON = genericToJSON channelOptions
+
+channelOptions :: Options
+channelOptions = defaultOptions
+  { fieldLabelModifier = camelTo2 '_' . drop 8
+  }
 
 data User = User
   { _userId   :: UserId
@@ -79,14 +95,21 @@ data User = User
 makeLenses ''User
 
 instance FromJSON User where
-  parseJSON = genericParseJSON defaultOptions
-    { fieldLabelModifier = camelTo2 '_' . drop 5
-    }
+  parseJSON = genericParseJSON userOptions
+
+instance ToJSON User where
+  toJSON = genericToJSON userOptions
+
+userOptions :: Options
+userOptions = defaultOptions
+  { fieldLabelModifier = camelTo2 '_' . drop 5
+  }
 
 newtype TriggerId = TriggerId Text
   deriving (Eq, Generic, Ord, Read, Show)
 
 instance FromJSON TriggerId
+instance ToJSON   TriggerId
 
 data ButtonPayload a = ButtonPayload
   { _actions         :: [Action]
@@ -106,7 +129,13 @@ data ButtonPayload a = ButtonPayload
 makeLenses ''ButtonPayload
 
 instance FromJSON a => FromJSON (ButtonPayload a) where
-  parseJSON = genericParseJSON defaultOptions
+  parseJSON = genericParseJSON buttonPayloadOptions
+
+instance ToJSON a => ToJSON (ButtonPayload a) where
+  toJSON = genericToJSON buttonPayloadOptions
+
+buttonPayloadOptions :: Options
+buttonPayloadOptions = defaultOptions
     { fieldLabelModifier = camelTo2 '_' . drop 1
     , omitNothingFields  = True
     }
