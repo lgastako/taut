@@ -31,9 +31,16 @@ spec =
 
     context "given a non-empty list" $
       it "a window of size 1 returns all immediate predecessors" $
-        replyWindows 1 exampleMsgs `shouldBe` fixme
+        replyWindows 1 exampleMsgs `shouldBe` expected
       where
-        fixme = Map.empty
+        expected = Map.fromList
+          [ ( exampleMsgs !! 1
+            , [ exampleMsgs !! 0 ]
+            )
+          , ( exampleMsgs !! 3
+            , [ exampleMsgs !! 2 ]
+            )
+          ]
 
 exampleMsgs :: [MessageEvent Text]
 exampleMsgs = [msg1, msg2, msg3, msg4]
