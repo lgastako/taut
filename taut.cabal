@@ -63,7 +63,7 @@ library
 
 test-suite taut-test
   type:                exitcode-stdio-1.0
-  hs-source-dirs:      test test-staging
+  hs-source-dirs:      test
   main-is:             Spec.hs
   other-modules:       Taut.FunctionsSpec
                      , Taut.Types.ButtonPayload.Arbitrary
