@@ -15,9 +15,6 @@ import Control.Lens              ( Iso'
 import Data.Aeson.TH             ( defaultOptions
                                  , deriveJSON
                                  )
-import Data.Aeson.Types          ( FromJSONKey
-                                 , ToJSONKey
-                                 )
 import Data.Csv                  ( ToField
                                  , toField
                                  )
@@ -31,7 +28,7 @@ import Test.QuickCheck           ( Arbitrary
 import Test.QuickCheck.Instances ()
 
 newtype UserId = UserId Text
-  deriving (Eq, Generic, Ord, Read, Show, FromJSONKey, ToJSONKey)
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance ToField UserId where
   toField = encodeUtf8 . toText

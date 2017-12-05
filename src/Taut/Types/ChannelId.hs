@@ -15,11 +15,6 @@ import Control.Lens              ( Iso'
 import Data.Aeson.TH             ( defaultOptions
                                  , deriveJSON
                                  )
-import Data.Aeson.Types          ( FromJSONKey
-                                 , ToJSONKey
-                                 , toJSONKey
-                                 , toJSONKeyText
-                                 )
 import Data.Csv                  ( ToField
                                  , toField
                                  )
@@ -33,10 +28,7 @@ import Test.QuickCheck           ( Arbitrary
 import Test.QuickCheck.Instances ()
 
 newtype ChannelId = ChannelId Text
-  deriving (Eq, Generic, Ord, Read, Show, FromJSONKey)
-
-instance ToJSONKey ChannelId where
-  toJSONKey = toJSONKeyText toText
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance ToField ChannelId where
   toField = encodeUtf8 . toText
