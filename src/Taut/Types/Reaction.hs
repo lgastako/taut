@@ -1,5 +1,7 @@
-{-# LANGUAGE DeriveGeneric   #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Reaction
        ( Reaction
        , count
@@ -18,8 +20,7 @@ import Data.Aeson.TH     ( defaultOptions
 import Data.DeriveTH     ( derive
                          , makeArbitrary
                          )
-import GHC.Generics      ( Generic )
-import Infinity
+import Focus.Prelude
 import Taut.Types.UserId ( UserId )
 import Test.QuickCheck   ( Arbitrary
                          , arbitrary
@@ -39,7 +40,7 @@ make :: ReactionName -> Int -> [UserId] -> Reaction
 make = Reaction
 
 summary :: Reaction -> Text
-summary r = r ^. name <> " (" <> tshow (r ^. count) <> ")"
+summary r = r ^. name <> " (" <> show (r ^. count) <> ")"
 
 $(deriveJSON defaultOptions ''Reaction)
 

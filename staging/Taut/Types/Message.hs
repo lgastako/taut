@@ -1,5 +1,6 @@
-{-# LANGUAGE DeriveGeneric   #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Message
        ( Message( Message )
        , Parse( Full
@@ -26,26 +27,25 @@ module Taut.Types.Message
        , username
        ) where
 
-import Control.Lens                  ( makeLenses )
-import Data.Aeson                    ( FromJSON( parseJSON )
-                                     , ToJSON( toJSON )
-                                     , defaultOptions
-                                     , genericParseJSON
-                                     , genericToJSON
-                                     )
-import Data.Aeson.Types              ( Options( constructorTagModifier
-                                              , fieldLabelModifier
-                                              , omitNothingFields
-                                              )
-                                     , camelTo2
-                                     )
-import Data.Char                     ( toLower )
-import Data.Text                     ( Text )
-import GHC.Generics                  ( Generic )
-import Taut.Types.ChannelId          ( ChannelId )
-import Taut.Types.Message.Attachment ( Attachment )
-import Taut.Types.OauthToken         ( OauthToken )
-import Taut.Types.UserName           ( UserName )
+import Control.Lens                         ( makeLenses )
+import Data.Aeson                           ( FromJSON( parseJSON )
+                                            , ToJSON( toJSON )
+                                            , defaultOptions
+                                            , genericParseJSON
+                                            , genericToJSON
+                                            )
+import Data.Aeson.Types                     ( Options( constructorTagModifier
+                                                     , fieldLabelModifier
+                                                     , omitNothingFields
+                                                     )
+                                            , camelTo2
+                                            )
+import Data.Char                            ( toLower )
+import Focus.Prelude                 hiding ( empty )
+import Taut.Types.ChannelId                 ( ChannelId )
+import Taut.Types.Message.Attachment        ( Attachment )
+import Taut.Types.OauthToken                ( OauthToken )
+import Taut.Types.UserName                  ( UserName )
 
 data Parse = Full | None
   deriving (Enum, Eq, Generic, Ord, Read, Show)

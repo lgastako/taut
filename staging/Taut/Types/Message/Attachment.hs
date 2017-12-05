@@ -1,5 +1,7 @@
-{-# LANGUAGE DeriveGeneric   #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Message.Attachment
        ( Attachment( Attachment )
        , Color( ColorCode
@@ -28,26 +30,25 @@ module Taut.Types.Message.Attachment
        , ts
        ) where
 
-import           Control.Lens                                  ( makeLenses )
-import           Data.Aeson                                    ( FromJSON( parseJSON )
-                                                               , ToJSON( toJSON )
-                                                               , defaultOptions
-                                                               , genericParseJSON
-                                                               , genericToJSON
-                                                               )
+import           Control.Lens                                         ( makeLenses )
+import           Data.Aeson                                           ( FromJSON( parseJSON )
+                                                                      , ToJSON( toJSON )
+                                                                      , defaultOptions
+                                                                      , genericParseJSON
+                                                                      , genericToJSON
+                                                                      )
 import qualified Data.Aeson                           as Aeson
-import           Data.Aeson.Types                              ( Options( fieldLabelModifier
-                                                                        , omitNothingFields
-                                                                        )
-                                                               , camelTo2
-                                                               , typeMismatch
-                                                               )
-import           Data.Text                                     ( Text )
+import           Data.Aeson.Types                                     ( Options( fieldLabelModifier
+                                                                               , omitNothingFields
+                                                                               )
+                                                                      , camelTo2
+                                                                      , typeMismatch
+                                                                      )
 import qualified Data.Text                            as Text
-import           GHC.Generics                                  ( Generic )
-import           Taut.Types.Message.Attachment.Action          ( Action )
-import           Taut.Types.Message.Attachment.Field           ( Field )
-import           Taut.Types.Timestamp                          ( Timestamp )
+import           Focus.Prelude                                 hiding ( empty )
+import           Taut.Types.Message.Attachment.Action                 ( Action )
+import           Taut.Types.Message.Attachment.Field                  ( Field )
+import           Taut.Types.Timestamp                                 ( Timestamp )
 
 data Color
   = ColorCode Text

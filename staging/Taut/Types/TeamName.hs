@@ -1,5 +1,6 @@
-{-# LANGUAGE DeriveGeneric   #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.TeamName
        ( TeamName
        , fromText
@@ -16,7 +17,7 @@ import Data.Aeson.TH             ( defaultOptions
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
-import Infinity
+import Focus.Prelude
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )

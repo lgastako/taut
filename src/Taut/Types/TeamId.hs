@@ -1,11 +1,12 @@
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE DeriveGeneric   #-}
+{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE TemplateHaskell            #-}
 module Taut.Types.TeamId
        ( TeamId
        , fromText
-       , toText
        , tidText
+       , toText
        ) where
 
 import Control.Lens              ( Iso'
@@ -23,9 +24,7 @@ import Data.Csv                  ( ToField
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
-import Data.Text.Encoding        ( encodeUtf8 )
-import GHC.Generics              ( Generic )
-import Infinity
+import Focus.Prelude
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )

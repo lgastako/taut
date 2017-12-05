@@ -7,12 +7,13 @@ extra-package-dbs: []
 packages:
 - location: "."
 - location:
-    git: git@github.com:SuperpowersCorp/infinity.git
-    commit: 0519411e11a98c6944a355c7bf979dc15f4838e9
+    git: git@github.com:SuperpowersCorp/focus.git
+    commit: 2d2807337c35007d2fbf3c1b1d5e8462373ec257
   extra-dep: true
 - location:
     git: git@github.com:SuperpowersCorp/luthor.git
-    commit: 32a96510f760e70c1912d8d8e4a905e3e5160358
+    commit: a216c69e3751e66d9d2d746c9f8307e4c7dd97aa
   extra-dep: true
 
-extra-deps: []
+extra-deps:
+- protolude-0.2

@@ -1,6 +1,7 @@
-{-# LANGUAGE DeriveGeneric   #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE TemplateHaskell            #-}
 module Taut.Types.UserId
        ( UserId
        , fromText
@@ -23,9 +24,7 @@ import Data.Csv                  ( ToField
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
-import Data.Text.Encoding        ( encodeUtf8 )
-import GHC.Generics              ( Generic )
-import Infinity
+import Focus.Prelude
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )

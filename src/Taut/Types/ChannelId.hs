@@ -1,6 +1,7 @@
-{-# LANGUAGE DeriveAnyClass  #-}
-{-# LANGUAGE DeriveGeneric   #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveAnyClass    #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.ChannelId
        ( ChannelId
        , cidText
@@ -16,8 +17,8 @@ import Data.Aeson.TH             ( defaultOptions
                                  )
 import Data.Aeson.Types          ( FromJSONKey
                                  , ToJSONKey
-                                 , toJSONKeyText
                                  , toJSONKey
+                                 , toJSONKeyText
                                  )
 import Data.Csv                  ( ToField
                                  , toField
@@ -25,9 +26,7 @@ import Data.Csv                  ( ToField
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
-import Data.Text.Encoding        ( encodeUtf8 )
-import GHC.Generics              ( Generic )
-import Infinity
+import Focus.Prelude
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )

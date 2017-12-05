@@ -1,5 +1,6 @@
-{-# LANGUAGE DeriveGeneric   #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.ButtonPayload
        ( ButtonPayload( ButtonPayload )
        , Channel( Channel )
@@ -40,8 +41,7 @@ import Data.Aeson.Types                     ( Options( fieldLabelModifier
                                                      )
                                             , camelTo2
                                             )
-import Data.Text                            ( Text )
-import GHC.Generics                         ( Generic )
+import Focus.Prelude
 import Taut.Types.ChannelId                 ( ChannelId )
 import Taut.Types.ChannelName               ( ChannelName )
 import Taut.Types.Message                   ( Message )
