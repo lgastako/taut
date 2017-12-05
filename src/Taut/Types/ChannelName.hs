@@ -1,5 +1,6 @@
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE DeriveGeneric   #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.ChannelName
        ( ChannelName
        , channelName
@@ -16,7 +17,7 @@ import Data.Aeson.TH             ( defaultOptions
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
-import Infinity
+import Focus.Prelude
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )

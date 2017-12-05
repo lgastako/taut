@@ -1,5 +1,6 @@
-{-# LANGUAGE DeriveGeneric   #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Message.Attachment.Action.Confirm
        ( Confirm( Confirm )
        , dismissText
@@ -20,8 +21,7 @@ import Data.Aeson.Types ( Options( fieldLabelModifier
                                  )
                         , camelTo2
                         )
-import Data.Text        ( Text )
-import GHC.Generics     ( Generic )
+import Focus.Prelude
 
 data Confirm = Confirm
   { _dismissText :: Text

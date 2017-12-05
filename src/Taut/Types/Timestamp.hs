@@ -1,5 +1,7 @@
-{-# LANGUAGE DeriveGeneric   #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Timestamp
        ( Timestamp
        , fromUTCTime
@@ -9,6 +11,8 @@ module Taut.Types.Timestamp
        , toUTCTime
        , utcTime
        ) where
+
+import qualified Prelude                   as P
 
 import           Control.Lens                      ( Iso'
                                                    , iso
@@ -24,14 +28,12 @@ import           Data.Default                      ( Default( def ) )
 import           Data.DeriveTH                     ( derive
                                                    , makeArbitrary
                                                    )
-import           Data.Text                         ( Text )
 import qualified Data.Text                 as Text
-import           Data.Text.Encoding                ( encodeUtf8 )
 import           Data.Time.Clock                   ( UTCTime )
 import           Data.Time.Clock.POSIX             ( posixSecondsToUTCTime
                                                    , utcTimeToPOSIXSeconds
                                                    )
-import           GHC.Generics                      ( Generic )
+import           Focus.Prelude
 import           Test.QuickCheck                   ( Arbitrary
                                                    , arbitrary
                                                    )
@@ -54,7 +56,7 @@ fromSlackTimeText :: Text -> Timestamp
 fromSlackTimeText = Timestamp
   . posixSecondsToUTCTime
   . realToFrac
-  . (read :: String -> Double)
+  . (P.read :: String -> Double)
   . Text.unpack
 
 toSlackTimeText :: Timestamp -> Text

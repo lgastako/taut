@@ -1,4 +1,8 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
 module Taut.Types.MessageEventSpec ( main , spec) where
+
+import           Prelude                  as P
 
 import           Data.Aeson                               ( decode
                                                           , eitherDecode
@@ -40,7 +44,7 @@ spec = describe "MessageEvent" $ do
                Nothing
                (Just [])
                (SubType.make "\186")
-               (Timestamp.fromUTCTime . read $ "1864-05-09 09:54:38.732041347182 UTC")
+               (Timestamp.fromUTCTime . P.read $ "1864-05-09 09:54:38.732041347182 UTC")
                (MessageType.fromText "")
                (UserId.fromText ""))
 

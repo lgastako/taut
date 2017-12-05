@@ -1,5 +1,7 @@
-{-# LANGUAGE DeriveGeneric   #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.MessageType
        ( MessageType
        , fromText
@@ -20,9 +22,7 @@ import Data.Default              ( Default( def ) )
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
-import Data.Text.Encoding        ( encodeUtf8 )
-import GHC.Generics              ( Generic )
-import Infinity
+import Focus.Prelude
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )

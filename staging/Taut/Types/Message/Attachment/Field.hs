@@ -1,5 +1,6 @@
-{-# LANGUAGE DeriveGeneric   #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Message.Attachment.Field
        ( Field( Field )
        , short
@@ -19,8 +20,7 @@ import Data.Aeson.Types ( Options( fieldLabelModifier
                                  )
                         , camelTo2
                         )
-import Data.Text        ( Text )
-import GHC.Generics     ( Generic )
+import Focus.Prelude
 
 data Field = Field
   { _short :: Bool

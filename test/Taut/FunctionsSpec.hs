@@ -1,8 +1,12 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
 module Taut.FunctionsSpec ( main, spec ) where
+
+import           Prelude                                 ( (!!) )
 
 import           Data.Default                            ( Default( def ) )
 import qualified Data.Map                as Map
-import           Infinity
+import           Focus.Prelude
 import           Taut.Functions                          ( replyWindows )
 import qualified Taut.Types.ChannelId    as ChannelId
 import           Taut.Types.MessageEvent                 ( MessageEvent )

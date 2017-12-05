@@ -1,6 +1,8 @@
+{-# LANGUAGE NoImplicitPrelude #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 module Taut.Types.Message.Attachment.Arbitrary () where
 
+import Focus.Prelude
 import Taut.Types.Message.Attachment                  ( Attachment( Attachment )
                                                       , Color( ColorCode
                                                              , Danger

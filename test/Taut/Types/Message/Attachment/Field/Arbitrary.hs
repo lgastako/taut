@@ -1,6 +1,8 @@
+{-# LANGUAGE NoImplicitPrelude    #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 module Taut.Types.Message.Attachment.Field.Arbitrary () where
 
+import Focus.Prelude
 import Taut.Types.Message.Attachment.Field ( Field( Field ) )
 import Test.QuickCheck                     ( Arbitrary
                                            , arbitrary

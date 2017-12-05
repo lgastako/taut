@@ -1,5 +1,7 @@
-{-# LANGUAGE DeriveGeneric   #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Message.Attachment.Action
        ( Action( Action )
        , ActionType( Button )
@@ -40,9 +42,8 @@ import           Data.Aeson.Types                                      ( Options
                                                                        )
 import           Data.Aeson.Types                                      ( Parser )
 import           Data.Char                                             ( toLower )
-import           Data.Text                                             ( Text )
 import qualified Data.Text                                    as Text
-import           GHC.Generics                                          ( Generic )
+import           Focus.Prelude
 import           Taut.Types.Message.Attachment.Action.Confirm          ( Confirm )
 
 (.:??) :: FromJSON a => Object -> Text -> Parser (Maybe a)

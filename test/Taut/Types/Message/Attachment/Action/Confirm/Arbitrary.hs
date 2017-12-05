@@ -1,6 +1,8 @@
+{-# LANGUAGE NoImplicitPrelude    #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 module Taut.Types.Message.Attachment.Action.Confirm.Arbitrary () where
 
+import Focus.Prelude
 import Taut.Types.Message.Attachment.Action.Confirm ( Confirm( Confirm ) )
 import Test.QuickCheck                              ( Arbitrary
                                                     , arbitrary
