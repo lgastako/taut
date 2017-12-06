@@ -6,6 +6,8 @@ import Focus.Prelude
 import Taut.Types.Message.Attachment.Action.Confirm ( Confirm( Confirm ) )
 import Test.QuickCheck                              ( Arbitrary
                                                     , arbitrary
+                                                    , genericShrink
+                                                    , shrink
                                                     )
 import Test.QuickCheck.Instances                    ()
 
@@ -15,3 +17,4 @@ instance Arbitrary Confirm where
     <*> arbitrary
     <*> arbitrary
     <*> arbitrary
+  shrink = genericShrink
