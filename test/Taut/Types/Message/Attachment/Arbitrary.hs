@@ -15,6 +15,8 @@ import Taut.Types.Message.Attachment.Field.Arbitrary  ()
 import Test.QuickCheck                                ( Arbitrary
                                                       , arbitrary
                                                       , elements
+                                                      , genericShrink
+                                                      , shrink
                                                       )
 
 instance Arbitrary Color where
@@ -23,6 +25,7 @@ instance Arbitrary Color where
     cc2 <- arbitrary
     -- TODO: better
     elements [Good, Warning, Danger, ColorCode cc1, ColorCode cc2]
+  shrink = genericShrink
 
 instance Arbitrary a => Arbitrary (Attachment a) where
   arbitrary = Attachment
@@ -44,3 +47,4 @@ instance Arbitrary a => Arbitrary (Attachment a) where
     <*> arbitrary
     <*> arbitrary
     <*> arbitrary
+  shrink = genericShrink

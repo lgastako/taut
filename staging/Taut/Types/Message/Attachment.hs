@@ -55,7 +55,7 @@ data Color
   | Danger
   | Good
   | Warning
-  deriving (Eq, Ord, Read, Show)
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance FromJSON Color where
   parseJSON (Aeson.String s) = return $ case s of

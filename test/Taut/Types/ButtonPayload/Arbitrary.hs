@@ -13,6 +13,8 @@ import Taut.Types.Message.Arbitrary                   ()
 import Taut.Types.Message.Attachment.Action.Arbitrary ()
 import Test.QuickCheck                                ( Arbitrary
                                                       , arbitrary
+                                                      , genericShrink
+                                                      , shrink
                                                       )
 
 instance Arbitrary a => Arbitrary (ButtonPayload a) where
@@ -29,21 +31,26 @@ instance Arbitrary a => Arbitrary (ButtonPayload a) where
     <*> arbitrary
     <*> arbitrary
     <*> arbitrary
+  shrink = genericShrink
 
 instance Arbitrary Channel where
   arbitrary = Channel
     <$> arbitrary
     <*> arbitrary
+  shrink = genericShrink
 
 instance Arbitrary Team where
   arbitrary = Team
     <$> arbitrary
     <*> arbitrary
+  shrink = genericShrink
 
 instance Arbitrary User where
   arbitrary = User
     <$> arbitrary
     <*> arbitrary
+  shrink = genericShrink
 
 instance Arbitrary TriggerId where
   arbitrary = TriggerId <$> arbitrary
+  shrink    = genericShrink

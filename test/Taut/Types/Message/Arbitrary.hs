@@ -10,6 +10,8 @@ import Taut.Types.Message.Attachment.Arbitrary ()
 import Test.QuickCheck                         ( Arbitrary
                                                , arbitrary
                                                , elements
+                                               , genericShrink
+                                               , shrink
                                                )
 
 instance Arbitrary a => Arbitrary (Message a) where
@@ -32,6 +34,8 @@ instance Arbitrary a => Arbitrary (Message a) where
     <*> arbitrary
     <*> arbitrary
     <*> arbitrary
+  shrink = genericShrink
 
 instance Arbitrary Parse where
   arbitrary = elements [toEnum 0..]
+  shrink = genericShrink
