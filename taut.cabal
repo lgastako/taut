@@ -17,8 +17,11 @@ library
   hs-source-dirs:      src
                      , staging
   exposed-modules:     Taut
+                     , Taut.Constants
                      , Taut.Examples
                      , Taut.Functions
+                     , Taut.Types.AccessToken
+                     , Taut.Types.BotAccessToken
                      , Taut.Types.ButtonPayload
                      , Taut.Types.ChannelId
                      , Taut.Types.ChannelName
@@ -40,7 +43,7 @@ library
                      , Taut.Types.UserId
                      , Taut.Types.UserName
   build-depends:       aeson
-                     , base                       >= 4.7 && < 5
+                     , base       >= 4.7 && < 5
                      , cassava
                      , containers
                      , data-default
