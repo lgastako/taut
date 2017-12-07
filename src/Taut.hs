@@ -1,6 +1,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 module Taut
     ( AccessToken
+    , AnyAccessToken
     , BotAccessToken
     , ChannelId
     , ChannelName
@@ -13,6 +14,7 @@ module Taut
     , Timestamp
     , UserName
     , UserId
+    , accessTokenText
     , botTokenPrefix
     , channelName
     , cidText
@@ -28,7 +30,10 @@ module Taut
     ) where
 
 import Taut.Constants            ( botTokenPrefix )
-import Taut.Types.AccessToken    ( AccessToken )
+import Taut.Types.AccessToken    ( AccessToken
+                                 , AnyAccessToken
+                                 , accessTokenText
+                                 )
 import Taut.Types.BotAccessToken ( BotAccessToken )
 import Taut.Types.ChannelId      ( ChannelId
                                  , cidText
