@@ -8,7 +8,7 @@ packages:
 - location: "."
 - location:
     git: git@github.com:SuperpowersCorp/focus.git
-    commit: 2d2807337c35007d2fbf3c1b1d5e8462373ec257
+    commit: 659ff7c9a071e45e46b30d2de2c170b629a71fb6
   extra-dep: true
 - location:
     git: git@github.com:SuperpowersCorp/luthor.git
@@ -17,3 +17,5 @@ packages:
 
 extra-deps:
 - protolude-0.2
+- validation-0.6.2
+
