@@ -7,12 +7,12 @@ extra-package-dbs: []
 packages:
 - location: "."
 - location:
-    git: git@github.com:SuperpowersCorp/focus.git
-    commit: 659ff7c9a071e45e46b30d2de2c170b629a71fb6
+    git: git@github.com:SuperpowersCorp/focus-prelude.git
+    commit: ad60d24784b1905bbbc2cdbfbec0444b7dc7df86
   extra-dep: true
 - location:
     git: git@github.com:SuperpowersCorp/luthor.git
-    commit: a216c69e3751e66d9d2d746c9f8307e4c7dd97aa
+    commit: 6987b27f3278d526b44e3817a7a863c94913d881
   extra-dep: true
 
 extra-deps:

@@ -48,7 +48,7 @@ library
                      , containers
                      , data-default
                      , derive
-                     , focus
+                     , focus-prelude
                      , lens
                      -- We need to depend on QuickCheck here if we want to
                      -- export arbitrary instances (which we do).
@@ -84,7 +84,7 @@ test-suite taut-test
                      , containers
                      , data-default
                      , derive
-                     , focus
+                     , focus-prelude
                      , hspec
                      , lens
                      , QuickCheck
