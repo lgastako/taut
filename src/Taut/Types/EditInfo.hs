@@ -8,6 +8,8 @@ module Taut.Types.EditInfo
        , user
        ) where
 
+import Focus.Prelude        hiding ( from )
+
 import Control.Lens                ( makeLenses )
 import Data.Aeson.TH               ( defaultOptions
                                    , deriveJSON
@@ -15,7 +17,6 @@ import Data.Aeson.TH               ( defaultOptions
 import Data.DeriveTH               ( derive
                                    , makeArbitrary
                                    )
-import Focus.Prelude        hiding ( from )
 import Taut.Types.Timestamp        ( Timestamp )
 import Taut.Types.UserId           ( UserId )
 import Test.QuickCheck             ( Arbitrary

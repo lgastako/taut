@@ -1,10 +1,10 @@
+{-# LANGUAGE DeriveAnyClass     #-}
+{-# LANGUAGE DeriveFunctor      #-}
 {-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE DeriveTraversable  #-}
 {-# LANGUAGE FlexibleInstances  #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 {-# LANGUAGE OverloadedStrings  #-}
-{-# LANGUAGE DeriveAnyClass     #-}
-{-# LANGUAGE DeriveFunctor      #-}
-{-# LANGUAGE DeriveTraversable  #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TemplateHaskell    #-}
 module Taut.Types.MessageEvent
@@ -27,6 +27,7 @@ module Taut.Types.MessageEvent
        ) where
 
 import qualified Prelude                as P
+import           Focus.Prelude
 
 import           Control.Lens                        ( (&)
                                                      , (.~)
@@ -53,7 +54,6 @@ import           Data.DeriveTH                       ( derive
                                                      , makeArbitrary
                                                      )
 import qualified Data.Text              as Text
-import           Focus.Prelude
 import           Language.Haskell.TH                 ( mkName
                                                      , nameBase
                                                      )

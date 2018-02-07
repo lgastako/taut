@@ -7,8 +7,9 @@ module Taut.Types.BotAccessToken
        , fromTextE
        ) where
 
-import qualified Data.Text              as Text
 import           Focus.Prelude
+
+import qualified Data.Text              as Text
 import           Taut.Constants                 ( botTokenPrefix )
 import           Taut.Types.AccessToken         ( AccessToken
                                                 , accessTokenText

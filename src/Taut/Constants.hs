@@ -6,5 +6,6 @@ module Taut.Constants
 
 import Focus.Prelude
 
+
 botTokenPrefix :: Text
 botTokenPrefix = "xoxb"

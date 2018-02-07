@@ -10,6 +10,8 @@ module Taut.Types.SubType
        , toText
        ) where
 
+import Focus.Prelude             hiding ( null )
+
 import Control.Lens                     ( Iso'
                                         , iso
                                         )
@@ -20,7 +22,6 @@ import Data.Default                     ( Default( def ) )
 import Data.DeriveTH                    ( derive
                                         , makeArbitrary
                                         )
-import Focus.Prelude             hiding ( null )
 import Test.QuickCheck                  ( Arbitrary
                                         , arbitrary
                                         )

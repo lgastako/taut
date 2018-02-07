@@ -9,6 +9,8 @@ module Taut.Types.UserId
        , uidText
        ) where
 
+import Focus.Prelude
+
 import Control.Lens              ( Iso'
                                  , iso
                                  )
@@ -24,7 +26,6 @@ import Data.Csv                  ( ToField
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
-import Focus.Prelude
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )

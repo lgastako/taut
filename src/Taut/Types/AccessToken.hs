@@ -9,6 +9,7 @@ module Taut.Types.AccessToken
 
 import Focus.Prelude
 
+
 class AccessToken a where
   accessTokenText :: a -> Text
 

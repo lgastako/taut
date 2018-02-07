@@ -4,8 +4,9 @@ module Taut.Examples
        ( exampleMsg1
        ) where
 
-import           Data.Default                            ( def )
 import           Focus.Prelude
+
+import           Data.Default                            ( def )
 import           Taut
 import qualified Taut.Types.ChannelId    as ChannelId
 import qualified Taut.Types.MessageEvent as MessageEvent

@@ -11,6 +11,8 @@ module Taut.Types.Reaction
        , users
        ) where
 
+import Focus.Prelude
+
 import Control.Lens      ( (^.)
                          , makeLenses
                          )
@@ -20,7 +22,6 @@ import Data.Aeson.TH     ( defaultOptions
 import Data.DeriveTH     ( derive
                          , makeArbitrary
                          )
-import Focus.Prelude
 import Taut.Types.UserId ( UserId )
 import Test.QuickCheck   ( Arbitrary
                          , arbitrary

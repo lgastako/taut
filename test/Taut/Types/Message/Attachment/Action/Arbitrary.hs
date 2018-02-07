@@ -3,6 +3,7 @@
 module Taut.Types.Message.Attachment.Action.Arbitrary () where
 
 import Focus.Prelude
+
 import Taut.Types.Message.Attachment.Action                   ( Action( Action )
                                                               , ActionType( Button )
                                                               , ButtonStyle

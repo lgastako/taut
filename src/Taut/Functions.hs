@@ -12,12 +12,12 @@ module Taut.Functions
        ) where
 
 import qualified Prelude                 as P
+import           Focus.Prelude
 
 import           Control.Lens                    ( (^.) )
 import qualified Data.Map.Strict         as Map
 import           Data.Maybe                      ( mapMaybe )
 import qualified Data.Text               as Text
-import           Focus.Prelude
 import           Taut.Types.ChannelId            ( ChannelId )
 import           Taut.Types.MessageEvent         ( MessageEvent
                                                  , channelId

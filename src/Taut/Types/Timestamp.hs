@@ -13,6 +13,7 @@ module Taut.Types.Timestamp
        ) where
 
 import qualified Prelude                   as P
+import           Focus.Prelude
 
 import           Control.Lens                      ( Iso'
                                                    , iso
@@ -33,7 +34,6 @@ import           Data.Time.Clock                   ( UTCTime )
 import           Data.Time.Clock.POSIX             ( posixSecondsToUTCTime
                                                    , utcTimeToPOSIXSeconds
                                                    )
-import           Focus.Prelude
 import           Test.QuickCheck                   ( Arbitrary
                                                    , arbitrary
                                                    )

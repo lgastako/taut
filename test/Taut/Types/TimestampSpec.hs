@@ -3,6 +3,7 @@
 module Taut.Types.TimestampSpec ( main, spec ) where
 
 import           Focus.Prelude
+
 import qualified Taut.Types.Timestamp as Timestamp
 import           Test.Hspec                        ( Spec
                                                    , hspec

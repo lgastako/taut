@@ -9,6 +9,8 @@ module Taut.Types.MessageType
        , typeText
        ) where
 
+import Focus.Prelude
+
 import Control.Lens              ( Iso'
                                  , iso
                                  )
@@ -22,7 +24,6 @@ import Data.Default              ( Default( def ) )
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
-import Focus.Prelude
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )

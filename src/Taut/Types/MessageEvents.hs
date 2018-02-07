@@ -6,10 +6,11 @@ module Taut.Types.MessageEvents
        , withPayloads
        ) where
 
+import           Focus.Prelude                      hiding ( null )
+
 import           Control.Lens                              ( (^.) )
 import qualified Data.Csv                as Csv
 import qualified Data.Vector             as Vector
-import           Focus.Prelude                      hiding ( null )
 import           Taut.Types.MessageEvent                   ( MessageEvent
                                                            , payload
                                                            , subType
