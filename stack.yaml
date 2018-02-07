@@ -1,4 +1,4 @@
-resolver: lts-8.17
+resolver: lts-9.21
 
 flags: {}
 
@@ -8,14 +8,14 @@ packages:
 - location: "."
 - location:
     git: git@github.com:SuperpowersCorp/focus-prelude.git
-    commit: ad60d24784b1905bbbc2cdbfbec0444b7dc7df86
+    commit: be316f3b79a58f4cda42d880f2528279666b3605
   extra-dep: true
 - location:
     git: git@github.com:SuperpowersCorp/luthor.git
-    commit: 6987b27f3278d526b44e3817a7a863c94913d881
+    commit: e208b305fde6fe0a1962f21dbe5f0bbce374e673
   extra-dep: true
 
 extra-deps:
 - protolude-0.2
+- safe-exceptions-0.1.7.0
 - validation-0.6.2
-
