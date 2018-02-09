@@ -8,14 +8,14 @@ packages:
 - location: "."
 - location:
     git: git@github.com:SuperpowersCorp/focus-prelude.git
-    commit: be316f3b79a58f4cda42d880f2528279666b3605
+    commit: a694a45945752816c798f76bbf1f166a8f59afc9
   extra-dep: true
 - location:
     git: git@github.com:SuperpowersCorp/luthor.git
-    commit: e208b305fde6fe0a1962f21dbe5f0bbce374e673
+    commit: 98135dbf6a79c0d920e8df779646cedbbb6b40cb
   extra-dep: true
 
 extra-deps:
-- protolude-0.2
+- protolude-0.2.1
 - safe-exceptions-0.1.7.0
 - validation-0.6.2
