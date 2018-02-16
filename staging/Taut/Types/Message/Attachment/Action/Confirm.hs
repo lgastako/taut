@@ -2,12 +2,12 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Message.Attachment.Action.Confirm
-       ( Confirm(Confirm)
+       ( Confirm( Confirm )
+       , dismissText
+       , okText
        , text
        , title
-       , dismissText
-       , okText)
-       where
+       ) where
 
 import Focus.Prelude
 
@@ -23,26 +23,24 @@ import Data.Aeson.Types ( Options( fieldLabelModifier
                                  )
                         , camelTo2
                         )
-import Data.Text        ( Text )
-import GHC.Generics     ( Generic )
 
 data Confirm = Confirm
-  { _title       :: Text
-  , _text        :: Text
+  { _dismissText :: Text
   , _okText      :: Text
-  , _dismissText :: Text
+  , _title       :: Text
+  , _text        :: Text
   } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Confirm
 
-instance ToJSON Confirm where
-  toJSON = genericToJSON customOptions
-
 instance FromJSON Confirm where
-  parseJSON = genericParseJSON customOptions
+  parseJSON = genericParseJSON confirmOptions
 
-customOptions :: Options
-customOptions = defaultOptions
+instance ToJSON Confirm where
+  toJSON = genericToJSON confirmOptions
+
+confirmOptions :: Options
+confirmOptions = defaultOptions
   { fieldLabelModifier = camelTo2 '_' . drop 1
   , omitNothingFields = True
   }

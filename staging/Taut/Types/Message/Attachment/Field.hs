@@ -2,12 +2,11 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Message.Attachment.Field
-       ( Field(Field)
+       ( Field( Field )
+       , short
        , title
        , value
-       , short
-       )
-       where
+       ) where
 
 import Focus.Prelude
 
@@ -25,21 +24,21 @@ import Data.Aeson.Types ( Options( fieldLabelModifier
                         )
 
 data Field = Field
-  { _title :: Text
+  { _short :: Bool
+  , _title :: Text
   , _value :: Text
-  , _short :: Bool
   } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Field
 
-instance ToJSON Field where
-  toJSON = genericToJSON customOptions
-
 instance FromJSON Field where
-  parseJSON = genericParseJSON customOptions
+  parseJSON = genericParseJSON fieldOptions
 
-customOptions :: Options
-customOptions = defaultOptions
+instance ToJSON Field where
+  toJSON = genericToJSON fieldOptions
+
+fieldOptions :: Options
+fieldOptions = defaultOptions
   { fieldLabelModifier = camelTo2 '_' . drop 1
-  , omitNothingFields = True
+  , omitNothingFields  = True
   }
