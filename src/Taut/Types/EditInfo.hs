@@ -1,5 +1,6 @@
-{-# LANGUAGE DeriveGeneric   #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.EditInfo
        ( EditInfo
        , from
@@ -7,19 +8,20 @@ module Taut.Types.EditInfo
        , user
        ) where
 
-import Control.Lens         ( makeLenses )
-import Data.Aeson.TH        ( defaultOptions
-                            , deriveJSON
-                            )
-import Data.DeriveTH        ( derive
-                            , makeArbitrary
-                            )
-import GHC.Generics         ( Generic )
-import Taut.Types.Timestamp ( Timestamp )
-import Taut.Types.UserId    ( UserId )
-import Test.QuickCheck      ( Arbitrary
-                            , arbitrary
-                            )
+import Focus.Prelude        hiding ( from )
+
+import Control.Lens                ( makeLenses )
+import Data.Aeson.TH               ( defaultOptions
+                                   , deriveJSON
+                                   )
+import Data.DeriveTH               ( derive
+                                   , makeArbitrary
+                                   )
+import Taut.Types.Timestamp        ( Timestamp )
+import Taut.Types.UserId           ( UserId )
+import Test.QuickCheck             ( Arbitrary
+                                   , arbitrary
+                                   )
 
 data EditInfo = EditInfo
   { _ts   :: Timestamp

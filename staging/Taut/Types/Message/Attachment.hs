@@ -1,29 +1,35 @@
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Message.Attachment
-       ( Attachment(Attachment)
-       , fallback
-       , color
-       , pretext
-       , attachmentType
+       ( Attachment( Attachment )
+       , Color( ColorCode
+              , Good
+              , Danger
+              , Warning
+              )
        , actions
-       , authorName
-       , authorLink
+       , attachmentType
        , authorIcon
+       , authorLink
+       , authorName
        , callbackId
-       , title
-       , titleLink
-       , text
+       , color
+       , fallback
        , fields
-       , imageUrl
-       , thumbUrl
        , footer
        , footerIcon
+       , imageUrl
+       , pretext
+       , text
+       , thumbUrl
+       , title
+       , titleLink
        , ts
-       , Color(Good, Warning, Danger, ColorCode)
-       , empty
-       )
-       where
+       ) where
+
+import           Focus.Prelude
 
 import           Control.Lens                                  ( makeLenses )
 import           Data.Aeson                                    ( FromJSON( parseJSON )
@@ -39,18 +45,20 @@ import           Data.Aeson.Types                              ( Options( fieldL
                                                                , camelTo2
                                                                , typeMismatch
                                                                )
-import           Data.Text                                     ( Text )
+import           Data.Default                                  ( Default
+                                                               , def
+                                                               )
 import qualified Data.Text                            as Text
-import           GHC.Generics                                  ( Generic )
 import           Taut.Types.Message.Attachment.Action          ( Action )
 import           Taut.Types.Message.Attachment.Field           ( Field )
 import           Taut.Types.Timestamp                          ( Timestamp )
 
-data Color = Good
-           | Warning
-           | Danger
-           | ColorCode Text
-  deriving (Show)
+data Color
+  = Good
+  | Warning
+  | Danger
+  | ColorCode Text
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance ToJSON Color where
   toJSON (ColorCode code) = Aeson.String code
@@ -58,10 +66,10 @@ instance ToJSON Color where
 
 instance FromJSON Color where
   parseJSON (Aeson.String s) = case s of
-    "good" -> return Good
+    "good"    -> return Good
     "warning" -> return Warning
-    "danger" -> return Danger
-    color -> return $ ColorCode color
+    "danger"  -> return Danger
+    color     -> return $ ColorCode color
   parseJSON invalid = typeMismatch "Color" invalid
 
 data Attachment a = Attachment
@@ -84,7 +92,7 @@ data Attachment a = Attachment
   , _footer         :: Maybe Text
   , _footerIcon     :: Maybe Text
   , _ts             :: Maybe Timestamp
-  } deriving (Generic, Show)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Attachment
 
@@ -100,24 +108,24 @@ customOptions = defaultOptions
   , omitNothingFields = True
   }
 
-empty :: Attachment a
-empty = Attachment
-  { _fallback = Nothing
-  , _color = Nothing
-  , _pretext = Nothing
-  , _attachmentType = Nothing
-  , _actions = Nothing
-  , _authorName = Nothing
-  , _authorLink = Nothing
-  , _authorIcon = Nothing
-  , _callbackId = Nothing
-  , _title = Nothing
-  , _titleLink = Nothing
-  , _text = Nothing
-  , _fields = Nothing
-  , _imageUrl = Nothing
-  , _thumbUrl = Nothing
-  , _footer = Nothing
-  , _footerIcon = Nothing
-  , _ts = Nothing
-  }
+instance Default (Attachment a) where
+  def = Attachment
+    { _fallback       = Nothing
+    , _color          = Nothing
+    , _pretext        = Nothing
+    , _attachmentType = Nothing
+    , _actions        = Nothing
+    , _authorName     = Nothing
+    , _authorLink     = Nothing
+    , _authorIcon     = Nothing
+    , _callbackId     = Nothing
+    , _title          = Nothing
+    , _titleLink      = Nothing
+    , _text           = Nothing
+    , _fields         = Nothing
+    , _imageUrl       = Nothing
+    , _thumbUrl       = Nothing
+    , _footer         = Nothing
+    , _footerIcon     = Nothing
+    , _ts             = Nothing
+    }

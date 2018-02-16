@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
-module Slack.Types.Message
+module Taut.Types.Message
        ( Message( Message )
        , Parse( Full
               , None
@@ -27,31 +27,32 @@ module Slack.Types.Message
        )
        where
 
-import Control.Lens                   ( makeLenses )
-import Data.Aeson                     ( FromJSON( parseJSON )
-                                      , ToJSON( toJSON )
-                                      , defaultOptions
-                                      , genericParseJSON
-                                      , genericToJSON
-                                      )
-import Data.Aeson.Types               ( Options( constructorTagModifier
-                                               , fieldLabelModifier
-                                               , omitNothingFields
-                                               )
-                                      , camelTo2
-                                      )
-import Data.Char                      ( toLower )
-import Data.Default                   ( Default
-                                      , def
-                                      )
 import Focus.Prelude
+
+import Control.Lens                  ( makeLenses )
+import Data.Aeson                    ( FromJSON( parseJSON )
+                                     , ToJSON( toJSON )
+                                     , defaultOptions
+                                     , genericParseJSON
+                                     , genericToJSON
+                                     )
+import Data.Aeson.Types              ( Options( constructorTagModifier
+                                              , fieldLabelModifier
+                                              , omitNothingFields
+                                              )
+                                     , camelTo2
+                                     )
+import Data.Char                     ( toLower )
+import Data.Default                  ( Default
+                                     , def
+                                     )
+import Taut.Types.ChannelId          ( ChannelId )
 import Taut.Types.Message.Attachment ( Attachment )
-import Taut.Types.ChannelId           ( ChannelId )
-import Taut.Types.OauthToken          ( OauthToken )
-import Taut.Types.UserName            ( UserName )
+import Taut.Types.OauthToken         ( OauthToken )
+import Taut.Types.UserName           ( UserName )
 
 data Parse = Full | None
-  deriving (Generic, Show)
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance ToJSON Parse where
   toJSON = genericToJSON customUnionTypeOptions
@@ -83,7 +84,7 @@ data Message a = Message
   , _type'          :: Maybe Text
   , _subType        :: Maybe Text
   , _ts             :: Maybe Text
-  } deriving (Show, Generic)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Message
 
@@ -120,4 +121,3 @@ instance Default (Message a) where
     , _ts             = Nothing
     , _type'          = Nothing
     }
-

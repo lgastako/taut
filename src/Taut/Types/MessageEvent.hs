@@ -1,8 +1,10 @@
-{-# LANGUAGE DeriveGeneric      #-}
-{-# LANGUAGE FlexibleInstances  #-}
 {-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveFunctor      #-}
+{-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE DeriveTraversable  #-}
+{-# LANGUAGE FlexibleInstances  #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
+{-# LANGUAGE OverloadedStrings  #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TemplateHaskell    #-}
 module Taut.Types.MessageEvent
@@ -24,50 +26,50 @@ module Taut.Types.MessageEvent
        , userId
        ) where
 
-import           Prelude                             hiding ( null )
+import qualified Prelude                as P
+import           Focus.Prelude
 
-import           Control.Lens                               ( (&)
-                                                            , (.~)
-                                                            , (??)
-                                                            , (^.)
-                                                            , DefName( TopName )
-                                                            , lensField
-                                                            , lensRules
-                                                            , makeLensesWith
-                                                            )
-import           Data.Aeson                                 ( FromJSON
-                                                            , ToJSON
-                                                            , genericParseJSON
-                                                            , genericToJSON
-                                                            , parseJSON
-                                                            , toJSON
-                                                            )
-import           Data.Aeson.TH                              ( defaultOptions
-                                                            , fieldLabelModifier
-                                                            )
-import           Data.Csv                                   ( ToNamedRecord( toNamedRecord ) )
+import           Control.Lens                        ( (&)
+                                                     , (.~)
+                                                     , (??)
+                                                     , (^.)
+                                                     , DefName( TopName )
+                                                     , lensField
+                                                     , lensRules
+                                                     , makeLensesWith
+                                                     )
+import           Data.Aeson                          ( FromJSON
+                                                     , ToJSON
+                                                     , genericParseJSON
+                                                     , genericToJSON
+                                                     , parseJSON
+                                                     , toJSON
+                                                     )
+import           Data.Aeson.TH                       ( defaultOptions
+                                                     , fieldLabelModifier
+                                                     )
+import           Data.Csv                            ( ToNamedRecord( toNamedRecord ) )
 import qualified Data.Csv               as Csv
-import           Data.DeriveTH                              ( derive
-                                                            , makeArbitrary
-                                                            )
+import           Data.DeriveTH                       ( derive
+                                                     , makeArbitrary
+                                                     )
 import qualified Data.Text              as Text
-import           Infinity                            hiding ( error )
-import           Language.Haskell.TH                        ( mkName
-                                                            , nameBase
-                                                            )
-import           Taut.Types.ChannelId                       ( ChannelId )
+import           Language.Haskell.TH                 ( mkName
+                                                     , nameBase
+                                                     )
+import           Taut.Types.ChannelId                ( ChannelId )
 import qualified Taut.Types.ChannelId   as ChannelId
-import           Taut.Types.EditInfo                        ( EditInfo )
-import           Taut.Types.MessageType                     ( MessageType )
-import           Taut.Types.Reaction                        ( Reaction )
+import           Taut.Types.EditInfo                 ( EditInfo )
+import           Taut.Types.MessageType              ( MessageType )
+import           Taut.Types.Reaction                 ( Reaction )
 import qualified Taut.Types.Reaction    as Reaction
-import           Taut.Types.SubType                         ( SubType )
+import           Taut.Types.SubType                  ( SubType )
 import qualified Taut.Types.SubType     as SubType
-import           Taut.Types.Timestamp                       ( Timestamp )
-import           Taut.Types.UserId                          ( UserId )
-import           Test.QuickCheck                            ( Arbitrary
-                                                            , arbitrary
-                                                            )
+import           Taut.Types.Timestamp                ( Timestamp )
+import           Taut.Types.UserId                   ( UserId )
+import           Test.QuickCheck                     ( Arbitrary
+                                                     , arbitrary
+                                                     )
 
 data MessageEvent a = MessageEvent
   { _channelId  :: ChannelId
@@ -102,10 +104,10 @@ fieldPairs = [ ("_channelId", "channel")
 -- reverseFieldPairs = [(b, a) | (a, b) <- fieldPairs]
 
 fromField :: String -> String
-fromField field = fromMaybe (drop 1 field) $ lookup field fieldPairs
+fromField field = fromMaybe (drop 1 field) $ P.lookup field fieldPairs
 
 toField :: String -> String
-toField field = fromMaybe (drop 1 field) $ lookup field fieldPairs -- reverseFieldPairs
+toField field = fromMaybe (drop 1 field) $ P.lookup field fieldPairs -- reverseFieldPairs
 
 instance ToJSON (MessageEvent Text) where
   toJSON = genericToJSON defaultOptions { fieldLabelModifier = toField }

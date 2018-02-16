@@ -22,6 +22,9 @@ test:
 watch:
 	stack build --fast --file-watch
 
+watch-test:
+	stack test --fast --file-watch
+
 b: build
 hl: hlint
 i: install
@@ -29,5 +32,6 @@ r: run
 s: setup
 w: watch
 t: test
+wt: watch-test
 
 .PHONY: test

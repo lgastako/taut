@@ -1,9 +1,12 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
 module Taut.Examples
        ( exampleMsg1
        ) where
 
+import           Focus.Prelude
+
 import           Data.Default                            ( def )
-import           Infinity
 import           Taut
 import qualified Taut.Types.ChannelId    as ChannelId
 import qualified Taut.Types.MessageEvent as MessageEvent

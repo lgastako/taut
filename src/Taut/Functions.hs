@@ -1,24 +1,22 @@
-{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE FlexibleContexts  #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
 module Taut.Functions
        ( byChannel
        , chronoByChan
        , chronological
+       , replyWindows
        , userReplyDocs
        , userReplyDocsWith
        , userReplyWindows
-       , replyWindows
        ) where
 
+import qualified Prelude                 as P
+import           Focus.Prelude
+
 import           Control.Lens                    ( (^.) )
-import           Control.Monad                   ( guard )
-import           Data.List                       ( foldl'
-                                                 , inits
-                                                 , sortOn
-                                                 )
-import           Data.Map.Strict                 ( Map )
 import qualified Data.Map.Strict         as Map
 import           Data.Maybe                      ( mapMaybe )
-import           Data.Text                       ( Text )
 import qualified Data.Text               as Text
 import           Taut.Types.ChannelId            ( ChannelId )
 import           Taut.Types.MessageEvent         ( MessageEvent
@@ -61,8 +59,8 @@ replyWindows n =
       guard $ length win == n
       return (target, win)
       where
-        target       = last ms
-        win          = takeWin . filter ((/= target ^. userId) . (^. userId)) . init $ ms
+        target       = P.last ms
+        win          = takeWin . filter ((/= target ^. userId) . (^. userId)) . P.init $ ms
         takeWin xs   = foldl' (const . drop 1) xs (drop n xs)
 
 userReplyWindows :: Ord a =>
@@ -73,7 +71,7 @@ userReplyWindows = Map.foldrWithKey add Map.empty
     add k v = Map.insertWith mappend (k ^. userId) (Map.singleton k v)
 
 userReplyDocs :: Map UserId (Map (MessageEvent Text) [MessageEvent Text]) -> Map UserId Text
-userReplyDocs = userReplyDocsWith id
+userReplyDocs = userReplyDocsWith identity
 
 userReplyDocsWith :: (a -> Text) -> Map UserId (Map (MessageEvent a) [MessageEvent a]) -> Map UserId Text
 userReplyDocsWith f = fmap (Text.intercalate "\n" . map (f . (^. payload)) . mconcat . Map.elems)

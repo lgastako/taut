@@ -1,8 +1,12 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
 module Taut.FunctionsSpec ( main, spec ) where
+
+import           Prelude                                 ( (!!) )
+import           Focus.Prelude
 
 import           Data.Default                            ( Default( def ) )
 import qualified Data.Map                as Map
-import           Infinity
 import           Taut.Functions                          ( replyWindows )
 import qualified Taut.Types.ChannelId    as ChannelId
 import           Taut.Types.MessageEvent                 ( MessageEvent )
@@ -31,9 +35,16 @@ spec =
 
     context "given a non-empty list" $
       it "a window of size 1 returns all immediate predecessors" $
-        replyWindows 1 exampleMsgs `shouldBe` fixme
+        replyWindows 1 exampleMsgs `shouldBe` expected
       where
-        fixme = Map.empty
+        expected = Map.fromList
+          [ ( exampleMsgs !! 1
+            , [ exampleMsgs !! 0 ]
+            )
+          , ( exampleMsgs !! 3
+            , [ exampleMsgs !! 2 ]
+            )
+          ]
 
 exampleMsgs :: [MessageEvent Text]
 exampleMsgs = [msg1, msg2, msg3, msg4]

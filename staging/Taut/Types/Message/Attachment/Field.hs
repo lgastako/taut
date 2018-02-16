@@ -1,12 +1,12 @@
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Message.Attachment.Field
-       ( Field(Field)
+       ( Field( Field )
+       , short
        , title
        , value
-       , short
-       )
-       where
+       ) where
 
 import Control.Lens     ( makeLenses )
 import Data.Aeson       ( FromJSON( parseJSON )
@@ -20,26 +20,24 @@ import Data.Aeson.Types ( Options( fieldLabelModifier
                                  )
                         , camelTo2
                         )
-import Data.Text        ( Text )
-import GHC.Generics     ( Generic )
+import Focus.Prelude
 
 data Field = Field
-  { _title :: Text
+  { _short :: Bool
+  , _title :: Text
   , _value :: Text
-  , _short :: Bool
-  } deriving (Generic, Show)
+  } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Field
 
-instance ToJSON Field where
-  toJSON = genericToJSON customOptions
-
 instance FromJSON Field where
-  parseJSON = genericParseJSON customOptions
+  parseJSON = genericParseJSON fieldOptions
 
+instance ToJSON Field where
+  toJSON = genericToJSON fieldOptions
 
-customOptions :: Options
-customOptions = defaultOptions
+fieldOptions :: Options
+fieldOptions = defaultOptions
   { fieldLabelModifier = camelTo2 '_' . drop 1
-  , omitNothingFields = True
+  , omitNothingFields  = True
   }

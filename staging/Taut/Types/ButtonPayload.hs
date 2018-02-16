@@ -1,44 +1,47 @@
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.ButtonPayload
-       ( Team(Team)
-       , teamId
-       , teamDomain
-       , Channel(Channel)
+       ( ButtonPayload( ButtonPayload )
+       , Channel( Channel )
+       , Team( Team )
+       , TriggerId( TriggerId )
+       , User( User )
+       , actions
+       , actionTs
+       , attachmentId
+       , callbackId
+       , channel
        , channelId
        , channelName
-       , User(User)
-       , userId
-       , userName
-       , ButtonPayload(ButtonPayload)
-       , actions
-       , callbackId
-       , team
-       , channel
-       , user
-       , actionTs
        , messageTs
-       , attachmentId
-       , token
-       , triggerId
        , originalMessage
        , responseUrl
-       )
-       where
+       , team
+       , teamDomain
+       , teamId
+       , token
+       , triggerId
+       , userId
+       , userName
+       , user
+       ) where
 
 import Control.Lens                         ( makeLenses )
 import Data.Aeson                           ( FromJSON
+                                            , ToJSON
                                             , defaultOptions
                                             , genericParseJSON
+                                            , genericToJSON
                                             , parseJSON
+                                            , toJSON
                                             )
 import Data.Aeson.Types                     ( Options( fieldLabelModifier
                                                      , omitNothingFields
                                                      )
                                             , camelTo2
                                             )
-import Data.Text                            ( Text )
-import GHC.Generics                         ( Generic )
+import Focus.Prelude
 import Taut.Types.ChannelId                 ( ChannelId )
 import Taut.Types.ChannelName               ( ChannelName )
 import Taut.Types.Message                   ( Message )
@@ -49,80 +52,93 @@ import Taut.Types.UserId                    ( UserId )
 import Taut.Types.UserName                  ( UserName )
 
 data Team = Team
-  { _teamId :: TeamId
-  , _teamDomain :: Text
-  }
-  deriving (Generic, Show)
+  { _teamDomain :: Text
+  , _teamId     :: TeamId
+  } deriving (Eq, Generic, Ord, Read, Show)
+
 makeLenses ''Team
 
-customTeamOptions :: Options
-customTeamOptions = defaultOptions
+instance FromJSON Team where
+  parseJSON = genericParseJSON teamOptions
+
+instance ToJSON Team where
+  toJSON = genericToJSON teamOptions
+
+teamOptions :: Options
+teamOptions = defaultOptions
   { fieldLabelModifier = camelTo2 '_' . drop 5
   }
 
-instance FromJSON Team where
-  parseJSON = genericParseJSON customTeamOptions
-
 data Channel = Channel
-  { _channelId :: ChannelId
+  { _channelId   :: ChannelId
   , _channelName :: ChannelName
-  }
-  deriving (Generic, Show)
+  } deriving (Eq, Generic, Ord, Read, Show)
+
 makeLenses ''Channel
 
-customChannelOptions :: Options
-customChannelOptions = defaultOptions
+instance FromJSON Channel where
+  parseJSON = genericParseJSON channelOptions
+
+instance ToJSON Channel where
+  toJSON = genericToJSON channelOptions
+
+channelOptions :: Options
+channelOptions = defaultOptions
   { fieldLabelModifier = camelTo2 '_' . drop 8
   }
 
-instance FromJSON Channel where
-  parseJSON = genericParseJSON customChannelOptions
-
 data User = User
-  { _userId :: UserId
+  { _userId   :: UserId
   , _userName :: UserName
-  }
-  deriving (Generic, Show)
+  } deriving (Eq, Generic, Ord, Read, Show)
+
 makeLenses ''User
 
-customUserOptions :: Options
-customUserOptions = defaultOptions
+instance FromJSON User where
+  parseJSON = genericParseJSON userOptions
+
+instance ToJSON User where
+  toJSON = genericToJSON userOptions
+
+userOptions :: Options
+userOptions = defaultOptions
   { fieldLabelModifier = camelTo2 '_' . drop 5
   }
 
-instance FromJSON User where
-  parseJSON = genericParseJSON customUserOptions
-
 newtype TriggerId = TriggerId Text
-                    deriving (Show, Generic)
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance FromJSON TriggerId
+instance ToJSON   TriggerId
 
 data ButtonPayload a = ButtonPayload
-  { _actions :: [Action]
-  , _callbackId :: a
-  , _team :: Team
-  , _channel :: Channel
-  , _user :: User
-  , _actionTs :: Text
-  , _messageTs :: Text
-  , _attachmentId :: Text
-  , _token :: OauthToken
+  { _actions         :: [Action]
+  , _actionTs        :: Text
+  , _attachmentId    :: Text
+  , _callbackId      :: a
+  , _channel         :: Channel
+  , _messageTs       :: Text
   , _originalMessage :: Message a
-  , _responseUrl :: Text
-  , _triggerId :: Maybe TriggerId
-  }
-  deriving (Show, Generic)
+  , _responseUrl     :: Text
+  , _team            :: Team
+  , _token           :: OauthToken
+  , _triggerId       :: Maybe TriggerId
+  , _user            :: User
+  } deriving (Eq, Generic, Ord, Read, Show)
+
 makeLenses ''ButtonPayload
 
 instance FromJSON a => FromJSON (ButtonPayload a) where
-  parseJSON = genericParseJSON customOptions
+  parseJSON = genericParseJSON buttonPayloadOptions
 
-customOptions :: Options
-customOptions = defaultOptions
-  { fieldLabelModifier = camelTo2 '_' . drop 1
-  , omitNothingFields = True
-  }
+instance ToJSON a => ToJSON (ButtonPayload a) where
+  toJSON = genericToJSON buttonPayloadOptions
+
+buttonPayloadOptions :: Options
+buttonPayloadOptions = defaultOptions
+    { fieldLabelModifier = camelTo2 '_' . drop 1
+    , omitNothingFields  = True
+    }
 
 {-
 -- An instance to use it with Servant
