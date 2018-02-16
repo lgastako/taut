@@ -9,6 +9,8 @@ module Taut.Types.Message.Attachment.Action.Confirm
        , okText)
        where
 
+import Focus.Prelude
+
 import Control.Lens     ( makeLenses )
 import Data.Aeson       ( FromJSON( parseJSON )
                         , ToJSON( toJSON )
@@ -22,7 +24,6 @@ import Data.Aeson.Types ( Options( fieldLabelModifier
                         , camelTo2
                         )
 import Data.Text        ( Text )
-import Focus.Prelude
 import GHC.Generics     ( Generic )
 
 data Confirm = Confirm

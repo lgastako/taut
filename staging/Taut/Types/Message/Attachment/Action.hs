@@ -18,31 +18,31 @@ module Taut.Types.Message.Attachment.Action
        , value
        ) where
 
-import           Control.Lens                                           ( makeLenses )
-import           Control.Monad                                          ( fail )
-import Data.Aeson.Types ( Parser )
-
-import           Data.Aeson                                             ( (.:)
-                                                                        , (.:?)
-                                                                        , Object
-                                                                        , FromJSON( parseJSON )
-                                                                        , ToJSON( toJSON )
-                                                                        , defaultOptions
-                                                                        , genericParseJSON
-                                                                        , genericToJSON
-                                                                        , withObject
-                                                                        )
-import qualified Data.Aeson                                    as Aeson
-import           Data.Aeson.Types                                       ( Options( constructorTagModifier
-                                                                                 , fieldLabelModifier
-                                                                                 , omitNothingFields
-                                                                                 )
-                                                                        , camelTo2
-                                                                        , typeMismatch
-                                                                        )
-import           Data.Char                                              ( toLower )
-import qualified Data.Text                                     as Text
 import           Focus.Prelude
+
+import           Control.Lens                                          ( makeLenses )
+import           Control.Monad                                         ( fail )
+import           Data.Aeson                                            ( (.:)
+                                                                       , (.:?)
+                                                                       , FromJSON( parseJSON )
+                                                                       , Object
+                                                                       , ToJSON( toJSON )
+                                                                       , defaultOptions
+                                                                       , genericParseJSON
+                                                                       , genericToJSON
+                                                                       , withObject
+                                                                       )
+import qualified Data.Aeson                                   as Aeson
+import           Data.Aeson.Types                                      ( Parser )
+import           Data.Aeson.Types                                      ( Options( constructorTagModifier
+                                                                                , fieldLabelModifier
+                                                                                , omitNothingFields
+                                                                                )
+                                                                       , camelTo2
+                                                                       , typeMismatch
+                                                                       )
+import           Data.Char                                             ( toLower )
+import qualified Data.Text                                    as Text
 import           Taut.Types.Message.Attachment.Action.Confirm          ( Confirm )
 
 data ButtonStyle
