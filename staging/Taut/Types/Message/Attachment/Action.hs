@@ -3,8 +3,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Message.Attachment.Action
-       ( Action( Action )
-       , ActionType( Button )
+       ( ActionType( Button )
+       , Action( Action )
        , ButtonStyle( Default
                     , Primary
                     , Danger
@@ -18,56 +18,55 @@ module Taut.Types.Message.Attachment.Action
        , value
        ) where
 
-import           Control.Applicative                                   ( (<|>) )
-import           Control.Lens                                          ( makeLenses )
-import           Control.Monad                                         ( fail )
-import           Data.Aeson                                            ( (.:)
-                                                                       , (.:?)
-                                                                       , FromJSON
-                                                                       , FromJSON( parseJSON )
-                                                                       , Object
-                                                                       , ToJSON( toJSON )
-                                                                       , defaultOptions
-                                                                       , genericParseJSON
-                                                                       , genericToJSON
-                                                                       , withObject
-                                                                       )
-import qualified Data.Aeson                                   as Aeson
-import           Data.Aeson.Types                                      ( Options( constructorTagModifier
-                                                                                , fieldLabelModifier
-                                                                                , omitNothingFields
-                                                                                )
-                                                                       , camelTo2
-                                                                       , typeMismatch
-                                                                       )
-import           Data.Aeson.Types                                      ( Parser )
-import           Data.Char                                             ( toLower )
-import qualified Data.Text                                    as Text
+import           Control.Lens                                           ( makeLenses )
+import           Control.Monad                                          ( fail )
+import Data.Aeson.Types ( Parser )
+
+import           Data.Aeson                                             ( (.:)
+                                                                        , (.:?)
+                                                                        , Object
+                                                                        , FromJSON( parseJSON )
+                                                                        , ToJSON( toJSON )
+                                                                        , defaultOptions
+                                                                        , genericParseJSON
+                                                                        , genericToJSON
+                                                                        , withObject
+                                                                        )
+import qualified Data.Aeson                                    as Aeson
+import           Data.Aeson.Types                                       ( Options( constructorTagModifier
+                                                                                 , fieldLabelModifier
+                                                                                 , omitNothingFields
+                                                                                 )
+                                                                        , camelTo2
+                                                                        , typeMismatch
+                                                                        )
+import           Data.Char                                              ( toLower )
+import qualified Data.Text                                     as Text
 import           Focus.Prelude
 import           Taut.Types.Message.Attachment.Action.Confirm          ( Confirm )
 
-(.:??) :: FromJSON a => Object -> Text -> Parser (Maybe a)
-(.:??) v t = v .:? t <|> return Nothing
-
 data ButtonStyle
-  = Danger
-  | Default
+  = Default
   | Primary
-  deriving (Enum, Eq, Ord, Generic, Read, Show)
-
-instance FromJSON ButtonStyle where
-  parseJSON = genericParseJSON buttonStyleOptions
+  | Danger
+  deriving (Eq, Generic, Ord, Read, Show)
 
 instance ToJSON ButtonStyle where
-  toJSON = genericToJSON buttonStyleOptions
+  toJSON = genericToJSON customUnionTypeOptions
 
-buttonStyleOptions :: Options
-buttonStyleOptions = defaultOptions
+instance FromJSON ButtonStyle where
+  parseJSON = genericParseJSON customUnionTypeOptions
+
+customUnionTypeOptions :: Options
+customUnionTypeOptions = defaultOptions
   { constructorTagModifier = fmap toLower
   }
 
 data ActionType = Button
   deriving (Eq, Generic, Ord, Read, Show)
+
+instance ToJSON ActionType where
+  toJSON _ = Aeson.String "button"
 
 instance FromJSON ActionType where
   parseJSON (Aeson.String s) = case s of
@@ -75,15 +74,12 @@ instance FromJSON ActionType where
     e -> fail $ "Invalid ActionType: " ++ Text.unpack e
   parseJSON invalid = typeMismatch "ActionType" invalid
 
-instance ToJSON ActionType where
-  toJSON _ = Aeson.String "button"
-
 data Action = Action
   { _confirm :: Maybe Confirm
   , _name    :: Text
-  , _style   :: Maybe ButtonStyle
   , _text    :: Maybe Text
   , _type'   :: ActionType
+  , _style   :: Maybe ButtonStyle
   , _value   :: Text
   } deriving (Eq, Generic, Ord, Read, Show)
 
@@ -92,24 +88,30 @@ makeLenses ''Action
 button :: Text -> Text ->  Text -> Action
 button name' text' value' = Action
   { _confirm = Nothing
-  , _name    = name'
-  , _style   = Nothing
-  , _text    = Just text'
-  , _type'   = Button
-  , _value   = value'
+  , _name = name'
+  , _text = Just text'
+  , _type' = Button
+  , _style = Nothing
+  , _value = value'
   }
+
+instance ToJSON Action where
+  toJSON = genericToJSON customActionOptions
 
 instance FromJSON Action where
   parseJSON = withObject "Action" $ \v -> Action
         <$> v .:?? "confirm"
         <*> v .:   "name"
-        <*> v .:?? "style"
         <*> v .:?? "text"
         <*> v .:   "type"
+        <*> v .:?? "style"
         <*> v .:   "value"
 
-instance ToJSON Action where
-  toJSON = genericToJSON defaultOptions
-    { fieldLabelModifier = camelTo2 '_' . drop 1 . filter (/= '\'')
-    , omitNothingFields  = True
-    }
+(.:??) :: FromJSON a => Object -> Text -> Parser (Maybe a)
+(.:??) v t = v .:? t <|> return Nothing
+
+customActionOptions :: Options
+customActionOptions = defaultOptions
+  { fieldLabelModifier = camelTo2 '_' . drop 1 . filter (/= '\'')
+  , omitNothingFields = True
+  }
