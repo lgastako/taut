@@ -10,8 +10,8 @@ import Taut.Client                as Exports ( MonadSlack
 import Taut.Constants             as Exports ( botTokenPrefix )
 import Taut.Types.AccessToken     as Exports ( AccessToken
                                              , AnyAccessToken
-                                             , accessTokenText
                                              , accessTokenString
+                                             , accessTokenText
                                              )
 import Taut.Types.BotAccessToken  as Exports ( BotAccessToken )
 import Taut.Types.BotEvent        as Exports ( BotEvent( Message

@@ -1,11 +1,13 @@
-{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE TypeSynonymInstances  #-}
 
 module Taut.Conv where
 
-import           Control.Lens                       ( view, (^.) )
+import           Control.Lens                       ( (^.)
+                                                    , view
+                                                    )
 import           Data.Text                          ( Text
                                                     , pack
                                                     , unpack
@@ -20,7 +22,7 @@ import           Taut.Types.BotEvent                ( BotEvent( Message
 import           Taut.Types.ChannelId               ( ChannelId )
 import qualified Taut.Types.ChannelId  as ChannelId
 import           Taut.Types.EditInfo                ( EditInfo )
-import qualified Taut.Types.EditInfo as EditInfo
+import qualified Taut.Types.EditInfo   as EditInfo
 import           Taut.Types.Timestamp               ( Timestamp
                                                     , fromUTCTime
                                                     )
