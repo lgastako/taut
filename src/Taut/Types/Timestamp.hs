@@ -4,6 +4,7 @@
 {-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Timestamp
        ( Timestamp
+       , currentTimestamp
        , fromUTCTime
        , fromSlackTimeText
        , slackTimeText
@@ -30,7 +31,9 @@ import           Data.DeriveTH                     ( derive
                                                    , makeArbitrary
                                                    )
 import qualified Data.Text                 as Text
-import           Data.Time.Clock                   ( UTCTime )
+import           Data.Time.Clock                   ( UTCTime
+                                                   , getCurrentTime
+                                                   )
 import           Data.Time.Clock.POSIX             ( posixSecondsToUTCTime
                                                    , utcTimeToPOSIXSeconds
                                                    )
@@ -48,6 +51,9 @@ instance ToField Timestamp where
 
 instance Default Timestamp where
   def = fromSlackTimeText "0"
+
+currentTimestamp :: IO Timestamp
+currentTimestamp = Timestamp <$> getCurrentTime
 
 fromUTCTime :: UTCTime -> Timestamp
 fromUTCTime = Timestamp
