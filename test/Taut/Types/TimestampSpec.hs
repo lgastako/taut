@@ -1,5 +1,6 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
+
 module Taut.Types.TimestampSpec ( main, spec ) where
 
 import           Focus.Prelude

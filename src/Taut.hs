@@ -6,8 +6,12 @@ module Taut
     , ChannelId
     , ChannelName
     , EditInfo
+    , BotEvent( Message
+              , OtherEvent
+              )
     , MessageEvent
     , MessageType
+    , MonadSlack
     , Reaction
     , SubType
     , TeamId
@@ -19,6 +23,8 @@ module Taut
     , channelName
     , cidText
     , onlyMessages
+    , runBot
+    , runSlack
     , slackTimeText
     , subText
     , tidText
@@ -29,6 +35,13 @@ module Taut
     , withPayloads
     ) where
 
+import Taut.Client               ( BotEvent( Message
+                                           , OtherEvent
+                                           )
+                                 , MonadSlack
+                                 , runBot
+                                 , runSlack
+                                 )
 import Taut.Constants            ( botTokenPrefix )
 import Taut.Types.AccessToken    ( AccessToken
                                  , AnyAccessToken

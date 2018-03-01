@@ -5,10 +5,14 @@ flags: {}
 extra-package-dbs: []
 
 packages:
-- location: "."
+- location: .
 - location:
     git: git@github.com:SuperpowersCorp/focus-prelude.git
     commit: a694a45945752816c798f76bbf1f166a8f59afc9
+  extra-dep: true
+- location:
+    git: git@hslack.github.com:SuperpowersCorp/hslack.git
+    commit: 4ec8a9728ee1ea22d635d16893b6ec5a9299a9a0
   extra-dep: true
 - location:
     git: git@github.com:SuperpowersCorp/luthor.git
@@ -18,4 +22,5 @@ packages:
 extra-deps:
 - protolude-0.2.1
 - safe-exceptions-0.1.7.0
+- slack-api-0.12
 - validation-0.6.2
