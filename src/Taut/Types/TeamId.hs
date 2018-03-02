@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude          #-}
@@ -23,6 +24,7 @@ import Data.Aeson.Types          ( FromJSONKey
 import Data.Csv                  ( ToField
                                  , toField
                                  )
+import Data.Data                 ( Data )
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
@@ -32,7 +34,7 @@ import Test.QuickCheck           ( Arbitrary
 import Test.QuickCheck.Instances ()
 
 newtype TeamId = TeamId Text
-  deriving (Eq, Generic, Ord, Read, Show, FromJSONKey, ToJSONKey)
+  deriving (Data, Eq, Generic, Ord, Read, Show, FromJSONKey, ToJSONKey)
 
 instance ToField TeamId where
   toField = encodeUtf8 . toText

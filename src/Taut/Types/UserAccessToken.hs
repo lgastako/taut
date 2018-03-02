@@ -1,6 +1,8 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
+{-# LANGUAGE OverloadedStrings  #-}
+
 module Taut.Types.UserAccessToken
        ( UserAccessToken
        , fromText
@@ -9,6 +11,10 @@ module Taut.Types.UserAccessToken
 
 import           Focus.Prelude
 
+import           Data.Aeson                     ( FromJSON
+                                                , ToJSON
+                                                )
+import           Data.Data                      ( Data )
 import qualified Data.Text              as Text
 import           Taut.Constants                 ( botTokenPrefix )
 import           Taut.Types.AccessToken         ( AccessToken
@@ -16,7 +22,10 @@ import           Taut.Types.AccessToken         ( AccessToken
                                                 )
 
 data UserAccessToken = UserAccessToken Text
-  deriving (Eq, Generic, Ord, Read, Show)
+  deriving (Data, Eq, Generic, Ord, Read, Show)
+
+instance FromJSON UserAccessToken
+instance ToJSON   UserAccessToken
 
 instance AccessToken UserAccessToken where
   accessTokenText (UserAccessToken text) = text

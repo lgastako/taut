@@ -1,7 +1,9 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
+{-# LANGUAGE OverloadedStrings  #-}
+{-# LANGUAGE TemplateHaskell    #-}
+
 module Taut.Types.Timestamp
        ( Timestamp
        , currentTimestamp
@@ -26,6 +28,7 @@ import           Data.Aeson.TH                     ( defaultOptions
 import           Data.Csv                          ( ToField
                                                    , toField
                                                    )
+import           Data.Data                         ( Data )
 import           Data.Default                      ( Default( def ) )
 import           Data.DeriveTH                     ( derive
                                                    , makeArbitrary
@@ -44,7 +47,7 @@ import           Test.QuickCheck.Instances         ()
 import           Text.Printf                       ( printf )
 
 newtype Timestamp = Timestamp UTCTime
-  deriving (Eq, Generic, Ord, Read, Show)
+  deriving (Data, Eq, Generic, Ord, Read, Show)
 
 instance ToField Timestamp where
   toField = encodeUtf8 . toSlackTimeText
