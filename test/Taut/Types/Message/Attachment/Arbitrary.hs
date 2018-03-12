@@ -28,7 +28,7 @@ instance Arbitrary Color where
     elements [Good, Warning, Danger, ColorCode cc1, ColorCode cc2]
   shrink = genericShrink
 
-instance Arbitrary a => Arbitrary (Attachment a) where
+instance Arbitrary Attachment where
   arbitrary = Attachment
     <$> arbitrary
     <*> arbitrary

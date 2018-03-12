@@ -23,4 +23,4 @@ main = hspec spec
 spec :: Spec
 spec = describe "ButtonPayload" $ do
   it "should be roundtrippable" $ property $ do
-    \payload -> (decode . encode $ payload) `shouldBe` Just (payload :: ButtonPayload ())
+    \payload -> (decode . encode $ payload) `shouldBe` Just (payload :: ButtonPayload)

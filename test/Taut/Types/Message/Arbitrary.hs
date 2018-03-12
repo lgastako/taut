@@ -15,7 +15,7 @@ import Test.QuickCheck                         ( Arbitrary
                                                , shrink
                                                )
 
-instance Arbitrary a => Arbitrary (Message a) where
+instance Arbitrary Message where
   arbitrary = Message
     <$> arbitrary
     <*> arbitrary
