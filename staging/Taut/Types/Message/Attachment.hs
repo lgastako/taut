@@ -69,13 +69,13 @@ instance ToJSON Color where
   toJSON (ColorCode code) = Aeson.String code
   toJSON x = Aeson.String . Text.toLower . Text.pack . show $ x
 
-data Attachment a = Attachment
+data Attachment = Attachment
   { _actions        :: Maybe [Action]
   , _attachmentType :: Maybe Text
   , _authorName     :: Maybe Text
   , _authorLink     :: Maybe Text
   , _authorIcon     :: Maybe Text
-  , _callbackId     :: Maybe a
+  , _callbackId     :: Maybe Text
   , _color          :: Maybe Color
   , _fallback       :: Maybe Text
   , _fields         :: Maybe [Field]
@@ -92,10 +92,10 @@ data Attachment a = Attachment
 
 makeLenses ''Attachment
 
-instance FromJSON a => FromJSON (Attachment a) where
+instance FromJSON Attachment where
   parseJSON = genericParseJSON attachmentOptions
 
-instance ToJSON a => ToJSON (Attachment a) where
+instance ToJSON Attachment where
   toJSON = genericToJSON attachmentOptions
 
 attachmentOptions :: Options
@@ -104,7 +104,7 @@ attachmentOptions = defaultOptions
   , omitNothingFields  = True
   }
 
-empty :: Attachment a
+empty :: Attachment
 empty = Attachment
   { _actions        = Nothing
   , _attachmentType = Nothing

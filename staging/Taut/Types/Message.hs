@@ -61,9 +61,9 @@ parseOptions = defaultOptions
   { constructorTagModifier = fmap toLower
   }
 
-data Message a = Message
+data Message = Message
   { _asUser         :: Maybe Bool
-  , _attachments    :: Maybe [Attachment a]
+  , _attachments    :: Maybe [Attachment]
   , _botId          :: Maybe Text
   , _channel        :: Maybe ChannelId
   , _iconEmoji      :: Maybe Text
@@ -84,10 +84,10 @@ data Message a = Message
 
 makeLenses ''Message
 
-instance FromJSON a => FromJSON (Message a) where
+instance FromJSON Message where
   parseJSON = genericParseJSON messageOptions
 
-instance ToJSON a => ToJSON (Message a) where
+instance ToJSON Message where
   toJSON = genericToJSON messageOptions
 
 messageOptions :: Options
@@ -96,7 +96,7 @@ messageOptions = defaultOptions
   , omitNothingFields = True
   }
 
-empty :: Message a
+empty :: Message
 empty = Message
   { _asUser         = Nothing
   , _attachments    = Nothing
