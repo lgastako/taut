@@ -18,7 +18,7 @@ import Test.QuickCheck                                ( Arbitrary
                                                       , shrink
                                                       )
 
-instance Arbitrary a => Arbitrary (ButtonPayload a) where
+instance Arbitrary ButtonPayload where
   arbitrary = ButtonPayload
     <$> arbitrary
     <*> arbitrary
