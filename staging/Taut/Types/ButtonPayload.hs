@@ -112,14 +112,14 @@ newtype TriggerId = TriggerId Text
 instance FromJSON TriggerId
 instance ToJSON   TriggerId
 
-data ButtonPayload a = ButtonPayload
+data ButtonPayload = ButtonPayload
   { _actions         :: [Action]
   , _actionTs        :: Text
   , _attachmentId    :: Text
-  , _callbackId      :: a
+  , _callbackId      :: Text
   , _channel         :: Channel
   , _messageTs       :: Text
-  , _originalMessage :: Message a
+  , _originalMessage :: Message
   , _responseUrl     :: Text
   , _team            :: Team
   , _token           :: OauthToken
@@ -129,10 +129,10 @@ data ButtonPayload a = ButtonPayload
 
 makeLenses ''ButtonPayload
 
-instance FromJSON a => FromJSON (ButtonPayload a) where
+instance FromJSON ButtonPayload where
   parseJSON = genericParseJSON buttonPayloadOptions
 
-instance ToJSON a => ToJSON (ButtonPayload a) where
+instance ToJSON ButtonPayload where
   toJSON = genericToJSON buttonPayloadOptions
 
 buttonPayloadOptions :: Options

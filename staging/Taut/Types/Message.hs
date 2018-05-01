@@ -1,6 +1,7 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
+
 module Taut.Types.Message
        ( Message( Message )
        , Parse( Full
@@ -64,9 +65,9 @@ parseOptions = defaultOptions
   { constructorTagModifier = fmap toLower
   }
 
-data Message a = Message
+data Message = Message
   { _asUser         :: Maybe Bool
-  , _attachments    :: Maybe [Attachment a]
+  , _attachments    :: Maybe [Attachment]
   , _botId          :: Maybe Text
   , _channel        :: Maybe ChannelId
   , _iconEmoji      :: Maybe Text
@@ -87,10 +88,10 @@ data Message a = Message
 
 makeLenses ''Message
 
-instance FromJSON a => FromJSON (Message a) where
+instance FromJSON Message where
   parseJSON = genericParseJSON messageOptions
 
-instance ToJSON a => ToJSON (Message a) where
+instance ToJSON Message where
   toJSON = genericToJSON messageOptions
 
 messageOptions :: Options
@@ -99,7 +100,7 @@ messageOptions = defaultOptions
   , omitNothingFields = True
   }
 
-instance Default (Message a) where
+instance Default Message where
   def = Message
     { _asUser         = Nothing
     , _attachments    = Nothing
