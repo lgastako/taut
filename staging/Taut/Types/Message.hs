@@ -10,7 +10,6 @@ module Taut.Types.Message
        , attachments
        , botId
        , channel
-       , empty
        , iconEmoji
        , iconUrl
        , linkNames
@@ -27,6 +26,8 @@ module Taut.Types.Message
        , username
        ) where
 
+import Focus.Prelude                 hiding ( empty )
+
 import Control.Lens                         ( makeLenses )
 import Data.Aeson                           ( FromJSON( parseJSON )
                                             , ToJSON( toJSON )
@@ -41,7 +42,9 @@ import Data.Aeson.Types                     ( Options( constructorTagModifier
                                             , camelTo2
                                             )
 import Data.Char                            ( toLower )
-import Focus.Prelude                 hiding ( empty )
+import Data.Default                         ( Default
+                                            , def
+                                            )
 import Taut.Types.ChannelId                 ( ChannelId )
 import Taut.Types.Message.Attachment        ( Attachment )
 import Taut.Types.OauthToken                ( OauthToken )
@@ -96,24 +99,24 @@ messageOptions = defaultOptions
   , omitNothingFields = True
   }
 
-empty :: Message a
-empty = Message
-  { _asUser         = Nothing
-  , _attachments    = Nothing
-  , _botId          = Nothing
-  , _channel        = Nothing
-  , _iconEmoji      = Nothing
-  , _iconUrl        = Nothing
-  , _linkNames      = Nothing
-  , _parse          = Nothing
-  , _replyBroadcast = Nothing
-  , _subType        = Nothing
-  , _text           = Nothing
-  , _threadTs       = Nothing
-  , _token          = Nothing
-  , _ts             = Nothing
-  , _type'          = Nothing
-  , _unfurlLinks    = Nothing
-  , _unfurlMedia    = Nothing
-  , _username       = Nothing
-  }
+instance Default (Message a) where
+  def = Message
+    { _asUser         = Nothing
+    , _attachments    = Nothing
+    , _botId          = Nothing
+    , _channel        = Nothing
+    , _iconEmoji      = Nothing
+    , _iconUrl        = Nothing
+    , _linkNames      = Nothing
+    , _parse          = Nothing
+    , _replyBroadcast = Nothing
+    , _subType        = Nothing
+    , _text           = Nothing
+    , _threadTs       = Nothing
+    , _token          = Nothing
+    , _ts             = Nothing
+    , _type'          = Nothing
+    , _unfurlLinks    = Nothing
+    , _unfurlMedia    = Nothing
+    , _username       = Nothing
+    }
