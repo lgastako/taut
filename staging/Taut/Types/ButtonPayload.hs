@@ -27,6 +27,8 @@ module Taut.Types.ButtonPayload
        , user
        ) where
 
+import Focus.Prelude
+
 import Control.Lens                         ( makeLenses )
 import Data.Aeson                           ( FromJSON
                                             , ToJSON
@@ -41,7 +43,6 @@ import Data.Aeson.Types                     ( Options( fieldLabelModifier
                                                      )
                                             , camelTo2
                                             )
-import Focus.Prelude
 import Taut.Types.ChannelId                 ( ChannelId )
 import Taut.Types.ChannelName               ( ChannelName )
 import Taut.Types.Message                   ( Message )

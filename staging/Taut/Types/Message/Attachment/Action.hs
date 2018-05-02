@@ -18,6 +18,8 @@ module Taut.Types.Message.Attachment.Action
        , value
        ) where
 
+import           Focus.Prelude
+
 import           Control.Applicative                                   ( (<|>) )
 import           Control.Lens                                          ( makeLenses )
 import           Control.Monad                                         ( fail )
@@ -43,7 +45,6 @@ import           Data.Aeson.Types                                      ( Options
 import           Data.Aeson.Types                                      ( Parser )
 import           Data.Char                                             ( toLower )
 import qualified Data.Text                                    as Text
-import           Focus.Prelude
 import           Taut.Types.Message.Attachment.Action.Confirm          ( Confirm )
 
 (.:??) :: FromJSON a => Object -> Text -> Parser (Maybe a)

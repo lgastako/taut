@@ -2,6 +2,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell   #-}
+
 module Taut.Types.Message.Attachment
        ( Attachment( Attachment )
        , Color( ColorCode
@@ -16,7 +17,6 @@ module Taut.Types.Message.Attachment
        , authorIcon
        , callbackId
        , color
-       , empty
        , fallback
        , fields
        , footer
@@ -29,6 +29,8 @@ module Taut.Types.Message.Attachment
        , titleLink
        , ts
        ) where
+
+import           Focus.Prelude                                 hiding ( empty )
 
 import           Control.Lens                                         ( makeLenses )
 import           Data.Aeson                                           ( FromJSON( parseJSON )
@@ -44,8 +46,10 @@ import           Data.Aeson.Types                                     ( Options(
                                                                       , camelTo2
                                                                       , typeMismatch
                                                                       )
+import           Data.Default                                         ( Default
+                                                                      , def
+                                                                      )
 import qualified Data.Text                            as Text
-import           Focus.Prelude                                 hiding ( empty )
 import           Taut.Types.Message.Attachment.Action                 ( Action )
 import           Taut.Types.Message.Attachment.Field                  ( Field )
 import           Taut.Types.Timestamp                                 ( Timestamp )
@@ -104,24 +108,24 @@ attachmentOptions = defaultOptions
   , omitNothingFields  = True
   }
 
-empty :: Attachment
-empty = Attachment
-  { _actions        = Nothing
-  , _attachmentType = Nothing
-  , _authorIcon     = Nothing
-  , _authorLink     = Nothing
-  , _authorName     = Nothing
-  , _callbackId     = Nothing
-  , _color          = Nothing
-  , _fallback       = Nothing
-  , _fields         = Nothing
-  , _footer         = Nothing
-  , _footerIcon     = Nothing
-  , _imageUrl       = Nothing
-  , _pretext        = Nothing
-  , _text           = Nothing
-  , _thumbUrl       = Nothing
-  , _title          = Nothing
-  , _titleLink      = Nothing
-  , _ts             = Nothing
-  }
+instance Default Attachment where
+  def = Attachment
+        { _actions        = Nothing
+        , _attachmentType = Nothing
+        , _authorIcon     = Nothing
+        , _authorLink     = Nothing
+        , _authorName     = Nothing
+        , _callbackId     = Nothing
+        , _color          = Nothing
+        , _fallback       = Nothing
+        , _fields         = Nothing
+        , _footer         = Nothing
+        , _footerIcon     = Nothing
+        , _imageUrl       = Nothing
+        , _pretext        = Nothing
+        , _text           = Nothing
+        , _thumbUrl       = Nothing
+        , _title          = Nothing
+        , _titleLink      = Nothing
+        , _ts             = Nothing
+        }

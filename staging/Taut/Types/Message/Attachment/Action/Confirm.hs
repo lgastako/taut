@@ -9,6 +9,8 @@ module Taut.Types.Message.Attachment.Action.Confirm
        , title
        ) where
 
+import Focus.Prelude
+
 import Control.Lens     ( makeLenses )
 import Data.Aeson       ( FromJSON( parseJSON )
                         , ToJSON( toJSON )
@@ -21,7 +23,6 @@ import Data.Aeson.Types ( Options( fieldLabelModifier
                                  )
                         , camelTo2
                         )
-import Focus.Prelude
 
 data Confirm = Confirm
   { _dismissText :: Text
