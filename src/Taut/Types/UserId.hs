@@ -30,12 +30,18 @@ import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
 import Test.QuickCheck.Instances ()
+import Web.HttpApiData           ( ToHttpApiData
+                                 , toQueryParam
+                                 )
 
 newtype UserId = UserId Text
   deriving (Eq, Generic, Ord, Read, Show, FromJSONKey, ToJSONKey)
 
 instance ToField UserId where
   toField = encodeUtf8 . toText
+
+instance ToHttpApiData UserId where
+  toQueryParam = toText
 
 fromText :: Text -> UserId
 fromText = UserId

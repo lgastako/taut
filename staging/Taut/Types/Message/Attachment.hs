@@ -30,12 +30,15 @@ module Taut.Types.Message.Attachment
        , ts
        ) where
 
-import           Focus.Prelude                                 hiding ( empty )
+import           Focus.Prelude                                 hiding ( decodeUtf8
+                                                                      , empty
+                                                                      )
 
 import           Control.Lens                                         ( makeLenses )
 import           Data.Aeson                                           ( FromJSON( parseJSON )
                                                                       , ToJSON( toJSON )
                                                                       , defaultOptions
+                                                                      , encode
                                                                       , genericParseJSON
                                                                       , genericToJSON
                                                                       )
@@ -50,9 +53,13 @@ import           Data.Default                                         ( Default
                                                                       , def
                                                                       )
 import qualified Data.Text                            as Text
+import           Data.Text.Lazy.Encoding                              ( decodeUtf8 )
 import           Taut.Types.Message.Attachment.Action                 ( Action )
 import           Taut.Types.Message.Attachment.Field                  ( Field )
 import           Taut.Types.Timestamp                                 ( Timestamp )
+import           Web.HttpApiData                                      ( ToHttpApiData
+                                                                      , toQueryParam
+                                                                      )
 
 data Color
   = ColorCode Text
@@ -101,6 +108,9 @@ instance FromJSON Attachment where
 
 instance ToJSON Attachment where
   toJSON = genericToJSON attachmentOptions
+
+instance ToHttpApiData Attachment where
+  toQueryParam = toStrict . decodeUtf8 . encode
 
 attachmentOptions :: Options
 attachmentOptions = defaultOptions

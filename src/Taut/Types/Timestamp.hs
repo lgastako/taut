@@ -13,32 +13,36 @@ module Taut.Types.Timestamp
        ) where
 
 import qualified Prelude                   as P
-import           Focus.Prelude
+import           Focus.Prelude                     hiding ( decodeUtf8 )
 
-import           Control.Lens                      ( Iso'
-                                                   , iso
-                                                   )
-import           Data.Aeson                        ()
-import           Data.Aeson.TH                     ( defaultOptions
-                                                   , deriveJSON
-                                                   )
-import           Data.Csv                          ( ToField
-                                                   , toField
-                                                   )
-import           Data.Default                      ( Default( def ) )
-import           Data.DeriveTH                     ( derive
-                                                   , makeArbitrary
-                                                   )
+import           Control.Lens                             ( Iso'
+                                                          , iso
+                                                          )
+import           Data.Aeson                               ( encode )
+import           Data.Aeson.TH                            ( defaultOptions
+                                                          , deriveJSON
+                                                          )
+import           Data.Csv                                 ( ToField
+                                                          , toField
+                                                          )
+import           Data.Default                             ( Default( def ) )
+import           Data.DeriveTH                            ( derive
+                                                          , makeArbitrary
+                                                          )
 import qualified Data.Text                 as Text
-import           Data.Time.Clock                   ( UTCTime )
-import           Data.Time.Clock.POSIX             ( posixSecondsToUTCTime
-                                                   , utcTimeToPOSIXSeconds
-                                                   )
-import           Test.QuickCheck                   ( Arbitrary
-                                                   , arbitrary
-                                                   )
-import           Test.QuickCheck.Instances         ()
-import           Text.Printf                       ( printf )
+import           Data.Text.Lazy.Encoding                  ( decodeUtf8 )
+import           Data.Time.Clock                          ( UTCTime )
+import           Data.Time.Clock.POSIX                    ( posixSecondsToUTCTime
+                                                          , utcTimeToPOSIXSeconds
+                                                          )
+import           Test.QuickCheck                          ( Arbitrary
+                                                          , arbitrary
+                                                          )
+import           Test.QuickCheck.Instances                ()
+import           Text.Printf                              ( printf )
+import           Web.HttpApiData                          ( ToHttpApiData
+                                                          , toQueryParam
+                                                          )
 
 newtype Timestamp = Timestamp UTCTime
   deriving (Eq, Generic, Ord, Read, Show)
@@ -48,6 +52,9 @@ instance ToField Timestamp where
 
 instance Default Timestamp where
   def = fromSlackTimeText "0"
+
+instance ToHttpApiData Timestamp where
+  toQueryParam = toStrict . decodeUtf8 . encode
 
 fromUTCTime :: UTCTime -> Timestamp
 fromUTCTime = Timestamp
