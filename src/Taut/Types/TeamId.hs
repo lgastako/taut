@@ -30,10 +30,9 @@ import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
 import Test.QuickCheck.Instances ()
-import           Web.HttpApiData                                       ( ToHttpApiData
-                                                                       , toQueryParam
-                                                                       )
-
+import Web.HttpApiData           ( ToHttpApiData
+                                 , toQueryParam
+                                 )
 
 newtype TeamId = TeamId Text
   deriving (Eq, Generic, Ord, Read, Show, FromJSONKey, ToJSONKey)
