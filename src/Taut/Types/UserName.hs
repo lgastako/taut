@@ -23,9 +23,16 @@ import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
 import Test.QuickCheck.Instances ()
+import           Web.HttpApiData                                       ( ToHttpApiData
+                                                                       , toQueryParam
+                                                                       )
+
 
 newtype UserName = UserName Text
   deriving (Eq, Generic, Ord, Read, Show)
+
+instance ToHttpApiData UserName where
+  toQueryParam = toText
 
 fromText :: Text -> UserName
 fromText = UserName

@@ -49,6 +49,7 @@ library
                      , data-default
                      , derive
                      , focus-prelude
+                     , http-api-data
                      , lens
                      -- We need to depend on QuickCheck here if we want to
                      -- export arbitrary instances (which we do).
@@ -86,6 +87,7 @@ test-suite taut-test
                      , derive
                      , focus-prelude
                      , hspec
+                     , http-api-data
                      , lens
                      , QuickCheck
                      , quickcheck-instances

@@ -30,12 +30,19 @@ import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
 import Test.QuickCheck.Instances ()
+import           Web.HttpApiData                                       ( ToHttpApiData
+                                                                       , toQueryParam
+                                                                       )
+
 
 newtype TeamId = TeamId Text
   deriving (Eq, Generic, Ord, Read, Show, FromJSONKey, ToJSONKey)
 
 instance ToField TeamId where
   toField = encodeUtf8 . toText
+
+instance ToHttpApiData TeamId where
+  toQueryParam = toText
 
 fromText :: Text -> TeamId
 fromText = TeamId

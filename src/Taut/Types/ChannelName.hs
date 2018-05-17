@@ -23,9 +23,15 @@ import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
 import Test.QuickCheck.Instances ()
+import           Web.HttpApiData                                       ( ToHttpApiData
+                                                                       , toQueryParam
+                                                                       )
 
 newtype ChannelName = ChannelName Text
   deriving (Eq, Generic, Ord, Read, Show)
+
+instance ToHttpApiData ChannelName where
+  toQueryParam = toText
 
 fromText :: Text -> ChannelName
 fromText = ChannelName
