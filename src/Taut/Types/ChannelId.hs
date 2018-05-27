@@ -30,7 +30,9 @@ import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
 import Test.QuickCheck.Instances ()
-import Web.HttpApiData           ( ToHttpApiData
+import Web.HttpApiData           ( FromHttpApiData
+                                 , ToHttpApiData
+                                 , parseQueryParam
                                  , toQueryParam
                                  )
 
@@ -42,6 +44,9 @@ instance ToJSONKey ChannelId where
 
 instance ToField ChannelId where
   toField = encodeUtf8 . unChannelId
+
+instance FromHttpApiData ChannelId where
+  parseQueryParam = Right . fromText
 
 instance ToHttpApiData ChannelId where
   toQueryParam = unChannelId

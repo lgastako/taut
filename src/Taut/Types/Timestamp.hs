@@ -15,37 +15,49 @@ module Taut.Types.Timestamp
      ) where
 
 import qualified Prelude                   as P
-import           Taut.Prelude                      hiding ( decodeUtf8 )
+import           Focus.Prelude                       hiding ( decodeUtf8 )
 
-import           Control.Lens                             ( Iso'
-                                                          , iso
-                                                          )
-import           Data.Aeson                               ( encode )
-import           Data.Csv                                 ( ToField
-                                                          , toField
-                                                          )
-import           Data.Default                             ( Default( def ) )
-import           Data.DeriveTH                            ( derive
-                                                          , makeArbitrary
-                                                          )
+import           Control.Lens                               ( Iso'
+                                                            , iso
+                                                            )
+import           Data.Aeson                                 ( eitherDecode
+                                                            , encode
+                                                            )
+import           Data.Aeson.TH                              ( defaultOptions
+                                                            , deriveJSON
+                                                            )
+import           Data.Csv                                   ( ToField
+                                                            , toField
+                                                            )
+import           Data.Default                               ( Default( def ) )
+import           Data.DeriveTH                              ( derive
+                                                            , makeArbitrary
+                                                            )
 import qualified Data.Text                 as Text
-import           Data.Text.Lazy.Encoding                  ( decodeUtf8 )
-import           Data.Time.Clock                          ( UTCTime )
-import           Data.Time.Clock.POSIX                    ( POSIXTime
-                                                          , posixSecondsToUTCTime
-                                                          , utcTimeToPOSIXSeconds
-                                                          )
-import           Test.QuickCheck                          ( Arbitrary
-                                                          , arbitrary
-                                                          )
-import           Test.QuickCheck.Instances                ()
-import           Text.Printf                              ( printf )
-import           Web.HttpApiData                          ( ToHttpApiData
-                                                          , toQueryParam
-                                                          )
+import qualified Data.Text.Lazy            as LText
+import           Data.Text.Lazy.Encoding                    ( decodeUtf8 )
+import qualified Data.Text.Lazy.Encoding   as LTextE
+import           Data.Time.Clock                            ( UTCTime )
+import           Data.Time.Clock.POSIX                      ( POSIXTime
+                                                            , posixSecondsToUTCTime
+                                                            , utcTimeToPOSIXSeconds
+                                                            )
+import           Test.QuickCheck                            ( Arbitrary
+                                                            , arbitrary
+                                                            )
+import           Test.QuickCheck.Instances                  ()
+import           Text.Printf                                ( printf )
+import           Web.HttpApiData                            ( FromHttpApiData
+                                                            , ToHttpApiData
+                                                            , parseQueryParam
+                                                            , toQueryParam
+                                                            )
 
 newtype Timestamp = Timestamp { unTimestamp :: UTCTime }
   deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
+
+instance FromHttpApiData Timestamp where
+  parseQueryParam = first Text.pack . eitherDecode . LTextE.encodeUtf8 . LText.fromStrict
 
 instance ToField Timestamp where
   toField = encodeUtf8 . toSlackTimeText
