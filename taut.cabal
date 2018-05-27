@@ -21,6 +21,7 @@ library
                      , Taut.Examples
                      , Taut.Functions
                      , Taut.Prelude
+                     , Taut.Prelude.Extras
                      , Taut.Types.AccessToken
                      , Taut.Types.BotAccessToken
                      , Taut.Types.ButtonPayload
