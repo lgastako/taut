@@ -30,7 +30,9 @@ import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
 import Test.QuickCheck.Instances ()
-import Web.HttpApiData           ( ToHttpApiData
+import Web.HttpApiData           ( FromHttpApiData
+                                 , ToHttpApiData
+                                 , parseQueryParam
                                  , toQueryParam
                                  )
 
@@ -39,6 +41,9 @@ newtype UserId = UserId Text
 
 instance ToField UserId where
   toField = encodeUtf8 . toText
+
+instance FromHttpApiData UserId where
+  parseQueryParam = Right . fromText
 
 instance ToHttpApiData UserId where
   toQueryParam = toText

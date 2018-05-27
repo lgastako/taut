@@ -30,36 +30,41 @@ module Taut.Types.Message.Attachment
        , ts
        ) where
 
-import           Focus.Prelude                                 hiding ( decodeUtf8
-                                                                      , empty
-                                                                      )
+import           Focus.Prelude                                  hiding ( decodeUtf8
+                                                                       , empty
+                                                                       )
 
-import           Control.Lens                                         ( makeLenses )
-import           Data.Aeson                                           ( FromJSON( parseJSON )
-                                                                      , ToJSON( toJSON )
-                                                                      , defaultOptions
-                                                                      , encode
-                                                                      , genericParseJSON
-                                                                      , genericToJSON
-                                                                      )
+import           Control.Lens                                          ( makeLenses )
+import           Data.Aeson                                            ( FromJSON( parseJSON )
+                                                                       , ToJSON( toJSON )
+                                                                       , defaultOptions
+                                                                       , eitherDecode
+                                                                       , encode
+                                                                       , genericParseJSON
+                                                                       , genericToJSON
+                                                                       )
 import qualified Data.Aeson                           as Aeson
-import           Data.Aeson.Types                                     ( Options( fieldLabelModifier
-                                                                               , omitNothingFields
-                                                                               )
-                                                                      , camelTo2
-                                                                      , typeMismatch
-                                                                      )
-import           Data.Default                                         ( Default
-                                                                      , def
-                                                                      )
+import           Data.Aeson.Types                                      ( Options( fieldLabelModifier
+                                                                                , omitNothingFields
+                                                                                )
+                                                                       , camelTo2
+                                                                       , typeMismatch
+                                                                       )
+import           Data.Default                                          ( Default
+                                                                       , def
+                                                                       )
 import qualified Data.Text                            as Text
-import           Data.Text.Lazy.Encoding                              ( decodeUtf8 )
-import           Taut.Types.Message.Attachment.Action                 ( Action )
-import           Taut.Types.Message.Attachment.Field                  ( Field )
-import           Taut.Types.Timestamp                                 ( Timestamp )
-import           Web.HttpApiData                                      ( ToHttpApiData
-                                                                      , toQueryParam
-                                                                      )
+import qualified Data.Text.Lazy                       as LText
+import           Data.Text.Lazy.Encoding                               ( decodeUtf8 )
+import qualified Data.Text.Lazy.Encoding              as LTextE
+import           Taut.Types.Message.Attachment.Action                  ( Action )
+import           Taut.Types.Message.Attachment.Field                   ( Field )
+import           Taut.Types.Timestamp                                  ( Timestamp )
+import           Web.HttpApiData                                       ( FromHttpApiData
+                                                                       , ToHttpApiData
+                                                                       , parseQueryParam
+                                                                       , toQueryParam
+                                                                       )
 
 data Color
   = ColorCode Text
@@ -108,6 +113,9 @@ instance FromJSON Attachment where
 
 instance ToJSON Attachment where
   toJSON = genericToJSON attachmentOptions
+
+instance FromHttpApiData Attachment where
+  parseQueryParam = first Text.pack . eitherDecode . LTextE.encodeUtf8 . LText.fromStrict
 
 instance ToHttpApiData Attachment where
   toQueryParam = toStrict . decodeUtf8 . encode

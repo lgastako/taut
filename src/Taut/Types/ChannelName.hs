@@ -23,12 +23,17 @@ import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
 import Test.QuickCheck.Instances ()
-import Web.HttpApiData           ( ToHttpApiData
+import Web.HttpApiData           ( FromHttpApiData
+                                 , ToHttpApiData
+                                 , parseQueryParam
                                  , toQueryParam
                                  )
 
 newtype ChannelName = ChannelName Text
   deriving (Eq, Generic, Ord, Read, Show)
+
+instance FromHttpApiData ChannelName where
+  parseQueryParam = Right . fromText
 
 instance ToHttpApiData ChannelName where
   toQueryParam = toText
