@@ -1,26 +1,24 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE TemplateHaskell            #-}
+
 module Taut.Types.Timestamp
-       ( Timestamp
-       , fromUTCTime
-       , fromSlackTimeText
-       , slackTimeText
-       , toSlackTimeText
-       , toUTCTime
-       , utcTime
-       ) where
+     ( Timestamp
+     , fromUTCTime
+     , fromSlackTimeText
+     , slackTimeText
+     , toSlackTimeText
+     , unTimestamp
+     , utcTime
+     ) where
 
 import qualified Prelude                   as P
-import           Focus.Prelude
+import           Taut.Prelude
 
 import           Control.Lens                      ( Iso'
                                                    , iso
-                                                   )
-import           Data.Aeson                        ()
-import           Data.Aeson.TH                     ( defaultOptions
-                                                   , deriveJSON
                                                    )
 import           Data.Csv                          ( ToField
                                                    , toField
@@ -31,7 +29,8 @@ import           Data.DeriveTH                     ( derive
                                                    )
 import qualified Data.Text                 as Text
 import           Data.Time.Clock                   ( UTCTime )
-import           Data.Time.Clock.POSIX             ( posixSecondsToUTCTime
+import           Data.Time.Clock.POSIX             ( POSIXTime
+                                                   , posixSecondsToUTCTime
                                                    , utcTimeToPOSIXSeconds
                                                    )
 import           Test.QuickCheck                   ( Arbitrary
@@ -40,8 +39,8 @@ import           Test.QuickCheck                   ( Arbitrary
 import           Test.QuickCheck.Instances         ()
 import           Text.Printf                       ( printf )
 
-newtype Timestamp = Timestamp UTCTime
-  deriving (Eq, Generic, Ord, Read, Show)
+newtype Timestamp = Timestamp { unTimestamp :: UTCTime }
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance ToField Timestamp where
   toField = encodeUtf8 . toSlackTimeText
@@ -56,25 +55,31 @@ fromSlackTimeText :: Text -> Timestamp
 fromSlackTimeText = Timestamp
   . posixSecondsToUTCTime
   . realToFrac
-  . (P.read :: String -> Double)
+  . (P.read :: P.String -> Double)
   . Text.unpack
 
 toSlackTimeText :: Timestamp -> Text
-toSlackTimeText (Timestamp t) = Text.pack . printf "%0.0f" $ d
-  -- TODO: is this right?
-  where
-    d :: Double
-    d = realToFrac . utcTimeToPOSIXSeconds $ t
+toSlackTimeText = Text.pack
+  . printf "%0.0f"
+  . (realToFrac :: POSIXTime -> Double)
+  . utcTimeToPOSIXSeconds
+  . unTimestamp
 
-toUTCTime :: Timestamp -> UTCTime
-toUTCTime (Timestamp t) = t
+-- toSlackTimeText (Timestamp t) = Text.pack . printf "%0.0f" $ d
+--   -- TODO: is this right?
+--   where
+--     d :: Double
+--     d = realToFrac . utcTimeToPOSIXSeconds $ t
+-- toSlackTimeText (Timestamp t) = Text.pack . printf "%0.0f" $ d
+--   -- TODO: is this right?
+--   where
+--     d :: Double
+--     d = realToFrac . utcTimeToPOSIXSeconds $ t
 
 utcTime :: Iso' Timestamp UTCTime
-utcTime = iso toUTCTime fromUTCTime
+utcTime = iso unTimestamp fromUTCTime
 
 slackTimeText :: Iso' Timestamp Text
 slackTimeText = iso toSlackTimeText fromSlackTimeText
-
-$(deriveJSON defaultOptions ''Timestamp)
 
 derive makeArbitrary ''Timestamp

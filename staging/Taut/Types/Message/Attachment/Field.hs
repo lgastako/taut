@@ -1,14 +1,15 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
-module Taut.Types.Message.Attachment.Field
-       ( Field( Field )
-       , short
-       , title
-       , value
-       ) where
 
-import Focus.Prelude
+module Taut.Types.Message.Attachment.Field
+     ( Field( Field )
+     , short
+     , title
+     , value
+     ) where
+
+import Taut.Prelude
 
 import Control.Lens     ( makeLenses )
 import Data.Aeson       ( FromJSON( parseJSON )

@@ -2,16 +2,17 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell   #-}
-module Taut.Types.Reaction
-       ( Reaction
-       , count
-       , make
-       , name
-       , summary
-       , users
-       ) where
 
-import Focus.Prelude
+module Taut.Types.Reaction
+     ( Reaction
+     , count
+     , make
+     , name
+     , summary
+     , users
+     ) where
+
+import Taut.Prelude
 
 import Control.Lens      ( (^.)
                          , makeLenses

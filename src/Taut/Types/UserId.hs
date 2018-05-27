@@ -2,20 +2,18 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude          #-}
 {-# LANGUAGE TemplateHaskell            #-}
-module Taut.Types.UserId
-       ( UserId
-       , fromText
-       , toText
-       , uidText
-       ) where
 
-import Focus.Prelude
+module Taut.Types.UserId
+     ( UserId
+     , fromText
+     , uidText
+     , unUserId
+     ) where
+
+import Taut.Prelude
 
 import Control.Lens              ( Iso'
                                  , iso
-                                 )
-import Data.Aeson.TH             ( defaultOptions
-                                 , deriveJSON
                                  )
 import Data.Aeson.Types          ( FromJSONKey
                                  , ToJSONKey
@@ -31,21 +29,16 @@ import Test.QuickCheck           ( Arbitrary
                                  )
 import Test.QuickCheck.Instances ()
 
-newtype UserId = UserId Text
-  deriving (Eq, Generic, Ord, Read, Show, FromJSONKey, ToJSONKey)
+newtype UserId = UserId { unUserId :: Text }
+  deriving (Eq, FromJSON, FromJSONKey, Generic, Ord, Read, Show, ToJSON, ToJSONKey)
 
 instance ToField UserId where
-  toField = encodeUtf8 . toText
+  toField = encodeUtf8 . unUserId
 
 fromText :: Text -> UserId
 fromText = UserId
 
-toText :: UserId -> Text
-toText (UserId u) = u
-
 uidText :: Iso' UserId Text
-uidText = iso toText fromText
-
-$(deriveJSON defaultOptions ''UserId)
+uidText = iso unUserId fromText
 
 derive makeArbitrary ''UserId

@@ -3,7 +3,7 @@
 module Taut.FunctionsSpec ( main, spec ) where
 
 import           Prelude                                 ( (!!) )
-import           Focus.Prelude
+import           Taut.Prelude
 
 import           Data.Default                            ( Default( def ) )
 import qualified Data.Map                as Map

@@ -1,13 +1,15 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-module Taut.Types.BotAccessToken
-       ( BotAccessToken
-       , fromText
-       , fromTextE
-       ) where
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE OverloadedStrings          #-}
 
-import           Focus.Prelude
+module Taut.Types.BotAccessToken
+     ( BotAccessToken
+     , fromText
+     , fromTextE
+     ) where
+
+import           Taut.Prelude
 
 import qualified Data.Text              as Text
 import           Taut.Constants                 ( botTokenPrefix )
@@ -15,11 +17,11 @@ import           Taut.Types.AccessToken         ( AccessToken
                                                 , accessTokenText
                                                 )
 
-data BotAccessToken = BotAccessToken Text
-  deriving (Eq, Generic, Ord, Read, Show)
+newtype BotAccessToken = BotAccessToken { unBotAccessToken :: Text }
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance AccessToken BotAccessToken where
-  accessTokenText (BotAccessToken text) = text
+  accessTokenText = unBotAccessToken
 
 fromText :: Text -> Maybe BotAccessToken
 fromText = eitherToMaybe . fromTextE

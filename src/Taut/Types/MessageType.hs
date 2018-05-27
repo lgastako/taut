@@ -1,21 +1,21 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TemplateHaskell   #-}
-module Taut.Types.MessageType
-       ( MessageType
-       , fromText
-       , message
-       , typeText
-       ) where
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE TemplateHaskell            #-}
 
-import Focus.Prelude
+module Taut.Types.MessageType
+     ( MessageType
+     , fromText
+     , message
+     , typeText
+     , unMessageType
+     ) where
+
+import Taut.Prelude
 
 import Control.Lens              ( Iso'
                                  , iso
-                                 )
-import Data.Aeson.TH             ( defaultOptions
-                                 , deriveJSON
                                  )
 import Data.Csv                  ( ToField
                                  , toField
@@ -29,8 +29,8 @@ import Test.QuickCheck           ( Arbitrary
                                  )
 import Test.QuickCheck.Instances ()
 
-newtype MessageType = MessageType Text
-  deriving (Eq, Generic, Ord, Read, Show)
+newtype MessageType = MessageType { unMessageType :: Text }
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance ToField MessageType where
   toField (MessageType t) = encodeUtf8 t
@@ -41,15 +41,10 @@ instance Default MessageType where
 fromText :: Text -> MessageType
 fromText = MessageType
 
-toText :: MessageType -> Text
-toText (MessageType t) = t
-
 typeText :: Iso' MessageType Text
-typeText = iso toText fromText
+typeText = iso unMessageType fromText
 
 message :: MessageType
 message = MessageType "message"
-
-$(deriveJSON defaultOptions ''MessageType)
 
 derive makeArbitrary ''MessageType

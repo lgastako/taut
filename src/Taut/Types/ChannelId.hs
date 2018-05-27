@@ -1,21 +1,19 @@
-{-# LANGUAGE DeriveAnyClass    #-}
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TemplateHaskell   #-}
-module Taut.Types.ChannelId
-       ( ChannelId
-       , cidText
-       , fromText
-       , toText
-       ) where
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE TemplateHaskell            #-}
 
-import Focus.Prelude
+module Taut.Types.ChannelId
+     ( ChannelId
+     , cidText
+     , fromText
+     , unChannelId
+     ) where
+
+import Taut.Prelude
 
 import Control.Lens              ( Iso'
                                  , iso
-                                 )
-import Data.Aeson.TH             ( defaultOptions
-                                 , deriveJSON
                                  )
 import Data.Aeson.Types          ( FromJSONKey
                                  , ToJSONKey
@@ -33,24 +31,19 @@ import Test.QuickCheck           ( Arbitrary
                                  )
 import Test.QuickCheck.Instances ()
 
-newtype ChannelId = ChannelId Text
-  deriving (Eq, Generic, Ord, Read, Show, FromJSONKey)
+newtype ChannelId = ChannelId { unChannelId :: Text }
+  deriving (Eq, FromJSON, FromJSONKey, Generic, Ord, Read, Show, ToJSON)
 
 instance ToJSONKey ChannelId where
-  toJSONKey = toJSONKeyText toText
+  toJSONKey = toJSONKeyText unChannelId
 
 instance ToField ChannelId where
-  toField = encodeUtf8 . toText
+  toField = encodeUtf8 . unChannelId
 
 fromText :: Text -> ChannelId
 fromText = ChannelId
 
-toText :: ChannelId -> Text
-toText (ChannelId u) = u
-
 cidText :: Iso' ChannelId Text
-cidText = iso toText fromText
-
-$(deriveJSON defaultOptions ''ChannelId)
+cidText = iso unChannelId fromText
 
 derive makeArbitrary ''ChannelId

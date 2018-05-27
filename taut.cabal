@@ -20,6 +20,7 @@ library
                      , Taut.Constants
                      , Taut.Examples
                      , Taut.Functions
+                     , Taut.Prelude
                      , Taut.Types.AccessToken
                      , Taut.Types.BotAccessToken
                      , Taut.Types.ButtonPayload

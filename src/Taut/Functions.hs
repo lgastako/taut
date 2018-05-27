@@ -1,18 +1,19 @@
 {-# LANGUAGE FlexibleContexts  #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
+
 module Taut.Functions
-       ( byChannel
-       , chronoByChan
-       , chronological
-       , replyWindows
-       , userReplyDocs
-       , userReplyDocsWith
-       , userReplyWindows
-       ) where
+     ( byChannel
+     , chronoByChan
+     , chronological
+     , replyWindows
+     , userReplyDocs
+     , userReplyDocsWith
+     , userReplyWindows
+     ) where
 
 import qualified Prelude                 as P
-import           Focus.Prelude
+import           Taut.Prelude
 
 import           Control.Lens                    ( (^.) )
 import qualified Data.Map.Strict         as Map

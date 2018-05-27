@@ -2,7 +2,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 module Taut.Types.Message.Arbitrary () where
 
-import Focus.Prelude
+import Taut.Prelude
 
 import Taut.Types.Message                      ( Message( Message )
                                                , Parse

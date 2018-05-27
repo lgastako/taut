@@ -27,7 +27,7 @@ module Taut.Types.Message
        , username
        ) where
 
-import Focus.Prelude                 hiding ( empty )
+import Taut.Prelude                 hiding ( empty )
 
 import Control.Lens                         ( makeLenses )
 import Data.Aeson                           ( FromJSON( parseJSON )

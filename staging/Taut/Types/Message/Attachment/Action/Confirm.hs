@@ -9,7 +9,7 @@ module Taut.Types.Message.Attachment.Action.Confirm
        , title
        ) where
 
-import Focus.Prelude
+import Taut.Prelude
 
 import Control.Lens     ( makeLenses )
 import Data.Aeson       ( FromJSON( parseJSON )

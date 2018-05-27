@@ -5,14 +5,16 @@ flags: {}
 extra-package-dbs: []
 
 packages:
-- location: "."
-- location:
-    git: git@github.com:SuperpowersCorp/focus-prelude.git
-    commit: a694a45945752816c798f76bbf1f166a8f59afc9
+- location: .
+- location: ../focus-prelude
   extra-dep: true
+# - location:
+#     git: git@github.com:SuperpowersCorp/focus-prelude.git
+#     commit: 00a1fb42e4c5b559e88f25d94feb108aff6ed734
+#   extra-dep: true
 - location:
     git: git@github.com:SuperpowersCorp/luthor.git
-    commit: 98135dbf6a79c0d920e8df779646cedbbb6b40cb
+    commit: 3228000b6419aee72bdf097d8f4864de0fe789c1
   extra-dep: true
 
 extra-deps:

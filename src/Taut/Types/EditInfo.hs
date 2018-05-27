@@ -1,14 +1,15 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
-module Taut.Types.EditInfo
-       ( EditInfo
-       , from
-       , ts
-       , user
-       ) where
 
-import Focus.Prelude        hiding ( from )
+module Taut.Types.EditInfo
+     ( EditInfo
+     , from
+     , ts
+     , user
+     ) where
+
+import Taut.Prelude         hiding ( from )
 
 import Control.Lens                ( makeLenses )
 import Data.Aeson.TH               ( defaultOptions

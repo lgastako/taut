@@ -1,12 +1,13 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
-module Taut.Types.MessageEvents
-       ( onlyMessages
-       , toCSV
-       , withPayloads
-       ) where
 
-import           Focus.Prelude                      hiding ( null )
+module Taut.Types.MessageEvents
+     ( onlyMessages
+     , toCSV
+     , withPayloads
+     ) where
+
+import           Taut.Prelude                       hiding ( null )
 
 import           Control.Lens                              ( (^.) )
 import qualified Data.Csv                as Csv
@@ -23,13 +24,14 @@ onlyMessages = filter (SubType.null . (^. subType))
 toCSV :: [MessageEvent Text] -> LByteString
 toCSV = Csv.encodeByName header
   where
-    header = Vector.fromList [ "channelId"
-                             , "userId"
-                             , "payload"
-                             , "type"
-                             , "subType"
-                             , "ts"
-                             ]
+    header = Vector.fromList
+      [ "channelId"
+      , "userId"
+      , "payload"
+      , "type"
+      , "subType"
+      , "ts"
+      ]
 
 -- TODO: rename this to something that communicates better. and also create
 -- something called something like "justMessages" that filters out the non

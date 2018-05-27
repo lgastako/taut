@@ -1,10 +1,11 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
-module Taut.Examples
-       ( exampleMsg1
-       ) where
 
-import           Focus.Prelude
+module Taut.Examples
+     ( exampleMsg1
+     ) where
+
+import           Taut.Prelude
 
 import           Data.Default                            ( def )
 import           Taut

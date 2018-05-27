@@ -1,22 +1,21 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TemplateHaskell   #-}
-module Taut.Types.SubType
-       ( SubType
-       , make
-       , null
-       , subText
-       , toText
-       ) where
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE TemplateHaskell            #-}
 
-import Focus.Prelude             hiding ( null )
+module Taut.Types.SubType
+     ( SubType
+     , make
+     , null
+     , subText
+     , unSubType
+     ) where
+
+import Taut.Prelude              hiding ( null )
 
 import Control.Lens                     ( Iso'
                                         , iso
-                                        )
-import Data.Aeson.TH                    ( defaultOptions
-                                        , deriveJSON
                                         )
 import Data.Default                     ( Default( def ) )
 import Data.DeriveTH                    ( derive
@@ -27,8 +26,8 @@ import Test.QuickCheck                  ( Arbitrary
                                         )
 import Test.QuickCheck.Instances        ()
 
-newtype SubType = SubType Text
-  deriving (Eq, Generic, Ord, Read, Show)
+newtype SubType = SubType { unSubType :: Text }
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance Default SubType where
   def = make ""
@@ -41,12 +40,7 @@ null subType
   | subType == def = True
   | otherwise      = False
 
-toText :: SubType -> Text
-toText (SubType s) = s
-
 subText :: Iso' SubType Text
-subText = iso toText make
-
-$(deriveJSON defaultOptions ''SubType)
+subText = iso unSubType make
 
 derive makeArbitrary ''SubType

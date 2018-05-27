@@ -27,7 +27,7 @@ module Taut.Types.ButtonPayload
        , user
        ) where
 
-import Focus.Prelude
+import Taut.Prelude
 
 import Control.Lens                         ( makeLenses )
 import Data.Aeson                           ( FromJSON

@@ -2,7 +2,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 module Taut.Types.ButtonPayloadSpec ( main, spec ) where
 
-import Focus.Prelude
+import Taut.Prelude
 
 import Data.Aeson                         ( decode
                                           , encode

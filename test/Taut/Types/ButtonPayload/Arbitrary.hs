@@ -2,7 +2,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 module Taut.Types.ButtonPayload.Arbitrary () where
 
-import Focus.Prelude
+import Taut.Prelude
 
 import Taut.Types.ButtonPayload                       ( ButtonPayload( ButtonPayload )
                                                       , Channel( Channel )

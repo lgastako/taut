@@ -1,14 +1,15 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
-module Taut.Types.UserName
-       ( UserName
-       , fromText
-       , toText
-       , userName
-       ) where
 
-import Focus.Prelude
+module Taut.Types.UserName
+     ( UserName
+     , fromText
+     , unUserName
+     , userName
+     ) where
+
+import Taut.Prelude
 
 import Control.Lens              ( Iso'
                                  , iso
@@ -24,17 +25,14 @@ import Test.QuickCheck           ( Arbitrary
                                  )
 import Test.QuickCheck.Instances ()
 
-newtype UserName = UserName Text
+newtype UserName = UserName { unUserName :: Text }
   deriving (Eq, Generic, Ord, Read, Show)
 
 fromText :: Text -> UserName
 fromText = UserName
 
-toText :: UserName -> Text
-toText (UserName u) = u
-
 userName :: Iso' UserName Text
-userName = iso toText fromText
+userName = iso unUserName fromText
 
 $(deriveJSON defaultOptions ''UserName)
 

@@ -18,7 +18,7 @@ module Taut.Types.Message.Attachment.Action
        , value
        ) where
 
-import           Focus.Prelude
+import           Taut.Prelude
 
 import           Control.Applicative                                   ( (<|>) )
 import           Control.Lens                                          ( makeLenses )

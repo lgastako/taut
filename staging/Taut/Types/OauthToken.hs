@@ -8,7 +8,7 @@ module Taut.Types.OauthToken
        , toText
        ) where
 
-import Focus.Prelude
+import Taut.Prelude
 
 import Control.Lens              ( Iso'
                                  , iso
