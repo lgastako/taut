@@ -1,5 +1,6 @@
 {-# LANGUAGE NoImplicitPrelude    #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+
 module Taut.Types.Message.Attachment.Action.Arbitrary () where
 
 import Taut.Prelude
@@ -9,12 +10,7 @@ import Taut.Types.Message.Attachment.Action                   ( Action( Action )
                                                               , ButtonStyle
                                                               )
 import Taut.Types.Message.Attachment.Action.Confirm.Arbitrary ()
-import Test.QuickCheck                                        ( Arbitrary
-                                                              , arbitrary
-                                                              , elements
-                                                              , genericShrink
-                                                              , shrink
-                                                              )
+import Test.QuickCheck
 import Test.QuickCheck.Instances                              ()
 
 instance Arbitrary Action where
@@ -29,8 +25,8 @@ instance Arbitrary Action where
 
 instance Arbitrary ActionType where
   arbitrary = return $ Button
-  shrink = genericShrink
+  shrink    = genericShrink
 
 instance Arbitrary ButtonStyle where
   arbitrary = elements [toEnum 0..]
-  shrink = genericShrink
+  shrink    = genericShrink

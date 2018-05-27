@@ -1,12 +1,13 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
+
 module Taut.Types.TeamName
-       ( TeamName
-       , fromText
-       , teamName
-       , toText
-       ) where
+     ( TeamName
+     , fromText
+     , teamName
+     , unTeamName
+     ) where
 
 import Taut.Prelude
 
@@ -23,18 +24,21 @@ import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
 import Test.QuickCheck.Instances ()
+import Web.HttpApiData           ( ToHttpApiData
+                                 , toQueryParam
+                                 )
 
-newtype TeamName = TeamName Text
+newtype TeamName = TeamName { unTeamName :: Text }
   deriving (Eq, Generic, Ord, Read, Show)
+
+instance ToHttpApiData TeamName where
+  toQueryParam = unTeamName
 
 fromText :: Text -> TeamName
 fromText = TeamName
 
-toText :: TeamName -> Text
-toText (TeamName n) = n
-
 teamName :: Iso' TeamName Text
-teamName = iso toText fromText
+teamName = iso unTeamName fromText
 
 $(deriveJSON defaultOptions ''TeamName)
 

@@ -1,5 +1,6 @@
 {-# LANGUAGE NoImplicitPrelude    #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+
 module Taut.Types.Message.Arbitrary () where
 
 import Taut.Prelude
@@ -8,12 +9,7 @@ import Taut.Types.Message                      ( Message( Message )
                                                , Parse
                                                )
 import Taut.Types.Message.Attachment.Arbitrary ()
-import Test.QuickCheck                         ( Arbitrary
-                                               , arbitrary
-                                               , elements
-                                               , genericShrink
-                                               , shrink
-                                               )
+import Test.QuickCheck
 
 instance Arbitrary Message where
   arbitrary = Message
@@ -39,4 +35,4 @@ instance Arbitrary Message where
 
 instance Arbitrary Parse where
   arbitrary = elements [toEnum 0..]
-  shrink = genericShrink
+  shrink    = genericShrink

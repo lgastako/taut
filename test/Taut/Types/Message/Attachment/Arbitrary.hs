@@ -1,5 +1,6 @@
 {-# LANGUAGE NoImplicitPrelude    #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+
 module Taut.Types.Message.Attachment.Arbitrary () where
 
 import Taut.Prelude
@@ -13,12 +14,7 @@ import Taut.Types.Message.Attachment                  ( Attachment( Attachment )
                                                       )
 import Taut.Types.Message.Attachment.Action.Arbitrary ()
 import Taut.Types.Message.Attachment.Field.Arbitrary  ()
-import Test.QuickCheck                                ( Arbitrary
-                                                      , arbitrary
-                                                      , elements
-                                                      , genericShrink
-                                                      , shrink
-                                                      )
+import Test.QuickCheck
 
 instance Arbitrary Color where
   arbitrary = do

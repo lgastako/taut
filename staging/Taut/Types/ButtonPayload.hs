@@ -1,42 +1,39 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
+
 module Taut.Types.ButtonPayload
-       ( ButtonPayload( ButtonPayload )
-       , Channel( Channel )
-       , Team( Team )
-       , TriggerId( TriggerId )
-       , User( User )
-       , actions
-       , actionTs
-       , attachmentId
-       , callbackId
-       , channel
-       , channelId
-       , channelName
-       , messageTs
-       , originalMessage
-       , responseUrl
-       , team
-       , teamDomain
-       , teamId
-       , token
-       , triggerId
-       , userId
-       , userName
-       , user
-       ) where
+     ( ButtonPayload( ButtonPayload )
+     , Channel( Channel )
+     , Team( Team )
+     , TriggerId( TriggerId )
+     , User( User )
+     , actionTs
+     , actions
+     , attachmentId
+     , callbackId
+     , channel
+     , channelId
+     , channelName
+     , messageTs
+     , originalMessage
+     , responseUrl
+     , team
+     , teamDomain
+     , teamId
+     , token
+     , triggerId
+     , user
+     , userId
+     , userName
+     ) where
 
 import Taut.Prelude
 
 import Control.Lens                         ( makeLenses )
-import Data.Aeson                           ( FromJSON
-                                            , ToJSON
-                                            , defaultOptions
+import Data.Aeson                           ( defaultOptions
                                             , genericParseJSON
                                             , genericToJSON
-                                            , parseJSON
-                                            , toJSON
                                             )
 import Data.Aeson.Types                     ( Options( fieldLabelModifier
                                                      , omitNothingFields

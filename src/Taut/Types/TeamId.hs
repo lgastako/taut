@@ -28,12 +28,18 @@ import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
 import Test.QuickCheck.Instances ()
+import Web.HttpApiData           ( ToHttpApiData
+                                 , toQueryParam
+                                 )
 
 newtype TeamId = TeamId { unTeamId :: Text }
   deriving (Eq, FromJSON, FromJSONKey, Generic, Ord, Read, Show, ToJSON, ToJSONKey)
 
 instance ToField TeamId where
   toField = encodeUtf8 . unTeamId
+
+instance ToHttpApiData TeamId where
+  toQueryParam = unTeamId
 
 fromText :: Text -> TeamId
 fromText = TeamId

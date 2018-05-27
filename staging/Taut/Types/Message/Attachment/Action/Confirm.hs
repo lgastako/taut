@@ -1,13 +1,14 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
+
 module Taut.Types.Message.Attachment.Action.Confirm
-       ( Confirm( Confirm )
-       , dismissText
-       , okText
-       , text
-       , title
-       ) where
+     ( Confirm( Confirm )
+     , dismissText
+     , okText
+     , text
+     , title
+     ) where
 
 import Taut.Prelude
 

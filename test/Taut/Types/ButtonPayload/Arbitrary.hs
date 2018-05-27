@@ -1,5 +1,6 @@
 {-# LANGUAGE NoImplicitPrelude    #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+
 module Taut.Types.ButtonPayload.Arbitrary () where
 
 import Taut.Prelude
@@ -12,11 +13,7 @@ import Taut.Types.ButtonPayload                       ( ButtonPayload( ButtonPay
                                                       )
 import Taut.Types.Message.Arbitrary                   ()
 import Taut.Types.Message.Attachment.Action.Arbitrary ()
-import Test.QuickCheck                                ( Arbitrary
-                                                      , arbitrary
-                                                      , genericShrink
-                                                      , shrink
-                                                      )
+import Test.QuickCheck
 
 instance Arbitrary ButtonPayload where
   arbitrary = ButtonPayload

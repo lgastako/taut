@@ -6,8 +6,8 @@
 
 module Taut.Types.Timestamp
      ( Timestamp
-     , fromUTCTime
      , fromSlackTimeText
+     , fromUTCTime
      , slackTimeText
      , toSlackTimeText
      , unTimestamp
@@ -15,29 +15,34 @@ module Taut.Types.Timestamp
      ) where
 
 import qualified Prelude                   as P
-import           Taut.Prelude
+import           Focus.Prelude                     hiding ( decodeUtf8 )
 
-import           Control.Lens                      ( Iso'
-                                                   , iso
-                                                   )
-import           Data.Csv                          ( ToField
-                                                   , toField
-                                                   )
-import           Data.Default                      ( Default( def ) )
-import           Data.DeriveTH                     ( derive
-                                                   , makeArbitrary
-                                                   )
+import           Control.Lens                             ( Iso'
+                                                          , iso
+                                                          )
+import           Data.Aeson                               ( encode )
+import           Data.Csv                                 ( ToField
+                                                          , toField
+                                                          )
+import           Data.Default                             ( Default( def ) )
+import           Data.DeriveTH                            ( derive
+                                                          , makeArbitrary
+                                                          )
 import qualified Data.Text                 as Text
-import           Data.Time.Clock                   ( UTCTime )
-import           Data.Time.Clock.POSIX             ( POSIXTime
-                                                   , posixSecondsToUTCTime
-                                                   , utcTimeToPOSIXSeconds
-                                                   )
-import           Test.QuickCheck                   ( Arbitrary
-                                                   , arbitrary
-                                                   )
-import           Test.QuickCheck.Instances         ()
-import           Text.Printf                       ( printf )
+import           Data.Text.Lazy.Encoding                  ( decodeUtf8 )
+import           Data.Time.Clock                          ( UTCTime )
+import           Data.Time.Clock.POSIX                    ( POSIXTime
+                                                          , posixSecondsToUTCTime
+                                                          , utcTimeToPOSIXSeconds
+                                                          )
+import           Test.QuickCheck                          ( Arbitrary
+                                                          , arbitrary
+                                                          )
+import           Test.QuickCheck.Instances                ()
+import           Text.Printf                              ( printf )
+import           Web.HttpApiData                          ( ToHttpApiData
+                                                          , toQueryParam
+                                                          )
 
 newtype Timestamp = Timestamp { unTimestamp :: UTCTime }
   deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
@@ -47,6 +52,9 @@ instance ToField Timestamp where
 
 instance Default Timestamp where
   def = fromSlackTimeText "0"
+
+instance ToHttpApiData Timestamp where
+  toQueryParam = toStrict . decodeUtf8 . encode
 
 fromUTCTime :: UTCTime -> Timestamp
 fromUTCTime = Timestamp
@@ -64,17 +72,6 @@ toSlackTimeText = Text.pack
   . (realToFrac :: POSIXTime -> Double)
   . utcTimeToPOSIXSeconds
   . unTimestamp
-
--- toSlackTimeText (Timestamp t) = Text.pack . printf "%0.0f" $ d
---   -- TODO: is this right?
---   where
---     d :: Double
---     d = realToFrac . utcTimeToPOSIXSeconds $ t
--- toSlackTimeText (Timestamp t) = Text.pack . printf "%0.0f" $ d
---   -- TODO: is this right?
---   where
---     d :: Double
---     d = realToFrac . utcTimeToPOSIXSeconds $ t
 
 utcTime :: Iso' Timestamp UTCTime
 utcTime = iso unTimestamp fromUTCTime

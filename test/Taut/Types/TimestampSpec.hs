@@ -1,15 +1,12 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Taut.Types.TimestampSpec ( main, spec ) where
+module Taut.Types.TimestampSpec ( spec ) where
 
 import Taut.Prelude
 
 import Taut.Types.Timestamp ( fromSlackTimeText )
 import Test.Hspec
-
-main :: IO ()
-main = hspec spec
 
 spec :: Spec
 spec = describe "Timestamp.fromSlackTimeText" $ do

@@ -7,15 +7,15 @@ module Taut.Types.MessageEvents
      , withPayloads
      ) where
 
-import           Taut.Prelude                       hiding ( null )
+import           Taut.Prelude
 
-import           Control.Lens                              ( (^.) )
+import           Control.Lens                       ( (^.) )
 import qualified Data.Csv                as Csv
 import qualified Data.Vector             as Vector
-import           Taut.Types.MessageEvent                   ( MessageEvent
-                                                           , payload
-                                                           , subType
-                                                           )
+import           Taut.Types.MessageEvent            ( MessageEvent
+                                                    , payload
+                                                    , subType
+                                                    )
 import qualified Taut.Types.SubType      as SubType
 
 onlyMessages :: [MessageEvent a] -> [MessageEvent a]

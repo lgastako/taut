@@ -30,6 +30,9 @@ import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
 import Test.QuickCheck.Instances ()
+import Web.HttpApiData           ( ToHttpApiData
+                                 , toQueryParam
+                                 )
 
 newtype ChannelId = ChannelId { unChannelId :: Text }
   deriving (Eq, FromJSON, FromJSONKey, Generic, Ord, Read, Show, ToJSON)
@@ -39,6 +42,9 @@ instance ToJSONKey ChannelId where
 
 instance ToField ChannelId where
   toField = encodeUtf8 . unChannelId
+
+instance ToHttpApiData ChannelId where
+  toQueryParam = unChannelId
 
 fromText :: Text -> ChannelId
 fromText = ChannelId

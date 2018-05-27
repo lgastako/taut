@@ -12,10 +12,6 @@ packages:
 #     git: git@github.com:SuperpowersCorp/focus-prelude.git
 #     commit: 00a1fb42e4c5b559e88f25d94feb108aff6ed734
 #   extra-dep: true
-- location:
-    git: git@github.com:SuperpowersCorp/luthor.git
-    commit: 3228000b6419aee72bdf097d8f4864de0fe789c1
-  extra-dep: true
 
 extra-deps:
 - protolude-0.2.1

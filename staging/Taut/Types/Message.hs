@@ -3,29 +3,29 @@
 {-# LANGUAGE TemplateHaskell   #-}
 
 module Taut.Types.Message
-       ( Message( Message )
-       , Parse( Full
-              , None
-              )
-       , asUser
-       , attachments
-       , botId
-       , channel
-       , iconEmoji
-       , iconUrl
-       , linkNames
-       , parse
-       , replyBroadcast
-       , subType
-       , text
-       , threadTs
-       , token
-       , ts
-       , type'
-       , unfurlLinks
-       , unfurlMedia
-       , username
-       ) where
+     ( Message( Message )
+     , Parse( Full
+            , None
+            )
+     , asUser
+     , attachments
+     , botId
+     , channel
+     , iconEmoji
+     , iconUrl
+     , linkNames
+     , parse
+     , replyBroadcast
+     , subType
+     , text
+     , threadTs
+     , token
+     , ts
+     , type'
+     , unfurlLinks
+     , unfurlMedia
+     , username
+     ) where
 
 import Taut.Prelude                 hiding ( empty )
 

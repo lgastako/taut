@@ -15,7 +15,6 @@ module Taut.Functions
 import qualified Prelude                 as P
 import           Taut.Prelude
 
-import           Control.Lens                    ( (^.) )
 import qualified Data.Map.Strict         as Map
 import           Data.Maybe                      ( mapMaybe )
 import qualified Data.Text               as Text
@@ -34,13 +33,13 @@ byChannel = foldr absorb Map.empty
     absorb msg = Map.insertWith (++) (msg ^. channelId) [msg]
 
 chronological :: [MessageEvent a] -> [MessageEvent a]
-chronological = sortOn (^. ts)
+chronological = sortOn (view ts)
 
 chronoByChan :: [MessageEvent a] -> Map ChannelId [MessageEvent a]
 chronoByChan = Map.map chronological . byChannel
 
-replyWindows :: Ord a =>
-                Int -> [MessageEvent a] -> Map (MessageEvent a) [MessageEvent a]
+replyWindows :: Ord a
+             => Int -> [MessageEvent a] -> Map (MessageEvent a) [MessageEvent a]
 replyWindows n =
   Map.fromList             -- Map (MessageEvent a) [MessageEvent a]
   . mconcat                -- [(MessageEvent a, [MessageEvent a])]
@@ -49,10 +48,9 @@ replyWindows n =
   . chronoByChan           -- Map ChannelId [MessageEvent a]
   where
     chanToWin :: [MessageEvent a] -> [(MessageEvent a, [MessageEvent a])]
-    chanToWin ms =
+    chanToWin =
       mapMaybe makePair   -- [ ]
       . inits             -- [[MessageEvent a]]
-      $ ms
 
     makePair :: [MessageEvent a] -> Maybe (MessageEvent a, [MessageEvent a])
     makePair ms = do
@@ -61,12 +59,12 @@ replyWindows n =
       return (target, win)
       where
         target       = P.last ms
-        win          = takeWin . filter ((/= target ^. userId) . (^. userId)) . P.init $ ms
+        win          = takeWin . filter ((/= target ^. userId) . view userId) . P.init $ ms
         takeWin xs   = foldl' (const . drop 1) xs (drop n xs)
 
-userReplyWindows :: Ord a =>
-                    Map (MessageEvent a) [MessageEvent a] ->
-                    Map UserId (Map (MessageEvent a) [MessageEvent a])
+userReplyWindows :: Ord a
+                 => Map (MessageEvent a) [MessageEvent a]
+                 -> Map UserId (Map (MessageEvent a) [MessageEvent a])
 userReplyWindows = Map.foldrWithKey add Map.empty
   where
     add k v = Map.insertWith mappend (k ^. userId) (Map.singleton k v)
@@ -75,4 +73,4 @@ userReplyDocs :: Map UserId (Map (MessageEvent Text) [MessageEvent Text]) -> Map
 userReplyDocs = userReplyDocsWith identity
 
 userReplyDocsWith :: (a -> Text) -> Map UserId (Map (MessageEvent a) [MessageEvent a]) -> Map UserId Text
-userReplyDocsWith f = fmap (Text.intercalate "\n" . map (f . (^. payload)) . mconcat . Map.elems)
+userReplyDocsWith f = fmap (Text.intercalate "\n" . map (f . view payload) . mconcat . Map.elems)

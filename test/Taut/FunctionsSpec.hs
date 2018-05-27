@@ -1,6 +1,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
-module Taut.FunctionsSpec ( main, spec ) where
+
+module Taut.FunctionsSpec ( spec ) where
 
 import           Prelude                                 ( (!!) )
 import           Taut.Prelude
@@ -14,37 +15,27 @@ import qualified Taut.Types.MessageEvent as MessageEvent
 import qualified Taut.Types.MessageType  as MessageType
 import qualified Taut.Types.Timestamp    as Timestamp
 import qualified Taut.Types.UserId       as UserId
-import           Test.Hspec                              ( Spec
-                                                         , context
-                                                         , describe
-                                                         , hspec
-                                                         , it
-                                                         , shouldBe
-                                                         )
-import           Test.QuickCheck                         ( property )
-
-main :: IO ()
-main = hspec spec
+import           Test.Hspec
+import           Test.QuickCheck
 
 spec :: Spec
-spec =
-  describe "replyWindows" $ do
-    context "given an empty list" $
-      it "any size window returns an empty map" $ property $
-        \n -> replyWindows n ([] :: [MessageEvent Text]) == Map.empty
+spec = describe "replyWindows" $ do
+  context "given an empty list" $
+    it "any size window returns an empty map" $ property $
+      \n -> replyWindows n ([] :: [MessageEvent Text]) == Map.empty
 
-    context "given a non-empty list" $
-      it "a window of size 1 returns all immediate predecessors" $
-        replyWindows 1 exampleMsgs `shouldBe` expected
-      where
-        expected = Map.fromList
-          [ ( exampleMsgs !! 1
-            , [ exampleMsgs !! 0 ]
-            )
-          , ( exampleMsgs !! 3
-            , [ exampleMsgs !! 2 ]
-            )
-          ]
+  context "given a non-empty list" $
+    it "a window of size 1 returns all immediate predecessors" $
+      replyWindows 1 exampleMsgs `shouldBe` expected
+    where
+      expected = Map.fromList
+        [ ( exampleMsgs !! 1
+          , [ exampleMsgs !! 0 ]
+          )
+        , ( exampleMsgs !! 3
+          , [ exampleMsgs !! 2 ]
+          )
+        ]
 
 exampleMsgs :: [MessageEvent Text]
 exampleMsgs = [msg1, msg2, msg3, msg4]

@@ -2,21 +2,22 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell   #-}
+
 module Taut.Types.Message.Attachment.Action
-       ( Action( Action )
-       , ActionType( Button )
-       , ButtonStyle( Default
-                    , Primary
-                    , Danger
-                    )
-       , button
-       , confirm
-       , name
-       , style
-       , text
-       , type'
-       , value
-       ) where
+     ( Action( Action )
+     , ActionType( Button )
+     , ButtonStyle( Danger
+                  , Default
+                  , Primary
+                  )
+     , button
+     , confirm
+     , name
+     , style
+     , text
+     , type'
+     , value
+     ) where
 
 import           Taut.Prelude
 
@@ -102,12 +103,12 @@ button name' text' value' = Action
 
 instance FromJSON Action where
   parseJSON = withObject "Action" $ \v -> Action
-        <$> v .:?? "confirm"
-        <*> v .:   "name"
-        <*> v .:?? "style"
-        <*> v .:?? "text"
-        <*> v .:   "type"
-        <*> v .:   "value"
+    <$> v .:?? "confirm"
+    <*> v .:   "name"
+    <*> v .:?? "style"
+    <*> v .:?? "text"
+    <*> v .:   "type"
+    <*> v .:   "value"
 
 instance ToJSON Action where
   toJSON = genericToJSON defaultOptions
