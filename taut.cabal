@@ -49,9 +49,9 @@ library
                      , containers
                      , data-default
                      , derive
-                     , focus-prelude
                      , http-api-data
                      , lens
+                     , protolude
                      -- We need to depend on QuickCheck here if we want to
                      -- export arbitrary instances (which we do).
                      , QuickCheck
@@ -83,6 +83,7 @@ test-suite taut-test
                      , containers
                      , data-default
                      , hspec
+                     , protolude
                      , QuickCheck
                      , quickcheck-instances
                      , taut

@@ -5,13 +5,7 @@ flags: {}
 extra-package-dbs: []
 
 packages:
-- location: .
-- location: ../focus-prelude
-  extra-dep: true
-# - location:
-#     git: git@github.com:SuperpowersCorp/focus-prelude.git
-#     commit: 00a1fb42e4c5b559e88f25d94feb108aff6ed734
-#   extra-dep: true
+- .
 
 extra-deps:
 - protolude-0.2.1

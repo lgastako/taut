@@ -15,7 +15,7 @@ module Taut.Types.Timestamp
      ) where
 
 import qualified Prelude                   as P
-import           Focus.Prelude                     hiding ( decodeUtf8 )
+import           Taut.Prelude                      hiding ( decodeUtf8 )
 
 import           Control.Lens                             ( Iso'
                                                           , iso

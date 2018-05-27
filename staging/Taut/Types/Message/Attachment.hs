@@ -30,7 +30,7 @@ module Taut.Types.Message.Attachment
      , ts
      ) where
 
-import           Focus.Prelude                                 hiding ( decodeUtf8
+import           Taut.Prelude                                  hiding ( decodeUtf8
                                                                       , empty
                                                                       )
 
