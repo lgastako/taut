@@ -44,6 +44,7 @@ library
                      , Taut.Types.UserName
   build-depends:       aeson
                      , base       >= 4.7 && < 5
+                     , bytestring
                      , cassava
                      , containers
                      , data-default
@@ -83,9 +84,11 @@ test-suite taut-test
                      , Taut.Types.Message.Attachment.Arbitrary
                      , Taut.Types.Message.Attachment.Field.Arbitrary
                      , Taut.Types.TimestampSpec
-  build-depends:       aeson
+  build-depends:       QuickCheck
+                     , aeson
                      , aeson-pretty
                      , base
+                     , bytestring
                      , cassava
                      , containers
                      , data-default
@@ -94,7 +97,6 @@ test-suite taut-test
                      , hspec
                      , http-api-data
                      , lens
-                     , QuickCheck
                      , quickcheck-instances
                      , spc-luthor
                      , taut

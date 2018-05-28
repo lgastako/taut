@@ -126,18 +126,18 @@ instance ToNamedRecord (MessageEvent Text) where
                     ]
 
 make :: ChannelId
-        -> Maybe EditInfo
-        -> Maybe Timestamp
-        -> Maybe Bool
-        -> Maybe Bool
-        -> a
-        -> Maybe [ChannelId]
-        -> Maybe [Reaction]
-        -> SubType
-        -> Timestamp
-        -> MessageType
-        -> UserId
-        -> MessageEvent a
+     -> Maybe EditInfo
+     -> Maybe Timestamp
+     -> Maybe Bool
+     -> Maybe Bool
+     -> a
+     -> Maybe [ChannelId]
+     -> Maybe [Reaction]
+     -> SubType
+     -> Timestamp
+     -> MessageType
+     -> UserId
+     -> MessageEvent a
 make = MessageEvent
 
 reactionCount :: MessageEvent a -> Int
