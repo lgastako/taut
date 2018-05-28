@@ -15,16 +15,13 @@ module Taut.Types.Timestamp
      ) where
 
 import qualified Prelude                   as P
-import           Focus.Prelude                       hiding ( decodeUtf8 )
+import           Taut.Prelude                        hiding ( decodeUtf8 )
 
 import           Control.Lens                               ( Iso'
                                                             , iso
                                                             )
 import           Data.Aeson                                 ( eitherDecode
                                                             , encode
-                                                            )
-import           Data.Aeson.TH                              ( defaultOptions
-                                                            , deriveJSON
                                                             )
 import           Data.Csv                                   ( ToField
                                                             , toField

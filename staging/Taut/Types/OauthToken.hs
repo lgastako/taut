@@ -1,6 +1,7 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE TemplateHaskell            #-}
 
 module Taut.Types.OauthToken
      ( OauthToken
@@ -14,9 +15,6 @@ import Taut.Prelude
 import Control.Lens              ( Iso'
                                  , iso
                                  )
-import Data.Aeson.TH             ( defaultOptions
-                                 , deriveJSON
-                                 )
 import Data.Csv                  ( ToField
                                  , toField
                                  )
@@ -27,7 +25,7 @@ import Test.QuickCheck
 import Test.QuickCheck.Instances ()
 
 newtype OauthToken = OauthToken { unOauthToken :: Text }
-  deriving (Eq, Ord, Read, Show, Generic)
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance ToField OauthToken where
   toField = encodeUtf8 . unOauthToken
@@ -37,7 +35,5 @@ fromText = OauthToken
 
 tidText :: Iso' OauthToken Text
 tidText = iso unOauthToken fromText
-
-$(deriveJSON defaultOptions ''OauthToken)
 
 derive makeArbitrary ''OauthToken
