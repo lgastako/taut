@@ -1,5 +1,6 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
 module Taut.Types.AccessToken
        ( AccessToken
        , AnyAccessToken
@@ -9,15 +10,25 @@ module Taut.Types.AccessToken
 
 import Focus.Prelude
 
+import Data.Aeson                ( FromJSON
+                                 , ToJSON
+                                 )
+import Test.QuickCheck           ( Arbitrary
+                                 , arbitrary
+                                 )
+import Test.QuickCheck.Instances ()
 
 class AccessToken a where
   accessTokenText :: a -> Text
 
-data AnyAccessToken = AnyAccessToken Text
-  deriving (Eq, Generic, Ord, Read, Show)
+newtype AnyAccessToken = AnyAccessToken { unAnyAccessToken :: Text }
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance AccessToken AnyAccessToken where
-  accessTokenText (AnyAccessToken text) = text
+  accessTokenText = unAnyAccessToken
+
+instance Arbitrary AnyAccessToken where
+  arbitrary = AnyAccessToken <$> arbitrary
 
 fromText :: Text -> AnyAccessToken
 fromText = AnyAccessToken
