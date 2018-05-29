@@ -3,7 +3,6 @@
 
 module Taut.Types.MessageEventsSpec ( spec ) where
 
-import qualified Prelude                  as P
 import           Taut.Prelude
 
 import           Data.Aeson                              ( decode
@@ -17,6 +16,7 @@ import           Taut.Types.MessageEvent                 ( MessageEvent
                                                          )
 import           Taut.Types.MessageEvents
 import           Taut.Types.MessageType   as MessageType
+import qualified Taut.Types.Timestamp     as Timestamp
 import           Taut.Types.UserId                       ( UserId )
 import qualified Taut.Types.UserId        as UserId
 import           Test.Hspec
@@ -24,7 +24,8 @@ import           Test.QuickCheck
 
 spec :: Spec
 spec = describe "MessageEvents" $ do
-  let now = P.read "Timestamp 2018-05-28 05:03:26.909048 UTC"
+  let Just now = readMaybe "2018-05-28 05:03:26.909048 UTC"
+      ts = Timestamp.fromUTCTime now
 
       cid1 :: ChannelId
       cid1 = ChannelId.fromText "C123"
@@ -48,7 +49,7 @@ spec = describe "MessageEvents" $ do
          Nothing
          Nothing
          def
-         now
+         ts
          (MessageType.fromText "mt1")
          uid1
 
@@ -62,7 +63,7 @@ spec = describe "MessageEvents" $ do
          Nothing
          Nothing
          def
-         now
+         ts
          (MessageType.fromText "mt2")
          uid2
 
@@ -85,7 +86,6 @@ spec = describe "MessageEvents" $ do
           mes = []
 
       toCSV mes `shouldBe` "channelId,userId,payload,type,subType,ts\r\n"
-
 
     it "non-empty MessageEvents should work thusly" $ do
 
