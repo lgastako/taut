@@ -68,7 +68,7 @@ spec = describe "MessageEvents" $ do
          uid2
 
 
-  context "serialize" $ do
+  context "serialize" $
 
     it "should roundtrip" $ property $
       \me -> (decode.encode) me == Just (me :: MessageEvent Text)

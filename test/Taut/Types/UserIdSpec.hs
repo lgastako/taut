@@ -15,12 +15,12 @@ import Test.Hspec
 import Test.QuickCheck
 
 spec :: Spec
-spec = describe "UserId" $ do
+spec = describe "UserId" $
 
   context "serialization" $ do
 
     it "roundtrip" $ property $
       \tid -> (decode.encode) tid == Just (tid :: UserId)
 
-    it "this specific example should be thus" $ do
+    it "this specific example should be thus" $
       (encode . fromText) "foo" `shouldBe` "\"foo\""

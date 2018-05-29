@@ -15,13 +15,12 @@ import Test.Hspec
 import Test.QuickCheck
 
 spec :: Spec
-spec = describe "SubType" $ do
+spec = describe "SubType" $
 
   context "serialization" $ do
 
     it "roundtrip" $ property $
       \st -> (decode.encode) st == Just (st :: SubType)
 
-    it "this specific example should be thus" $ do
-
+    it "this specific example should be thus" $
       encode (make "foo") `shouldBe` "\"foo\""

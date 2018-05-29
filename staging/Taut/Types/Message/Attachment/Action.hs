@@ -40,10 +40,10 @@ import           Data.Aeson.Types                                      ( Options
                                                                                 , fieldLabelModifier
                                                                                 , omitNothingFields
                                                                                 )
+                                                                       , Parser
                                                                        , camelTo2
                                                                        , typeMismatch
                                                                        )
-import           Data.Aeson.Types                                      ( Parser )
 import           Data.Char                                             ( toLower )
 import qualified Data.Text                                    as Text
 import           Taut.Types.Message.Attachment.Action.Confirm          ( Confirm )
@@ -82,7 +82,7 @@ data ActionType = Button
   deriving (Bounded, Enum, Eq, Generic, Ord, Read, Show)
 
 instance Arbitrary ActionType where
-  arbitrary = return $ Button
+  arbitrary = return Button
   shrink    = genericShrink
 
 instance FromJSON ActionType where

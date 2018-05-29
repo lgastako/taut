@@ -30,9 +30,7 @@ module Taut.Types.Message.Attachment
      , ts
      ) where
 
-import           Taut.Prelude                                   hiding ( decodeUtf8
-                                                                       , empty
-                                                                       )
+import           Taut.Prelude                                   hiding ( decodeUtf8 )
 
 import           Control.Lens                                          ( makeLenses )
 import           Data.Aeson                                            ( FromJSON( parseJSON )

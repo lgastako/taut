@@ -57,7 +57,7 @@ spec = describe "MessageEvent" $ do
   context "roundtripping" $ do
     it "should be able to roundtrip this particular msg" $ do
       let rt = eitherDecode . encode $ msg1
-      rt `shouldBe` (Right msg1)
+      rt `shouldBe` Right msg1
 
     it "should roundtrip arbitrary messages successfully" $ property $
       roundTripSuccessfully

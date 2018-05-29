@@ -15,9 +15,12 @@ import Test.Hspec
 import Test.QuickCheck
 
 spec :: Spec
-spec = describe "MessageType" $ do
+spec = describe "MessageType" $
+
   context "serialization" $ do
+
     it "roundtrip" $ property $
       \mt -> (decode.encode) mt == Just (mt :: MessageType)
+
     it "specific example should be thus" $
       encode (fromText "abc") `shouldBe` "\"abc\""
