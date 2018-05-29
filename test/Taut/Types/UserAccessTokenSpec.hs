@@ -22,8 +22,8 @@ spec = describe "UserAccessToken" $
     it "should round trip" $ property $
       \accessToken -> (decode . encode) (accessToken :: UserAccessToken) == Just accessToken
 
-    it "this example should serialize like so" $
-      encode (fromText "xoxbfoo") `shouldBe` "\"xoxbfoo\""
+    it "bot token should not work" $
+      fromText "xoxbfoo" `shouldBe` Nothing
 
-    it "example without xoxb perfix should not fromText" $
-      fromText "non-xoxb-prefixed-string" `shouldBe` Nothing
+    it "example without xoxb perfix should fromText" $
+      encode (fromText "non-xoxb-prefixed-string") `shouldBe` "\"non-xoxb-prefixed-string\""
