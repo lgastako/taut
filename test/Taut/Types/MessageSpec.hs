@@ -66,4 +66,4 @@ spec = describe "Message" $
             Nothing
             (Just $ UserName.fromText "username")
 
-      encode msg `shouldBe` "{}"
+      encode msg `shouldBe` "{\"text\":\"this is the msg\",\"channel\":\"cid\",\"username\":\"username\"}"
