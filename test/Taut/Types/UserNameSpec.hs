@@ -3,7 +3,7 @@
 
 module Taut.Types.UserNameSpec ( spec ) where
 
-import Focus.Prelude
+import Taut.Prelude
 
 import Data.Aeson          ( decode
                            , encode

@@ -4,7 +4,7 @@
 module Taut.Types.MessageEventsSpec ( spec ) where
 
 import qualified Prelude                  as P
-import           Focus.Prelude
+import           Taut.Prelude
 
 import           Data.Aeson                              ( decode
                                                          , encode

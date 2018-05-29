@@ -3,7 +3,7 @@
 
 module Taut.Types.EditInfoSpec ( spec ) where
 
-import           Focus.Prelude                     hiding ( from )
+import           Taut.Prelude                      hiding ( from )
 
 import           Data.Aeson                               ( decode
                                                           , encode

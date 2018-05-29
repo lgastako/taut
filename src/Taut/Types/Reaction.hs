@@ -13,7 +13,7 @@ module Taut.Types.Reaction
      , users
      ) where
 
-import Focus.Prelude
+import Taut.Prelude
 
 import Control.Lens      ( (^.)
                          , makeLenses

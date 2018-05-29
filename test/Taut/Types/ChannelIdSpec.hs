@@ -3,7 +3,7 @@
 
 module Taut.Types.ChannelIdSpec ( spec ) where
 
-import Focus.Prelude
+import Taut.Prelude
 
 import Data.Aeson           ( decode
                             , encode

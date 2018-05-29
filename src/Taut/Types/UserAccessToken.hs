@@ -7,6 +7,7 @@ module Taut.Types.UserAccessToken
      ( UserAccessToken
      , fromText
      , fromTextE
+     , unUserAccessToken
      ) where
 
 import           Taut.Prelude
@@ -23,7 +24,7 @@ import           Test.QuickCheck                ( Arbitrary
                                                 , arbitrary
                                                 )
 
-newtype UserAccessToken = UserAccessToken Text
+newtype UserAccessToken = UserAccessToken { unUserAccessToken :: Text }
   deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance AccessToken UserAccessToken where
