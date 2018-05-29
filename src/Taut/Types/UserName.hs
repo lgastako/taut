@@ -1,6 +1,7 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE TemplateHaskell            #-}
 
 module Taut.Types.UserName
      ( UserName
@@ -13,9 +14,6 @@ import Taut.Prelude
 
 import Control.Lens              ( Iso'
                                  , iso
-                                 )
-import Data.Aeson.TH             ( defaultOptions
-                                 , deriveJSON
                                  )
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
@@ -31,7 +29,7 @@ import Web.HttpApiData           ( FromHttpApiData
                                  )
 
 newtype UserName = UserName { unUserName :: Text }
-  deriving (Eq, Generic, Ord, Read, Show)
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance FromHttpApiData UserName where
   parseQueryParam = Right . fromText
@@ -44,7 +42,5 @@ fromText = UserName
 
 userName :: Iso' UserName Text
 userName = iso unUserName fromText
-
-$(deriveJSON defaultOptions ''UserName)
 
 derive makeArbitrary ''UserName

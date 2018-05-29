@@ -45,6 +45,10 @@ make = Reaction
 summary :: Reaction -> Text
 summary r = r ^. name <> " (" <> show (r ^. count) <> ")"
 
+-- TODO: options to remove the underscores in the serialized versions...  but
+--       of course we either have to convert existing data, be backwards
+--       compatible or verify that we're not already using a specific thing
+--       before changing it
 $(deriveJSON defaultOptions ''Reaction)
 
 derive makeArbitrary ''Reaction

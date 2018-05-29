@@ -1,6 +1,7 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE TemplateHaskell            #-}
 
 module Taut.Types.TeamName
      ( TeamName
@@ -13,9 +14,6 @@ import Taut.Prelude
 
 import Control.Lens              ( Iso'
                                  , iso
-                                 )
-import Data.Aeson.TH             ( defaultOptions
-                                 , deriveJSON
                                  )
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
@@ -31,7 +29,7 @@ import Web.HttpApiData           ( FromHttpApiData
                                  )
 
 newtype TeamName = TeamName { unTeamName :: Text }
-  deriving (Eq, Generic, Ord, Read, Show)
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance FromHttpApiData TeamName where
   parseQueryParam = Right . fromText
@@ -44,7 +42,5 @@ fromText = TeamName
 
 teamName :: Iso' TeamName Text
 teamName = iso unTeamName fromText
-
-$(deriveJSON defaultOptions ''TeamName)
 
 derive makeArbitrary ''TeamName
