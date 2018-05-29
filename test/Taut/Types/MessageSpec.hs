@@ -3,15 +3,16 @@
 
 module Taut.Types.MessageSpec ( spec ) where
 
-import Taut.Prelude
-import Data.Aeson         ( decode
-                          , encode
-                          )
-import Taut.Types.Message ( Message( Message ) )
-import Test.Hspec
-import Test.QuickCheck
+import           Taut.Prelude
+
+import           Data.Aeson                        ( decode
+                                                   , encode
+                                                   )
 import qualified Taut.Types.ChannelId as ChannelId
+import           Taut.Types.Message                ( Message( Message ) )
 import qualified Taut.Types.UserName  as UserName
+import           Test.Hspec
+import           Test.QuickCheck
 
 spec :: Spec
 spec = describe "Message" $

@@ -14,7 +14,7 @@ import Taut.Prelude
 
 import Control.Lens              ( makeLenses )
 import Data.Aeson                ( FromJSON( parseJSON )
-                                 , ToJSON ( toJSON )
+                                 , ToJSON( toJSON )
                                  , defaultOptions
                                  , genericParseJSON
                                  , genericToJSON

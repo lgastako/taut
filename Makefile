@@ -15,8 +15,10 @@ hlint:
 
 longboye-all:
 	longboye imports src
+	longboye imports staging
 	longboye imports test
 	longboye pragmas src
+	longboye pragmas staging
 	longboye pragmas test
 
 setup:

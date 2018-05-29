@@ -27,7 +27,7 @@ module Taut.Types.Message
      , username
      ) where
 
-import Taut.Prelude                 hiding ( empty )
+import Taut.Prelude                  hiding ( empty )
 
 import Control.Lens                         ( makeLenses )
 import Data.Aeson                           ( FromJSON( parseJSON )
@@ -50,7 +50,12 @@ import Taut.Types.ChannelId                 ( ChannelId )
 import Taut.Types.Message.Attachment        ( Attachment )
 import Taut.Types.OauthToken                ( OauthToken )
 import Taut.Types.UserName                  ( UserName )
-import Test.QuickCheck (Arbitrary, arbitrary, shrink, genericShrink, elements)
+import Test.QuickCheck                      ( Arbitrary
+                                            , arbitrary
+                                            , elements
+                                            , genericShrink
+                                            , shrink
+                                            )
 
 data Parse = Full | None
   deriving (Enum, Eq, Generic, Ord, Read, Show)

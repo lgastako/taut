@@ -5,9 +5,9 @@ module Taut.Types.TeamNameSpec ( spec ) where
 
 import Taut.Prelude
 
-import Data.Aeson             ( decode
-                              , encode
-                              )
+import Data.Aeson          ( decode
+                           , encode
+                           )
 import Taut.Types.TeamName
 import Test.Hspec
 import Test.QuickCheck

@@ -24,4 +24,3 @@ spec = describe "OauthToken" $
 
     it "this example should serialize like so" $
       encode (fromText "foo") `shouldBe` "\"foo\""
-

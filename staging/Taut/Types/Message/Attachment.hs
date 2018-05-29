@@ -60,12 +60,17 @@ import qualified Data.Text.Lazy.Encoding              as LTextE
 import           Taut.Types.Message.Attachment.Action                  ( Action )
 import           Taut.Types.Message.Attachment.Field                   ( Field )
 import           Taut.Types.Timestamp                                  ( Timestamp )
+import           Test.QuickCheck                                       ( Arbitrary
+                                                                       , arbitrary
+                                                                       , elements
+                                                                       , genericShrink
+                                                                       , shrink
+                                                                       )
 import           Web.HttpApiData                                       ( FromHttpApiData
                                                                        , ToHttpApiData
                                                                        , parseQueryParam
                                                                        , toQueryParam
                                                                        )
-import           Test.QuickCheck (arbitrary, Arbitrary, shrink, genericShrink, elements)
 
 data Color
   = ColorCode Text

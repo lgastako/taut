@@ -48,7 +48,11 @@ import Taut.Types.OauthToken                ( OauthToken )
 import Taut.Types.TeamId                    ( TeamId )
 import Taut.Types.UserId                    ( UserId )
 import Taut.Types.UserName                  ( UserName )
-import Test.QuickCheck (Arbitrary, arbitrary, shrink, genericShrink)
+import Test.QuickCheck                      ( Arbitrary
+                                            , arbitrary
+                                            , genericShrink
+                                            , shrink
+                                            )
 
 data Team = Team
   { _teamDomain :: Text

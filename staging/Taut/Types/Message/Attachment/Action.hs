@@ -47,7 +47,12 @@ import           Data.Aeson.Types                                      ( Parser 
 import           Data.Char                                             ( toLower )
 import qualified Data.Text                                    as Text
 import           Taut.Types.Message.Attachment.Action.Confirm          ( Confirm )
-import           Test.QuickCheck (Arbitrary, arbitrary, shrink, elements, genericShrink)
+import           Test.QuickCheck                                       ( Arbitrary
+                                                                       , arbitrary
+                                                                       , elements
+                                                                       , genericShrink
+                                                                       , shrink
+                                                                       )
 
 (.:??) :: FromJSON a => Object -> Text -> Parser (Maybe a)
 (.:??) v t = v .:? t <|> return Nothing
