@@ -3,24 +3,24 @@
 
 module Taut.Types.MessageEventsSpec ( spec ) where
 
+import qualified Prelude                  as P
 import           Focus.Prelude
-import qualified Prelude                as P
 
-import           Data.Aeson                  ( decode
-                                             , encode
-                                             )
-import           Data.Default                ( def )
-import           Taut.Types.MessageEvent     ( MessageEvent
-                                             , make
-                                             )
+import           Data.Aeson                              ( decode
+                                                         , encode
+                                                         )
+import           Data.Default                            ( def )
+import           Taut.Types.ChannelId                    ( ChannelId )
+import qualified Taut.Types.ChannelId     as ChannelId
+import           Taut.Types.MessageEvent                 ( MessageEvent
+                                                         , make
+                                                         )
 import           Taut.Types.MessageEvents
+import           Taut.Types.MessageType   as MessageType
+import           Taut.Types.UserId                       ( UserId )
+import qualified Taut.Types.UserId        as UserId
 import           Test.Hspec
 import           Test.QuickCheck
-import           Taut.Types.MessageType as MessageType
-import           Taut.Types.ChannelId                ( ChannelId )
-import qualified Taut.Types.ChannelId   as ChannelId
-import           Taut.Types.UserId                   ( UserId )
-import qualified Taut.Types.UserId      as UserId
 
 spec :: Spec
 spec = describe "MessageEvents" $ do

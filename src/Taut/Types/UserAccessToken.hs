@@ -1,6 +1,7 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE OverloadedStrings          #-}
 module Taut.Types.UserAccessToken
        ( UserAccessToken
        , fromText
@@ -9,17 +10,26 @@ module Taut.Types.UserAccessToken
 
 import           Focus.Prelude
 
+import           Data.Aeson                     ( FromJSON
+                                                , ToJSON
+                                                )
 import qualified Data.Text              as Text
 import           Taut.Constants                 ( botTokenPrefix )
 import           Taut.Types.AccessToken         ( AccessToken
                                                 , accessTokenText
                                                 )
+import           Test.QuickCheck                ( Arbitrary
+                                                , arbitrary
+                                                )
 
-data UserAccessToken = UserAccessToken Text
-  deriving (Eq, Generic, Ord, Read, Show)
+newtype UserAccessToken = UserAccessToken Text
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance AccessToken UserAccessToken where
   accessTokenText (UserAccessToken text) = text
+
+instance Arbitrary UserAccessToken where
+  arbitrary = UserAccessToken <$> arbitrary
 
 fromText :: Text -> Maybe UserAccessToken
 fromText = eitherToMaybe . fromTextE

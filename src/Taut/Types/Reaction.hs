@@ -4,6 +4,7 @@
 {-# LANGUAGE TemplateHaskell   #-}
 module Taut.Types.Reaction
        ( Reaction
+       , ReactionName
        , count
        , make
        , name
