@@ -53,6 +53,7 @@ library
                      , focus-prelude
                      , http-api-data
                      , lens
+                     , random
                      -- We need to depend on QuickCheck here if we want to
                      -- export arbitrary instances (which we do).
                      , QuickCheck
@@ -73,17 +74,11 @@ test-suite taut-test
   other-modules:       Taut.FunctionsSpec
                      , Taut.Types.AccessTokenSpec
                      , Taut.Types.BotAccessTokenSpec
-                     , Taut.Types.ButtonPayload.Arbitrary
                      , Taut.Types.ButtonPayloadSpec
                      , Taut.Types.ChannelIdSpec
                      , Taut.Types.ChannelNameSpec
                      , Taut.Types.EditInfoSpec
                      , Taut.Types.MessageEventSpec
-                     , Taut.Types.Message.Arbitrary
-                     , Taut.Types.Message.Attachment.Action.Arbitrary
-                     , Taut.Types.Message.Attachment.Action.Confirm.Arbitrary
-                     , Taut.Types.Message.Attachment.Arbitrary
-                     , Taut.Types.Message.Attachment.Field.Arbitrary
                      , Taut.Types.TimestampSpec
   build-depends:       QuickCheck
                      , aeson
@@ -99,6 +94,7 @@ test-suite taut-test
                      , http-api-data
                      , lens
                      , quickcheck-instances
+                     , random
                      , spc-luthor
                      , taut
                      , template-haskell

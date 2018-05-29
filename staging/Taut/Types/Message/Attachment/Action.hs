@@ -46,6 +46,7 @@ import           Data.Aeson.Types                                      ( Parser 
 import           Data.Char                                             ( toLower )
 import qualified Data.Text                                    as Text
 import           Taut.Types.Message.Attachment.Action.Confirm          ( Confirm )
+import           Test.QuickCheck (Arbitrary, arbitrary, shrink, elements, genericShrink)
 
 (.:??) :: FromJSON a => Object -> Text -> Parser (Maybe a)
 (.:??) v t = v .:? t <|> return Nothing
@@ -54,7 +55,11 @@ data ButtonStyle
   = Danger
   | Default
   | Primary
-  deriving (Enum, Eq, Ord, Generic, Read, Show)
+  deriving (Bounded, Enum, Eq, Ord, Generic, Read, Show)
+
+instance Arbitrary ButtonStyle where
+  arbitrary = elements [toEnum 0..]
+  shrink = genericShrink
 
 instance FromJSON ButtonStyle where
   parseJSON = genericParseJSON buttonStyleOptions
@@ -68,7 +73,11 @@ buttonStyleOptions = defaultOptions
   }
 
 data ActionType = Button
-  deriving (Eq, Generic, Ord, Read, Show)
+  deriving (Bounded, Enum, Eq, Generic, Ord, Read, Show)
+
+instance Arbitrary ActionType where
+  arbitrary = return $ Button
+  shrink    = genericShrink
 
 instance FromJSON ActionType where
   parseJSON (Aeson.String s) = case s of
@@ -114,3 +123,13 @@ instance ToJSON Action where
     { fieldLabelModifier = camelTo2 '_' . drop 1 . filter (/= '\'')
     , omitNothingFields  = True
     }
+
+instance Arbitrary Action where
+  arbitrary = Action
+    <$> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+  shrink = genericShrink
