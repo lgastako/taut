@@ -78,7 +78,18 @@ test-suite taut-test
                      , Taut.Types.ChannelNameSpec
                      , Taut.Types.EditInfoSpec
                      , Taut.Types.MessageEventSpec
+                     , Taut.Types.MessageEventsSpec
+                     , Taut.Types.MessageSpec
+                     , Taut.Types.MessageTypeSpec
+                     , Taut.Types.OauthTokenSpec
+                     , Taut.Types.ReactionSpec
+                     , Taut.Types.SubTypeSpec
+                     , Taut.Types.TeamIdSpec
+                     , Taut.Types.TeamNameSpec
                      , Taut.Types.TimestampSpec
+                     , Taut.Types.UserAccessTokenSpec
+                     , Taut.Types.UserIdSpec
+                     , Taut.Types.UserNameSpec
   build-depends:       QuickCheck
                      , aeson
                      , aeson-pretty
