@@ -50,6 +50,7 @@ import Taut.Types.ChannelId                 ( ChannelId )
 import Taut.Types.Message.Attachment        ( Attachment )
 import Taut.Types.OauthToken                ( OauthToken )
 import Taut.Types.UserName                  ( UserName )
+import Test.QuickCheck (Arbitrary, arbitrary, shrink, genericShrink, elements)
 
 data Parse = Full | None
   deriving (Enum, Eq, Generic, Ord, Read, Show)
@@ -59,6 +60,31 @@ instance FromJSON Parse where
 
 instance ToJSON Parse where
   toJSON = genericToJSON parseOptions
+
+instance Arbitrary Message where
+  arbitrary = Message
+    <$> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+
+instance Arbitrary Parse where
+  arbitrary = elements [toEnum 0..]
+  shrink    = genericShrink
 
 parseOptions :: Options
 parseOptions = defaultOptions

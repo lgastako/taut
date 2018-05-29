@@ -23,6 +23,12 @@ import Data.Aeson.Types ( Options( fieldLabelModifier
                                  )
                         , camelTo2
                         )
+import Test.QuickCheck                     ( Arbitrary
+                                           , arbitrary
+                                           , genericShrink
+                                           , shrink
+                                           )
+import Test.QuickCheck.Instances           ()
 
 data Field = Field
   { _short :: Bool
@@ -31,6 +37,13 @@ data Field = Field
   } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Field
+
+instance Arbitrary Field where
+  arbitrary = Field
+    <$> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+  shrink = genericShrink
 
 instance FromJSON Field where
   parseJSON = genericParseJSON fieldOptions

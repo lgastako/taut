@@ -48,6 +48,7 @@ import Taut.Types.OauthToken                ( OauthToken )
 import Taut.Types.TeamId                    ( TeamId )
 import Taut.Types.UserId                    ( UserId )
 import Taut.Types.UserName                  ( UserName )
+import Test.QuickCheck (Arbitrary, arbitrary, shrink, genericShrink)
 
 data Team = Team
   { _teamDomain :: Text
@@ -55,6 +56,12 @@ data Team = Team
   } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Team
+
+instance Arbitrary Team where
+  arbitrary = Team
+    <$> arbitrary
+    <*> arbitrary
+  shrink = genericShrink
 
 instance FromJSON Team where
   parseJSON = genericParseJSON teamOptions
@@ -74,6 +81,12 @@ data Channel = Channel
 
 makeLenses ''Channel
 
+instance Arbitrary Channel where
+  arbitrary = Channel
+    <$> arbitrary
+    <*> arbitrary
+  shrink = genericShrink
+
 instance FromJSON Channel where
   parseJSON = genericParseJSON channelOptions
 
@@ -92,6 +105,13 @@ data User = User
 
 makeLenses ''User
 
+
+instance Arbitrary User where
+  arbitrary = User
+    <$> arbitrary
+    <*> arbitrary
+  shrink = genericShrink
+
 instance FromJSON User where
   parseJSON = genericParseJSON userOptions
 
@@ -105,6 +125,10 @@ userOptions = defaultOptions
 
 newtype TriggerId = TriggerId Text
   deriving (Eq, Generic, Ord, Read, Show)
+
+instance Arbitrary TriggerId where
+  arbitrary = TriggerId <$> arbitrary
+  shrink    = genericShrink
 
 instance FromJSON TriggerId
 instance ToJSON   TriggerId
@@ -125,6 +149,22 @@ data ButtonPayload = ButtonPayload
   } deriving (Eq, Generic, Ord, Read, Show)
 
 makeLenses ''ButtonPayload
+
+instance Arbitrary ButtonPayload where
+  arbitrary = ButtonPayload
+    <$> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+  shrink = genericShrink
 
 instance FromJSON ButtonPayload where
   parseJSON = genericParseJSON buttonPayloadOptions

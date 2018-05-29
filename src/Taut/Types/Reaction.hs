@@ -5,6 +5,7 @@
 
 module Taut.Types.Reaction
      ( Reaction
+     , ReactionName
      , count
      , make
      , name
@@ -12,7 +13,7 @@ module Taut.Types.Reaction
      , users
      ) where
 
-import Taut.Prelude
+import Focus.Prelude
 
 import Control.Lens      ( (^.)
                          , makeLenses

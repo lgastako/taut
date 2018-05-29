@@ -11,17 +11,26 @@ module Taut.Types.UserAccessToken
 
 import           Taut.Prelude
 
+import           Data.Aeson                     ( FromJSON
+                                                , ToJSON
+                                                )
 import qualified Data.Text              as Text
 import           Taut.Constants                 ( botTokenPrefix )
 import           Taut.Types.AccessToken         ( AccessToken
                                                 , accessTokenText
                                                 )
+import           Test.QuickCheck                ( Arbitrary
+                                                , arbitrary
+                                                )
 
-newtype UserAccessToken = UserAccessToken { unUserAccessToken ::  Text }
+newtype UserAccessToken = UserAccessToken Text
   deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance AccessToken UserAccessToken where
   accessTokenText = unUserAccessToken
+
+instance Arbitrary UserAccessToken where
+  arbitrary = UserAccessToken <$> arbitrary
 
 fromText :: Text -> Maybe UserAccessToken
 fromText = eitherToMaybe . fromTextE

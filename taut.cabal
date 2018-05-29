@@ -42,10 +42,12 @@ library
                      , Taut.Types.TeamId
                      , Taut.Types.TeamName
                      , Taut.Types.Timestamp
+                     , Taut.Types.UserAccessToken
                      , Taut.Types.UserId
                      , Taut.Types.UserName
   build-depends:       aeson
                      , base       >= 4.7 && < 5
+                     , bytestring
                      , cassava
                      , containers
                      , data-default
@@ -69,16 +71,16 @@ test-suite taut-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   other-modules:       Taut.FunctionsSpec
-                     , Taut.Types.ButtonPayload.Arbitrary
+                     , Taut.Types.AccessTokenSpec
+                     , Taut.Types.BotAccessTokenSpec
                      , Taut.Types.ButtonPayloadSpec
+                     , Taut.Types.ChannelIdSpec
+                     , Taut.Types.ChannelNameSpec
+                     , Taut.Types.EditInfoSpec
                      , Taut.Types.MessageEventSpec
-                     , Taut.Types.Message.Arbitrary
-                     , Taut.Types.Message.Attachment.Action.Arbitrary
-                     , Taut.Types.Message.Attachment.Action.Confirm.Arbitrary
-                     , Taut.Types.Message.Attachment.Arbitrary
-                     , Taut.Types.Message.Attachment.Field.Arbitrary
                      , Taut.Types.TimestampSpec
-  build-depends:       aeson
+  build-depends:       QuickCheck
+                     , aeson
                      , aeson-pretty
                      , base
                      , containers

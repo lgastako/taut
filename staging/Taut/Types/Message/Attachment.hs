@@ -65,6 +65,7 @@ import           Web.HttpApiData                                       ( FromHtt
                                                                        , parseQueryParam
                                                                        , toQueryParam
                                                                        )
+import           Test.QuickCheck (arbitrary, Arbitrary, shrink, genericShrink, elements)
 
 data Color
   = ColorCode Text
@@ -72,6 +73,14 @@ data Color
   | Good
   | Warning
   deriving (Eq, Generic, Ord, Read, Show)
+
+instance Arbitrary Color where
+  arbitrary = do
+    cc1 <- arbitrary
+    cc2 <- arbitrary
+    -- TODO: better
+    elements [Good, Warning, Danger, ColorCode cc1, ColorCode cc2]
+  shrink = genericShrink
 
 instance FromJSON Color where
   parseJSON (Aeson.String s) = return $ case s of
@@ -125,6 +134,28 @@ attachmentOptions = defaultOptions
   { fieldLabelModifier = camelTo2 '_' . drop 1
   , omitNothingFields  = True
   }
+
+instance Arbitrary Attachment where
+  arbitrary = Attachment
+    <$> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+  shrink = genericShrink
 
 instance Default Attachment where
   def = Attachment

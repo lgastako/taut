@@ -5,11 +5,10 @@ module Taut.Types.ButtonPayloadSpec ( spec ) where
 
 import Taut.Prelude
 
-import Data.Aeson                         ( decode
-                                          , encode
-                                          )
-import Taut.Types.ButtonPayload           ( ButtonPayload )
-import Taut.Types.ButtonPayload.Arbitrary ()
+import Data.Aeson               ( decode
+                                , encode
+                                )
+import Taut.Types.ButtonPayload ( ButtonPayload )
 import Test.Hspec
 import Test.QuickCheck
 
