@@ -30,21 +30,14 @@ module Taut.Types.MessageEvent
 import qualified Prelude                as P
 import           Taut.Prelude                       hiding ( intercalate )
 
-import           Control.Lens                              ( (&)
-                                                           , (.~)
-                                                           , (??)
-                                                           , (^.)
+import           Control.Lens                              ( (??)
                                                            , DefName( TopName )
                                                            , lensField
                                                            , lensRules
                                                            , makeLensesWith
                                                            )
-import           Data.Aeson                                ( FromJSON
-                                                           , ToJSON
-                                                           , genericParseJSON
+import           Data.Aeson                                ( genericParseJSON
                                                            , genericToJSON
-                                                           , parseJSON
-                                                           , toJSON
                                                            )
 import           Data.Aeson.TH                             ( defaultOptions
                                                            , fieldLabelModifier

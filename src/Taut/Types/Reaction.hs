@@ -15,9 +15,6 @@ module Taut.Types.Reaction
 
 import Taut.Prelude
 
-import Control.Lens      ( (^.)
-                         , makeLenses
-                         )
 import Data.Aeson.TH     ( defaultOptions
                          , deriveJSON
                          )

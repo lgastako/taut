@@ -9,7 +9,6 @@ module Taut.Types.MessageEvents
 
 import           Taut.Prelude
 
-import           Control.Lens                       ( (^.) )
 import qualified Data.Csv                as Csv
 import qualified Data.Vector             as Vector
 import           Taut.Types.MessageEvent            ( MessageEvent

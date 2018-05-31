@@ -10,19 +10,18 @@ module Taut.Types.UserAccessToken
      , unUserAccessToken
      ) where
 
-import           Taut.Prelude
+import Taut.Prelude    hiding ( null )
 
-import           Data.Aeson                     ( FromJSON
-                                                , ToJSON
-                                                )
-import qualified Data.Text              as Text
-import           Taut.Constants                 ( botTokenPrefix )
-import           Taut.Types.AccessToken         ( AccessToken
-                                                , accessTokenText
-                                                )
-import           Test.QuickCheck                ( Arbitrary
-                                                , arbitrary
-                                                )
+import Data.Text              ( null
+                              , strip
+                              )
+import Taut.Constants         ( botTokenPrefix )
+import Taut.Types.AccessToken ( AccessToken
+                              , accessTokenText
+                              )
+import Test.QuickCheck        ( Arbitrary
+                              , arbitrary
+                              )
 
 newtype UserAccessToken = UserAccessToken { unUserAccessToken :: Text }
   deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
@@ -38,11 +37,11 @@ fromText = eitherToMaybe . fromTextE
 
 fromTextE :: Text -> Either Text UserAccessToken
 fromTextE text
-  | Text.null s                   = Left "User access token is an empty string"
+  | null s                        = Left "User access token is an empty string"
   | s `startsWith` botTokenPrefix = Left mismatchedTokensError
   | otherwise                     = Right . UserAccessToken $ s
   where
-    s = Text.strip text
+    s = strip text
 
     mismatchedTokensError =
       "Attempt to create a UserAccessToken value from a bot access token."

@@ -11,9 +11,6 @@ module Taut.Types.AccessToken
 
 import Taut.Prelude
 
-import Data.Aeson                ( FromJSON
-                                 , ToJSON
-                                 )
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
