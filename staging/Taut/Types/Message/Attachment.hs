@@ -4,35 +4,33 @@
 {-# LANGUAGE TemplateHaskell   #-}
 
 module Taut.Types.Message.Attachment
-       ( Attachment( Attachment )
-       , Color( ColorCode
-              , Danger
-              , Good
-              , Warning
-              )
-       , actions
-       , attachmentType
-       , authorName
-       , authorLink
-       , authorIcon
-       , callbackId
-       , color
-       , fallback
-       , fields
-       , footer
-       , footerIcon
-       , imageUrl
-       , pretext
-       , text
-       , thumbUrl
-       , title
-       , titleLink
-       , ts
-       ) where
+     ( Attachment( Attachment )
+     , Color( ColorCode
+            , Danger
+            , Good
+            , Warning
+            )
+     , actions
+     , attachmentType
+     , authorIcon
+     , authorLink
+     , authorName
+     , callbackId
+     , color
+     , fallback
+     , fields
+     , footer
+     , footerIcon
+     , imageUrl
+     , pretext
+     , text
+     , thumbUrl
+     , title
+     , titleLink
+     , ts
+     ) where
 
-import           Focus.Prelude                                  hiding ( decodeUtf8
-                                                                       , empty
-                                                                       )
+import           Taut.Prelude                                   hiding ( decodeUtf8 )
 
 import           Control.Lens                                          ( makeLenses )
 import           Data.Aeson                                            ( FromJSON( parseJSON )
@@ -60,6 +58,12 @@ import qualified Data.Text.Lazy.Encoding              as LTextE
 import           Taut.Types.Message.Attachment.Action                  ( Action )
 import           Taut.Types.Message.Attachment.Field                   ( Field )
 import           Taut.Types.Timestamp                                  ( Timestamp )
+import           Test.QuickCheck                                       ( Arbitrary
+                                                                       , arbitrary
+                                                                       , elements
+                                                                       , genericShrink
+                                                                       , shrink
+                                                                       )
 import           Web.HttpApiData                                       ( FromHttpApiData
                                                                        , ToHttpApiData
                                                                        , parseQueryParam
@@ -72,6 +76,14 @@ data Color
   | Good
   | Warning
   deriving (Eq, Generic, Ord, Read, Show)
+
+instance Arbitrary Color where
+  arbitrary = do
+    cc1 <- arbitrary
+    cc2 <- arbitrary
+    -- TODO: better
+    elements [Good, Warning, Danger, ColorCode cc1, ColorCode cc2]
+  shrink = genericShrink
 
 instance FromJSON Color where
   parseJSON (Aeson.String s) = return $ case s of
@@ -126,24 +138,46 @@ attachmentOptions = defaultOptions
   , omitNothingFields  = True
   }
 
+instance Arbitrary Attachment where
+  arbitrary = Attachment
+    <$> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+  shrink = genericShrink
+
 instance Default Attachment where
   def = Attachment
-        { _actions        = Nothing
-        , _attachmentType = Nothing
-        , _authorIcon     = Nothing
-        , _authorLink     = Nothing
-        , _authorName     = Nothing
-        , _callbackId     = Nothing
-        , _color          = Nothing
-        , _fallback       = Nothing
-        , _fields         = Nothing
-        , _footer         = Nothing
-        , _footerIcon     = Nothing
-        , _imageUrl       = Nothing
-        , _pretext        = Nothing
-        , _text           = Nothing
-        , _thumbUrl       = Nothing
-        , _title          = Nothing
-        , _titleLink      = Nothing
-        , _ts             = Nothing
-        }
+    { _actions        = Nothing
+    , _attachmentType = Nothing
+    , _authorIcon     = Nothing
+    , _authorLink     = Nothing
+    , _authorName     = Nothing
+    , _callbackId     = Nothing
+    , _color          = Nothing
+    , _fallback       = Nothing
+    , _fields         = Nothing
+    , _footer         = Nothing
+    , _footerIcon     = Nothing
+    , _imageUrl       = Nothing
+    , _pretext        = Nothing
+    , _text           = Nothing
+    , _thumbUrl       = Nothing
+    , _title          = Nothing
+    , _titleLink      = Nothing
+    , _ts             = Nothing
+    }

@@ -1,28 +1,35 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
+
 module Taut.Types.Message.Attachment.Action.Confirm
-       ( Confirm( Confirm )
-       , dismissText
-       , okText
-       , text
-       , title
-       ) where
+     ( Confirm( Confirm )
+     , dismissText
+     , okText
+     , text
+     , title
+     ) where
 
-import Focus.Prelude
+import Taut.Prelude
 
-import Control.Lens     ( makeLenses )
-import Data.Aeson       ( FromJSON( parseJSON )
-                        , ToJSON( toJSON )
-                        , defaultOptions
-                        , genericParseJSON
-                        , genericToJSON
-                        )
-import Data.Aeson.Types ( Options( fieldLabelModifier
-                                 , omitNothingFields
+import Control.Lens              ( makeLenses )
+import Data.Aeson                ( FromJSON( parseJSON )
+                                 , ToJSON( toJSON )
+                                 , defaultOptions
+                                 , genericParseJSON
+                                 , genericToJSON
                                  )
-                        , camelTo2
-                        )
+import Data.Aeson.Types          ( Options( fieldLabelModifier
+                                          , omitNothingFields
+                                          )
+                                 , camelTo2
+                                 )
+import Test.QuickCheck           ( Arbitrary
+                                 , arbitrary
+                                 , genericShrink
+                                 , shrink
+                                 )
+import Test.QuickCheck.Instances ()
 
 data Confirm = Confirm
   { _dismissText :: Text
@@ -38,6 +45,14 @@ instance FromJSON Confirm where
 
 instance ToJSON Confirm where
   toJSON = genericToJSON confirmOptions
+
+instance Arbitrary Confirm where
+  arbitrary = Confirm
+    <$> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+  shrink = genericShrink
 
 confirmOptions :: Options
 confirmOptions = defaultOptions

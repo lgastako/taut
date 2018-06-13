@@ -1,20 +1,19 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TemplateHaskell   #-}
-module Taut.Types.OauthToken
-       ( OauthToken
-       , fromText
-       , tidText
-       , toText
-       ) where
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE TemplateHaskell            #-}
 
-import Focus.Prelude
+module Taut.Types.OauthToken
+     ( OauthToken
+     , fromText
+     , tidText
+     , unOauthToken
+     ) where
+
+import Taut.Prelude
 
 import Control.Lens              ( Iso'
                                  , iso
-                                 )
-import Data.Aeson.TH             ( defaultOptions
-                                 , deriveJSON
                                  )
 import Data.Csv                  ( ToField
                                  , toField
@@ -22,26 +21,19 @@ import Data.Csv                  ( ToField
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
-import Test.QuickCheck           ( Arbitrary
-                                 , arbitrary
-                                 )
+import Test.QuickCheck
 import Test.QuickCheck.Instances ()
 
-newtype OauthToken = OauthToken Text
-  deriving (Eq, Ord, Read, Show, Generic)
+newtype OauthToken = OauthToken { unOauthToken :: Text }
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance ToField OauthToken where
-  toField = encodeUtf8 . toText
+  toField = encodeUtf8 . unOauthToken
 
 fromText :: Text -> OauthToken
 fromText = OauthToken
 
-toText :: OauthToken -> Text
-toText (OauthToken u) = u
-
 tidText :: Iso' OauthToken Text
-tidText = iso toText fromText
-
-$(deriveJSON defaultOptions ''OauthToken)
+tidText = iso unOauthToken fromText
 
 derive makeArbitrary ''OauthToken

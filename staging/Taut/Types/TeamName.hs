@@ -1,20 +1,19 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TemplateHaskell   #-}
-module Taut.Types.TeamName
-       ( TeamName
-       , fromText
-       , teamName
-       , toText
-       ) where
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE TemplateHaskell            #-}
 
-import Focus.Prelude
+module Taut.Types.TeamName
+     ( TeamName
+     , fromText
+     , teamName
+     , unTeamName
+     ) where
+
+import Taut.Prelude
 
 import Control.Lens              ( Iso'
                                  , iso
-                                 )
-import Data.Aeson.TH             ( defaultOptions
-                                 , deriveJSON
                                  )
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
@@ -29,24 +28,19 @@ import Web.HttpApiData           ( FromHttpApiData
                                  , toQueryParam
                                  )
 
-newtype TeamName = TeamName Text
-  deriving (Eq, Generic, Ord, Read, Show)
+newtype TeamName = TeamName { unTeamName :: Text }
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance FromHttpApiData TeamName where
   parseQueryParam = Right . fromText
 
 instance ToHttpApiData TeamName where
-  toQueryParam = toText
+  toQueryParam = unTeamName
 
 fromText :: Text -> TeamName
 fromText = TeamName
 
-toText :: TeamName -> Text
-toText (TeamName n) = n
-
 teamName :: Iso' TeamName Text
-teamName = iso toText fromText
-
-$(deriveJSON defaultOptions ''TeamName)
+teamName = iso unTeamName fromText
 
 derive makeArbitrary ''TeamName

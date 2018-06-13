@@ -1,20 +1,19 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TemplateHaskell   #-}
-module Taut.Types.UserName
-       ( UserName
-       , fromText
-       , toText
-       , userName
-       ) where
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE TemplateHaskell            #-}
 
-import Focus.Prelude
+module Taut.Types.UserName
+     ( UserName
+     , fromText
+     , unUserName
+     , userName
+     ) where
+
+import Taut.Prelude
 
 import Control.Lens              ( Iso'
                                  , iso
-                                 )
-import Data.Aeson.TH             ( defaultOptions
-                                 , deriveJSON
                                  )
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
@@ -29,24 +28,19 @@ import Web.HttpApiData           ( FromHttpApiData
                                  , toQueryParam
                                  )
 
-newtype UserName = UserName Text
-  deriving (Eq, Generic, Ord, Read, Show)
+newtype UserName = UserName { unUserName :: Text }
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance FromHttpApiData UserName where
   parseQueryParam = Right . fromText
 
 instance ToHttpApiData UserName where
-  toQueryParam = toText
+  toQueryParam = unUserName
 
 fromText :: Text -> UserName
 fromText = UserName
 
-toText :: UserName -> Text
-toText (UserName u) = u
-
 userName :: Iso' UserName Text
-userName = iso toText fromText
-
-$(deriveJSON defaultOptions ''UserName)
+userName = iso unUserName fromText
 
 derive makeArbitrary ''UserName

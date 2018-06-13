@@ -2,23 +2,24 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell   #-}
-module Taut.Types.Message.Attachment.Action
-       ( Action( Action )
-       , ActionType( Button )
-       , ButtonStyle( Default
-                    , Primary
-                    , Danger
-                    )
-       , button
-       , confirm
-       , name
-       , style
-       , text
-       , type'
-       , value
-       ) where
 
-import           Focus.Prelude
+module Taut.Types.Message.Attachment.Action
+     ( Action( Action )
+     , ActionType( Button )
+     , ButtonStyle( Danger
+                  , Default
+                  , Primary
+                  )
+     , button
+     , confirm
+     , name
+     , style
+     , text
+     , type'
+     , value
+     ) where
+
+import           Taut.Prelude
 
 import           Control.Applicative                                   ( (<|>) )
 import           Control.Lens                                          ( makeLenses )
@@ -39,13 +40,19 @@ import           Data.Aeson.Types                                      ( Options
                                                                                 , fieldLabelModifier
                                                                                 , omitNothingFields
                                                                                 )
+                                                                       , Parser
                                                                        , camelTo2
                                                                        , typeMismatch
                                                                        )
-import           Data.Aeson.Types                                      ( Parser )
 import           Data.Char                                             ( toLower )
 import qualified Data.Text                                    as Text
 import           Taut.Types.Message.Attachment.Action.Confirm          ( Confirm )
+import           Test.QuickCheck                                       ( Arbitrary
+                                                                       , arbitrary
+                                                                       , elements
+                                                                       , genericShrink
+                                                                       , shrink
+                                                                       )
 
 (.:??) :: FromJSON a => Object -> Text -> Parser (Maybe a)
 (.:??) v t = v .:? t <|> return Nothing
@@ -54,7 +61,11 @@ data ButtonStyle
   = Danger
   | Default
   | Primary
-  deriving (Enum, Eq, Ord, Generic, Read, Show)
+  deriving (Bounded, Enum, Eq, Ord, Generic, Read, Show)
+
+instance Arbitrary ButtonStyle where
+  arbitrary = elements [toEnum 0..]
+  shrink = genericShrink
 
 instance FromJSON ButtonStyle where
   parseJSON = genericParseJSON buttonStyleOptions
@@ -68,7 +79,11 @@ buttonStyleOptions = defaultOptions
   }
 
 data ActionType = Button
-  deriving (Eq, Generic, Ord, Read, Show)
+  deriving (Bounded, Enum, Eq, Generic, Ord, Read, Show)
+
+instance Arbitrary ActionType where
+  arbitrary = return Button
+  shrink    = genericShrink
 
 instance FromJSON ActionType where
   parseJSON (Aeson.String s) = case s of
@@ -102,15 +117,25 @@ button name' text' value' = Action
 
 instance FromJSON Action where
   parseJSON = withObject "Action" $ \v -> Action
-        <$> v .:?? "confirm"
-        <*> v .:   "name"
-        <*> v .:?? "style"
-        <*> v .:?? "text"
-        <*> v .:   "type"
-        <*> v .:   "value"
+    <$> v .:?? "confirm"
+    <*> v .:   "name"
+    <*> v .:?? "style"
+    <*> v .:?? "text"
+    <*> v .:   "type"
+    <*> v .:   "value"
 
 instance ToJSON Action where
   toJSON = genericToJSON defaultOptions
     { fieldLabelModifier = camelTo2 '_' . drop 1 . filter (/= '\'')
     , omitNothingFields  = True
     }
+
+instance Arbitrary Action where
+  arbitrary = Action
+    <$> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+  shrink = genericShrink

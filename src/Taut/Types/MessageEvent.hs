@@ -7,69 +7,66 @@
 {-# LANGUAGE OverloadedStrings  #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TemplateHaskell    #-}
+
 module Taut.Types.MessageEvent
-       ( MessageEvent
-       , channelId
-       , edited
-       , eventTs
-       , hidden
-       , isStarred
-       , make
-       , payload
-       , pinnedTo
-       , reactions
-       , reactionCount
-       , reactionsSummary
-       , subType
-       , ts
-       , type_
-       , userId
-       ) where
+     ( MessageEvent
+     , channelId
+     , edited
+     , eventTs
+     , hidden
+     , isStarred
+     , make
+     , payload
+     , pinnedTo
+     , reactionCount
+     , reactions
+     , reactionsSummary
+     , subType
+     , ts
+     , type_
+     , userId
+     ) where
 
 import qualified Prelude                as P
-import           Focus.Prelude
+import           Taut.Prelude                       hiding ( intercalate )
 
-import           Control.Lens                        ( (&)
-                                                     , (.~)
-                                                     , (??)
-                                                     , (^.)
-                                                     , DefName( TopName )
-                                                     , lensField
-                                                     , lensRules
-                                                     , makeLensesWith
-                                                     )
-import           Data.Aeson                          ( FromJSON
-                                                     , ToJSON
-                                                     , genericParseJSON
-                                                     , genericToJSON
-                                                     , parseJSON
-                                                     , toJSON
-                                                     )
-import           Data.Aeson.TH                       ( defaultOptions
-                                                     , fieldLabelModifier
-                                                     )
-import           Data.Csv                            ( ToNamedRecord( toNamedRecord ) )
+import           Control.Lens                              ( (??)
+                                                           , DefName( TopName )
+                                                           , lensField
+                                                           , lensRules
+                                                           , makeLensesWith
+                                                           )
+import           Data.Aeson                                ( genericParseJSON
+                                                           , genericToJSON
+                                                           )
+import           Data.Aeson.TH                             ( defaultOptions
+                                                           , fieldLabelModifier
+                                                           )
+import           Data.Csv                                  ( ToNamedRecord( toNamedRecord ) )
 import qualified Data.Csv               as Csv
-import           Data.DeriveTH                       ( derive
-                                                     , makeArbitrary
-                                                     )
-import qualified Data.Text              as Text
-import           Language.Haskell.TH                 ( mkName
-                                                     , nameBase
-                                                     )
-import           Taut.Types.ChannelId                ( ChannelId )
-import qualified Taut.Types.ChannelId   as ChannelId
-import           Taut.Types.EditInfo                 ( EditInfo )
-import           Taut.Types.MessageType              ( MessageType )
-import           Taut.Types.Reaction                 ( Reaction )
+import           Data.DeriveTH                             ( derive
+                                                           , makeArbitrary
+                                                           )
+import           Data.String                               ( String )
+import           Data.Text                                 ( intercalate )
+import           Language.Haskell.TH                       ( mkName
+                                                           , nameBase
+                                                           )
+import           Taut.Types.ChannelId                      ( ChannelId
+                                                           , unChannelId
+                                                           )
+import           Taut.Types.EditInfo                       ( EditInfo )
+import           Taut.Types.MessageType                    ( MessageType )
+import           Taut.Types.Reaction                       ( Reaction )
 import qualified Taut.Types.Reaction    as Reaction
-import           Taut.Types.SubType                  ( SubType )
-import qualified Taut.Types.SubType     as SubType
-import           Taut.Types.Timestamp                ( Timestamp )
-import           Taut.Types.UserId                   ( UserId )
-import           Test.QuickCheck                     ( Arbitrary
-                                                     , arbitrary
-                                                     )
+import           Taut.Types.SubType                        ( SubType
+                                                           , unSubType
+                                                           )
+import           Taut.Types.Timestamp                      ( Timestamp )
+import           Taut.Types.UserId                         ( UserId )
+import           Test.QuickCheck                           ( Arbitrary
+                                                           , arbitrary
+                                                           )
 
 data MessageEvent a = MessageEvent
   { _channelId  :: ChannelId
@@ -117,27 +114,27 @@ instance FromJSON (MessageEvent Text) where
 
 instance ToNamedRecord (MessageEvent Text) where
   toNamedRecord (MessageEvent chanId _ _ _ _ payload' _ _ subType' ts' type_' userId') =
-    Csv.namedRecord [ ("channelId", Csv.toField (ChannelId.toText chanId))
+    Csv.namedRecord [ ("channelId", Csv.toField (unChannelId chanId))
                     , ("userId",    Csv.toField userId')
                     , ("payload",   Csv.toField payload')
                     , ("type",      Csv.toField type_')
-                    , ("subType",   Csv.toField (SubType.toText subType'))
+                    , ("subType",   Csv.toField (unSubType subType'))
                     , ("ts",        Csv.toField ts')
                     ]
 
 make :: ChannelId
-        -> Maybe EditInfo
-        -> Maybe Timestamp
-        -> Maybe Bool
-        -> Maybe Bool
-        -> a
-        -> Maybe [ChannelId]
-        -> Maybe [Reaction]
-        -> SubType
-        -> Timestamp
-        -> MessageType
-        -> UserId
-        -> MessageEvent a
+     -> Maybe EditInfo
+     -> Maybe Timestamp
+     -> Maybe Bool
+     -> Maybe Bool
+     -> a
+     -> Maybe [ChannelId]
+     -> Maybe [Reaction]
+     -> SubType
+     -> Timestamp
+     -> MessageType
+     -> UserId
+     -> MessageEvent a
 make = MessageEvent
 
 reactionCount :: MessageEvent a -> Int
@@ -145,6 +142,6 @@ reactionCount = sum . map (^. Reaction.count) . fromMaybe [] . (^. reactions)
 
 reactionsSummary :: MessageEvent a -> Text
 reactionsSummary =
-  Text.intercalate ", " . map Reaction.summary . fromMaybe [] . (^. reactions)
+  intercalate ", " . map Reaction.summary . fromMaybe [] . (^. reactions)
 
 derive makeArbitrary ''MessageEvent

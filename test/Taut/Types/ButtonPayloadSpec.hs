@@ -1,26 +1,18 @@
 {-# LANGUAGE NoImplicitPrelude    #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
-module Taut.Types.ButtonPayloadSpec ( main, spec ) where
 
-import Focus.Prelude
+module Taut.Types.ButtonPayloadSpec ( spec ) where
 
-import Data.Aeson                         ( decode
-                                          , encode
-                                          )
-import Taut.Types.ButtonPayload           ( ButtonPayload )
-import Taut.Types.ButtonPayload.Arbitrary ()
-import Test.Hspec                         ( Spec
-                                          , describe
-                                          , hspec
-                                          , it
-                                          , shouldBe
-                                          )
-import Test.QuickCheck                    ( property )
+import Taut.Prelude
 
-main :: IO ()
-main = hspec spec
+import Data.Aeson               ( decode
+                                , encode
+                                )
+import Taut.Types.ButtonPayload ( ButtonPayload )
+import Test.Hspec
+import Test.QuickCheck
 
 spec :: Spec
-spec = describe "ButtonPayload" $ do
-  it "should be roundtrippable" $ property $ do
+spec = describe "ButtonPayload" $
+  it "should be roundtrippable" $ property $
     \payload -> (decode . encode $ payload) `shouldBe` Just (payload :: ButtonPayload)

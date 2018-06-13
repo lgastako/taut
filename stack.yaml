@@ -5,15 +5,7 @@ flags: {}
 extra-package-dbs: []
 
 packages:
-- location: "."
-- location:
-    git: git@github.com:SuperpowersCorp/focus-prelude.git
-    commit: a694a45945752816c798f76bbf1f166a8f59afc9
-  extra-dep: true
-- location:
-    git: git@github.com:SuperpowersCorp/luthor.git
-    commit: 98135dbf6a79c0d920e8df779646cedbbb6b40cb
-  extra-dep: true
+- .
 
 extra-deps:
 - protolude-0.2.1

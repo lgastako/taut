@@ -1,20 +1,19 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TemplateHaskell   #-}
-module Taut.Types.ChannelName
-       ( ChannelName
-       , channelName
-       , fromText
-       , toText
-       ) where
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE TemplateHaskell            #-}
 
-import Focus.Prelude
+module Taut.Types.ChannelName
+     ( ChannelName
+     , channelName
+     , fromText
+     , unChannelName
+     ) where
+
+import Taut.Prelude
 
 import Control.Lens              ( Iso'
                                  , iso
-                                 )
-import Data.Aeson.TH             ( defaultOptions
-                                 , deriveJSON
                                  )
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
@@ -29,24 +28,19 @@ import Web.HttpApiData           ( FromHttpApiData
                                  , toQueryParam
                                  )
 
-newtype ChannelName = ChannelName Text
-  deriving (Eq, Generic, Ord, Read, Show)
+newtype ChannelName = ChannelName { unChannelName :: Text }
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance FromHttpApiData ChannelName where
   parseQueryParam = Right . fromText
 
 instance ToHttpApiData ChannelName where
-  toQueryParam = toText
+  toQueryParam = unChannelName
 
 fromText :: Text -> ChannelName
 fromText = ChannelName
 
-toText :: ChannelName -> Text
-toText (ChannelName n) = n
-
 channelName :: Iso' ChannelName Text
-channelName = iso toText fromText
-
-$(deriveJSON defaultOptions ''ChannelName)
+channelName = iso unChannelName fromText
 
 derive makeArbitrary ''ChannelName

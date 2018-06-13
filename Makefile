@@ -13,6 +13,14 @@ dist-clean:
 hlint:
 	stack exec hlint .
 
+longboye-all:
+	longboye imports src
+	longboye imports staging
+	longboye imports test
+	longboye pragmas src
+	longboye pragmas staging
+	longboye pragmas test
+
 setup:
 	stack setup
 
@@ -28,6 +36,7 @@ watch-test:
 b: build
 hl: hlint
 i: install
+lba: longboye-all
 r: run
 s: setup
 w: watch

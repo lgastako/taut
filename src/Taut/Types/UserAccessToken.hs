@@ -1,36 +1,47 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE OverloadedStrings          #-}
+
 module Taut.Types.UserAccessToken
-       ( UserAccessToken
-       , fromText
-       , fromTextE
-       ) where
+     ( UserAccessToken
+     , fromText
+     , fromTextE
+     , unUserAccessToken
+     ) where
 
-import           Focus.Prelude
+import Taut.Prelude    hiding ( null )
 
-import qualified Data.Text              as Text
-import           Taut.Constants                 ( botTokenPrefix )
-import           Taut.Types.AccessToken         ( AccessToken
-                                                , accessTokenText
-                                                )
+import Data.Text              ( null
+                              , strip
+                              )
+import Taut.Constants         ( botTokenPrefix )
+import Taut.Types.AccessToken ( AccessToken
+                              , accessTokenText
+                              )
+import Test.QuickCheck        ( Arbitrary
+                              , arbitrary
+                              )
 
-data UserAccessToken = UserAccessToken Text
-  deriving (Eq, Generic, Ord, Read, Show)
+newtype UserAccessToken = UserAccessToken { unUserAccessToken :: Text }
+  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance AccessToken UserAccessToken where
-  accessTokenText (UserAccessToken text) = text
+  accessTokenText = unUserAccessToken
+
+instance Arbitrary UserAccessToken where
+  arbitrary = UserAccessToken <$> arbitrary
 
 fromText :: Text -> Maybe UserAccessToken
 fromText = eitherToMaybe . fromTextE
 
 fromTextE :: Text -> Either Text UserAccessToken
 fromTextE text
-  | Text.null s                   = Left "User access token is an empty string"
+  | null s                        = Left "User access token is an empty string"
   | s `startsWith` botTokenPrefix = Left mismatchedTokensError
   | otherwise                     = Right . UserAccessToken $ s
   where
-    s = Text.strip text
+    s = strip text
 
     mismatchedTokensError =
       "Attempt to create a UserAccessToken value from a bot access token."

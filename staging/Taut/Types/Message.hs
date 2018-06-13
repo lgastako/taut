@@ -3,31 +3,31 @@
 {-# LANGUAGE TemplateHaskell   #-}
 
 module Taut.Types.Message
-       ( Message( Message )
-       , Parse( Full
-              , None
-              )
-       , asUser
-       , attachments
-       , botId
-       , channel
-       , iconEmoji
-       , iconUrl
-       , linkNames
-       , parse
-       , replyBroadcast
-       , subType
-       , text
-       , threadTs
-       , token
-       , ts
-       , type'
-       , unfurlLinks
-       , unfurlMedia
-       , username
-       ) where
+     ( Message( Message )
+     , Parse( Full
+            , None
+            )
+     , asUser
+     , attachments
+     , botId
+     , channel
+     , iconEmoji
+     , iconUrl
+     , linkNames
+     , parse
+     , replyBroadcast
+     , subType
+     , text
+     , threadTs
+     , token
+     , ts
+     , type'
+     , unfurlLinks
+     , unfurlMedia
+     , username
+     ) where
 
-import Focus.Prelude                 hiding ( empty )
+import Taut.Prelude
 
 import Control.Lens                         ( makeLenses )
 import Data.Aeson                           ( FromJSON( parseJSON )
@@ -50,6 +50,12 @@ import Taut.Types.ChannelId                 ( ChannelId )
 import Taut.Types.Message.Attachment        ( Attachment )
 import Taut.Types.OauthToken                ( OauthToken )
 import Taut.Types.UserName                  ( UserName )
+import Test.QuickCheck                      ( Arbitrary
+                                            , arbitrary
+                                            , elements
+                                            , genericShrink
+                                            , shrink
+                                            )
 
 data Parse = Full | None
   deriving (Enum, Eq, Generic, Ord, Read, Show)
@@ -59,6 +65,31 @@ instance FromJSON Parse where
 
 instance ToJSON Parse where
   toJSON = genericToJSON parseOptions
+
+instance Arbitrary Message where
+  arbitrary = Message
+    <$> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+    <*> arbitrary
+
+instance Arbitrary Parse where
+  arbitrary = elements [toEnum 0..]
+  shrink    = genericShrink
 
 parseOptions :: Options
 parseOptions = defaultOptions

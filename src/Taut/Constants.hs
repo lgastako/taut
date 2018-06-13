@@ -1,10 +1,11 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
-module Taut.Constants
-       ( botTokenPrefix
-       ) where
 
-import Focus.Prelude
+module Taut.Constants
+     ( botTokenPrefix
+     ) where
+
+import Taut.Prelude
 
 
 botTokenPrefix :: Text

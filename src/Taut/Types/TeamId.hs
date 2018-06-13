@@ -2,20 +2,18 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude          #-}
 {-# LANGUAGE TemplateHaskell            #-}
-module Taut.Types.TeamId
-       ( TeamId
-       , fromText
-       , tidText
-       , toText
-       ) where
 
-import Focus.Prelude
+module Taut.Types.TeamId
+     ( TeamId
+     , fromText
+     , tidText
+     , unTeamId
+     ) where
+
+import Taut.Prelude
 
 import Control.Lens              ( Iso'
                                  , iso
-                                 )
-import Data.Aeson.TH             ( defaultOptions
-                                 , deriveJSON
                                  )
 import Data.Aeson.Types          ( FromJSONKey
                                  , ToJSONKey
@@ -36,27 +34,22 @@ import Web.HttpApiData           ( FromHttpApiData
                                  , toQueryParam
                                  )
 
-newtype TeamId = TeamId Text
-  deriving (Eq, Generic, Ord, Read, Show, FromJSONKey, ToJSONKey)
+newtype TeamId = TeamId { unTeamId :: Text }
+  deriving (Eq, FromJSON, FromJSONKey, Generic, Ord, Read, Show, ToJSON, ToJSONKey)
 
 instance ToField TeamId where
-  toField = encodeUtf8 . toText
+  toField = encodeUtf8 . unTeamId
 
 instance FromHttpApiData TeamId where
   parseQueryParam = Right . fromText
 
 instance ToHttpApiData TeamId where
-  toQueryParam = toText
+  toQueryParam = unTeamId
 
 fromText :: Text -> TeamId
 fromText = TeamId
 
-toText :: TeamId -> Text
-toText (TeamId u) = u
-
 tidText :: Iso' TeamId Text
-tidText = iso toText fromText
-
-$(deriveJSON defaultOptions ''TeamId)
+tidText = iso unTeamId fromText
 
 derive makeArbitrary ''TeamId
