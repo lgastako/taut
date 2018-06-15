@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude          #-}
@@ -27,7 +28,7 @@ import Test.QuickCheck                  ( Arbitrary
 import Test.QuickCheck.Instances        ()
 
 newtype SubType = SubType { unSubType :: Text }
-  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
+  deriving (Data, Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance Default SubType where
   def = make ""

@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude          #-}
@@ -51,7 +52,7 @@ import           Web.HttpApiData                            ( FromHttpApiData
                                                             )
 
 newtype Timestamp = Timestamp { unTimestamp :: UTCTime }
-  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
+  deriving (Data, Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance FromHttpApiData Timestamp where
   parseQueryParam = first Text.pack . eitherDecode . LTextE.encodeUtf8 . LText.fromStrict

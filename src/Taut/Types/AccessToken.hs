@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude          #-}
@@ -20,7 +21,7 @@ class AccessToken a where
   accessTokenText :: a -> Text
 
 newtype AnyAccessToken = AnyAccessToken { unAnyAccessToken :: Text }
-  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
+  deriving (Data, Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance AccessToken AnyAccessToken where
   accessTokenText = unAnyAccessToken

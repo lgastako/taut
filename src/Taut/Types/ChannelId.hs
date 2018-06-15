@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude          #-}
@@ -37,7 +38,7 @@ import Web.HttpApiData           ( FromHttpApiData
                                  )
 
 newtype ChannelId = ChannelId { unChannelId :: Text }
-  deriving (Eq, FromJSON, FromJSONKey, Generic, Ord, Read, Show, ToJSON)
+  deriving (Data, Eq, FromJSON, FromJSONKey, Generic, Ord, Read, Show, ToJSON)
 
 instance ToJSONKey ChannelId where
   toJSONKey = toJSONKeyText unChannelId

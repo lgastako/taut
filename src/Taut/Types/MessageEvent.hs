@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveFunctor      #-}
 {-# LANGUAGE DeriveGeneric      #-}
@@ -81,7 +82,7 @@ data MessageEvent a = MessageEvent
   , _ts         :: Timestamp
   , _type       :: MessageType
   , _userId     :: UserId
-  } deriving (Eq, Functor, Foldable, Generic, Ord, Read, Show, Traversable)
+  } deriving (Data, Eq, Functor, Foldable, Generic, Ord, Read, Show, Traversable)
 
 makeLensesWith ?? ''MessageEvent $ lensRules
   & lensField .~ (\_ _ n -> let name = nameBase n

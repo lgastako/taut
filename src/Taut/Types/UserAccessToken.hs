@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude          #-}
@@ -24,7 +25,7 @@ import Test.QuickCheck        ( Arbitrary
                               )
 
 newtype UserAccessToken = UserAccessToken { unUserAccessToken :: Text }
-  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
+  deriving (Data, Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance AccessToken UserAccessToken where
   accessTokenText = unUserAccessToken

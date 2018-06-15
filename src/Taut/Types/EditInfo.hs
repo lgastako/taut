@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
@@ -27,7 +28,7 @@ import Test.QuickCheck             ( Arbitrary
 data EditInfo = EditInfo
   { _ts   :: Timestamp
   , _user :: UserId
-  } deriving (Eq, Generic, Ord, Read, Show)
+  } deriving (Data, Eq, Generic, Ord, Read, Show)
 
 makeLenses ''EditInfo -- TODO: rename user to userId
 

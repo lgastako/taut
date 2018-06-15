@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude          #-}
@@ -29,7 +30,7 @@ import Web.HttpApiData           ( FromHttpApiData
                                  )
 
 newtype ChannelName = ChannelName { unChannelName :: Text }
-  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
+  deriving (Data, Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance FromHttpApiData ChannelName where
   parseQueryParam = Right . fromText

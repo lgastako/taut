@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude          #-}
@@ -35,7 +36,7 @@ import Web.HttpApiData           ( FromHttpApiData
                                  )
 
 newtype UserId = UserId { unUserId :: Text }
-  deriving (Eq, FromJSON, FromJSONKey, Generic, Ord, Read, Show, ToJSON, ToJSONKey)
+  deriving (Data, Eq, FromJSON, FromJSONKey, Generic, Ord, Read, Show, ToJSON, ToJSONKey)
 
 instance ToField UserId where
   toField = encodeUtf8 . unUserId

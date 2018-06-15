@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude          #-}
@@ -21,7 +22,7 @@ import Test.QuickCheck        ( Arbitrary
                               )
 
 newtype BotAccessToken = BotAccessToken { unBotAccessToken :: Text }
-  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
+  deriving (Data, Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance AccessToken BotAccessToken where
   accessTokenText = unBotAccessToken

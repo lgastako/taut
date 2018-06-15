@@ -14,5 +14,6 @@ import Data.Aeson          as Exports ( FromJSON
                                       , parseJSON
                                       , toJSON
                                       )
+import Data.Data           as Exports ( Data )
 import Protolude           as Exports
 
