@@ -7,6 +7,7 @@ module Taut.Types.OauthToken
      ( OauthToken
      , fromText
      , tidText
+     , toText
      , unOauthToken
      ) where
 
@@ -32,6 +33,9 @@ instance ToField OauthToken where
 
 fromText :: Text -> OauthToken
 fromText = OauthToken
+
+toText :: OauthToken -> Text
+toText = unOauthToken
 
 tidText :: Iso' OauthToken Text
 tidText = iso unOauthToken fromText
