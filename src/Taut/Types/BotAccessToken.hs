@@ -8,6 +8,7 @@ module Taut.Types.BotAccessToken
      ( BotAccessToken
      , fromText
      , fromTextE
+     , toText
      ) where
 
 import Taut.Prelude    hiding ( null )
@@ -45,3 +46,6 @@ fromTextE text
       "Attempt to create a BotAccessToken value from a user access token."
         <> " Either supply a bot access token or use AccessToken instead"
         <> " of BotAccessToken."
+
+toText :: BotAccessToken -> Text
+toText = unBotAccessToken

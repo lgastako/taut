@@ -8,6 +8,7 @@ module Taut.Types.AccessToken
      , AnyAccessToken
      , accessTokenText
      , fromText
+     , toText
      ) where
 
 import Taut.Prelude
@@ -31,3 +32,6 @@ instance Arbitrary AnyAccessToken where
 
 fromText :: Text -> AnyAccessToken
 fromText = AnyAccessToken
+
+toText :: AnyAccessToken -> Text
+toText = unAnyAccessToken

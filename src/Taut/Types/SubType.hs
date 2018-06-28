@@ -10,6 +10,7 @@ module Taut.Types.SubType
      , make
      , null
      , subText
+     , toText
      , unSubType
      ) where
 
@@ -43,5 +44,8 @@ null subType
 
 subText :: Iso' SubType Text
 subText = iso unSubType make
+
+toText :: SubType -> Text
+toText = unSubType
 
 derive makeArbitrary ''SubType
