@@ -7,6 +7,7 @@
 module Taut.Types.UserName
      ( UserName
      , fromText
+     , toText
      , unUserName
      , userName
      ) where
@@ -40,6 +41,9 @@ instance ToHttpApiData UserName where
 
 fromText :: Text -> UserName
 fromText = UserName
+
+toText :: UserName -> Text
+toText = unUserName
 
 userName :: Iso' UserName Text
 userName = iso unUserName fromText

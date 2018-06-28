@@ -8,6 +8,7 @@ module Taut.Types.UserAccessToken
      ( UserAccessToken
      , fromText
      , fromTextE
+     , toText
      , unUserAccessToken
      ) where
 
@@ -48,3 +49,6 @@ fromTextE text
       "Attempt to create a UserAccessToken value from a bot access token."
         <> " Either supply a user access token or use BotAccessToken instead"
         <> " of UserAccessToken."
+
+toText :: UserAccessToken -> Text
+toText = unUserAccessToken
