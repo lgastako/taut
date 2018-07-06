@@ -9,6 +9,7 @@ module Taut.Types.MessageType
      ( MessageType
      , fromText
      , message
+     , toText
      , typeText
      , unMessageType
      ) where
@@ -41,6 +42,9 @@ instance Default MessageType where
 
 fromText :: Text -> MessageType
 fromText = MessageType
+
+toText :: MessageType -> Text
+toText = unMessageType
 
 typeText :: Iso' MessageType Text
 typeText = iso unMessageType fromText

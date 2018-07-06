@@ -11,6 +11,7 @@ module Taut.Types.Timestamp
      , fromUTCTime
      , slackTimeText
      , toSlackTimeText
+     , toUTCTime
      , unTimestamp
      , utcTime
      ) where
@@ -68,6 +69,9 @@ instance ToHttpApiData Timestamp where
 
 fromUTCTime :: UTCTime -> Timestamp
 fromUTCTime = Timestamp
+
+toUTCTime :: Timestamp -> UTCTime
+toUTCTime = unTimestamp
 
 fromSlackTimeText :: Text -> Timestamp
 fromSlackTimeText = Timestamp

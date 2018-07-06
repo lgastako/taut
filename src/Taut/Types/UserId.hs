@@ -7,6 +7,7 @@
 module Taut.Types.UserId
      ( UserId
      , fromText
+     , toText
      , uidText
      , unUserId
      ) where
@@ -49,6 +50,9 @@ instance ToHttpApiData UserId where
 
 fromText :: Text -> UserId
 fromText = UserId
+
+toText :: UserId -> Text
+toText = unUserId
 
 uidText :: Iso' UserId Text
 uidText = iso unUserId fromText

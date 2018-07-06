@@ -8,6 +8,7 @@ module Taut.Types.TeamId
      ( TeamId
      , fromText
      , tidText
+     , toText
      , unTeamId
      ) where
 
@@ -49,6 +50,9 @@ instance ToHttpApiData TeamId where
 
 fromText :: Text -> TeamId
 fromText = TeamId
+
+toText :: TeamId -> Text
+toText = unTeamId
 
 tidText :: Iso' TeamId Text
 tidText = iso unTeamId fromText

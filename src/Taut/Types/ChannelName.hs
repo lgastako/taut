@@ -8,6 +8,7 @@ module Taut.Types.ChannelName
      ( ChannelName
      , channelName
      , fromText
+     , toText
      , unChannelName
      ) where
 
@@ -40,6 +41,9 @@ instance ToHttpApiData ChannelName where
 
 fromText :: Text -> ChannelName
 fromText = ChannelName
+
+toText :: ChannelName -> Text
+toText = unChannelName
 
 channelName :: Iso' ChannelName Text
 channelName = iso unChannelName fromText

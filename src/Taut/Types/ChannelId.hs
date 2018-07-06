@@ -8,6 +8,7 @@ module Taut.Types.ChannelId
      ( ChannelId
      , cidText
      , fromText
+     , toText
      , unChannelId
      ) where
 
@@ -57,5 +58,8 @@ fromText = ChannelId
 
 cidText :: Iso' ChannelId Text
 cidText = iso unChannelId fromText
+
+toText :: ChannelId -> Text
+toText = unChannelId
 
 derive makeArbitrary ''ChannelId
