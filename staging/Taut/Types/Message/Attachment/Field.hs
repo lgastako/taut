@@ -1,6 +1,7 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
+{-# LANGUAGE TemplateHaskell    #-}
 
 module Taut.Types.Message.Attachment.Field
      ( Field( Field )
@@ -34,7 +35,7 @@ data Field = Field
   { _short :: Bool
   , _title :: Text
   , _value :: Text
-  } deriving (Eq, Generic, Ord, Read, Show)
+  } deriving (Data, Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Field
 

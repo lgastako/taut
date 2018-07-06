@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude          #-}
@@ -25,7 +26,7 @@ import Test.QuickCheck
 import Test.QuickCheck.Instances ()
 
 newtype OauthToken = OauthToken { unOauthToken :: Text }
-  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
+  deriving (Data, Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance ToField OauthToken where
   toField = encodeUtf8 . unOauthToken

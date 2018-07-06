@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -61,7 +62,7 @@ data ButtonStyle
   = Danger
   | Default
   | Primary
-  deriving (Bounded, Enum, Eq, Ord, Generic, Read, Show)
+  deriving (Bounded, Data, Enum, Eq, Ord, Generic, Read, Show)
 
 instance Arbitrary ButtonStyle where
   arbitrary = elements [toEnum 0..]
@@ -79,7 +80,7 @@ buttonStyleOptions = defaultOptions
   }
 
 data ActionType = Button
-  deriving (Bounded, Enum, Eq, Generic, Ord, Read, Show)
+  deriving (Bounded, Data, Enum, Eq, Generic, Ord, Read, Show)
 
 instance Arbitrary ActionType where
   arbitrary = return Button
@@ -101,7 +102,7 @@ data Action = Action
   , _text    :: Maybe Text
   , _type'   :: ActionType
   , _value   :: Text
-  } deriving (Eq, Generic, Ord, Read, Show)
+  } deriving (Data, Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Action
 

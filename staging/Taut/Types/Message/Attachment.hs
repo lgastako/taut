@@ -1,7 +1,8 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
+{-# LANGUAGE OverloadedStrings  #-}
+{-# LANGUAGE TemplateHaskell    #-}
 
 module Taut.Types.Message.Attachment
      ( Attachment( Attachment )
@@ -75,7 +76,7 @@ data Color
   | Danger
   | Good
   | Warning
-  deriving (Eq, Generic, Ord, Read, Show)
+  deriving (Data, Eq, Generic, Ord, Read, Show)
 
 instance Arbitrary Color where
   arbitrary = do
@@ -116,7 +117,7 @@ data Attachment = Attachment
   , _titleLink      :: Maybe Text
   , _title          :: Maybe Text
   , _ts             :: Maybe Timestamp
-  } deriving (Eq, Generic, Ord, Read, Show)
+  } deriving (Data, Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Attachment
 

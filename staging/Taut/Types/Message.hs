@@ -1,6 +1,7 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
+{-# LANGUAGE TemplateHaskell    #-}
 
 module Taut.Types.Message
      ( Message( Message )
@@ -58,7 +59,7 @@ import Test.QuickCheck                      ( Arbitrary
                                             )
 
 data Parse = Full | None
-  deriving (Enum, Eq, Generic, Ord, Read, Show)
+  deriving (Data, Enum, Eq, Generic, Ord, Read, Show)
 
 instance FromJSON Parse where
   parseJSON = genericParseJSON parseOptions
@@ -115,7 +116,7 @@ data Message = Message
   , _unfurlLinks    :: Maybe Bool
   , _unfurlMedia    :: Maybe Bool
   , _username       :: Maybe UserName
-  } deriving (Eq, Generic, Ord, Read, Show)
+  } deriving (Data, Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Message
 

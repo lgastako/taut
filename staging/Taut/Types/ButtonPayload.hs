@@ -1,6 +1,7 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
+{-# LANGUAGE TemplateHaskell    #-}
 
 module Taut.Types.ButtonPayload
      ( ButtonPayload( ButtonPayload )
@@ -57,7 +58,7 @@ import Test.QuickCheck                      ( Arbitrary
 data Team = Team
   { _teamDomain :: Text
   , _teamId     :: TeamId
-  } deriving (Eq, Generic, Ord, Read, Show)
+  } deriving (Data, Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Team
 
@@ -81,7 +82,7 @@ teamOptions = defaultOptions
 data Channel = Channel
   { _channelId   :: ChannelId
   , _channelName :: ChannelName
-  } deriving (Eq, Generic, Ord, Read, Show)
+  } deriving (Data, Eq, Generic, Ord, Read, Show)
 
 makeLenses ''Channel
 
@@ -105,10 +106,9 @@ channelOptions = defaultOptions
 data User = User
   { _userId   :: UserId
   , _userName :: UserName
-  } deriving (Eq, Generic, Ord, Read, Show)
+  } deriving (Data, Eq, Generic, Ord, Read, Show)
 
 makeLenses ''User
-
 
 instance Arbitrary User where
   arbitrary = User
@@ -128,7 +128,7 @@ userOptions = defaultOptions
   }
 
 newtype TriggerId = TriggerId Text
-  deriving (Eq, Generic, Ord, Read, Show)
+  deriving (Data, Eq, Generic, Ord, Read, Show)
 
 instance Arbitrary TriggerId where
   arbitrary = TriggerId <$> arbitrary
@@ -150,7 +150,7 @@ data ButtonPayload = ButtonPayload
   , _token           :: OauthToken
   , _triggerId       :: Maybe TriggerId
   , _user            :: User
-  } deriving (Eq, Generic, Ord, Read, Show)
+  } deriving (Data, Eq, Generic, Ord, Read, Show)
 
 makeLenses ''ButtonPayload
 

@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude          #-}
@@ -29,7 +30,7 @@ import Web.HttpApiData           ( FromHttpApiData
                                  )
 
 newtype TeamName = TeamName { unTeamName :: Text }
-  deriving (Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
+  deriving (Data, Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
 
 instance FromHttpApiData TeamName where
   parseQueryParam = Right . fromText
