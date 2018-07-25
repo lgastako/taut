@@ -30,7 +30,7 @@ import           Taut.Types.UserId               ( UserId )
 byChannel :: [MessageEvent a] -> Map ChannelId [MessageEvent a]
 byChannel = foldr absorb Map.empty
   where
-    absorb msg = Map.insertWith (++) (msg ^. channelId) [msg]
+    absorb msg' = Map.insertWith (++) (msg' ^. channelId) [msg']
 
 chronological :: [MessageEvent a] -> [MessageEvent a]
 chronological = sortOn (view ts)
