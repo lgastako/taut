@@ -23,6 +23,8 @@ import Data.Default                     ( Default( def ) )
 import Data.DeriveTH                    ( derive
                                         , makeArbitrary
                                         )
+import Data.Serialize                   ( Serialize )
+import Data.Serialize.Text              ()
 import Test.QuickCheck                  ( Arbitrary
                                         , arbitrary
                                         )
@@ -33,6 +35,8 @@ newtype SubType = SubType { unSubType :: Text }
 
 instance Default SubType where
   def = make ""
+
+instance Serialize SubType
 
 make :: Text -> SubType
 make = SubType

@@ -8,6 +8,7 @@ packages:
 - .
 
 extra-deps:
+- cereal-time-0.1.0.0
 - protolude-0.2.1
 - safe-exceptions-0.1.7.0
 - validation-0.6.2

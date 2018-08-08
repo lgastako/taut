@@ -32,6 +32,7 @@ import           Data.Default                               ( Default( def ) )
 import           Data.DeriveTH                              ( derive
                                                             , makeArbitrary
                                                             )
+import           Data.Serialize                             ( Serialize )
 import qualified Data.Text                 as Text
 import qualified Data.Text.Lazy            as LText
 import           Data.Text.Lazy.Encoding                    ( decodeUtf8 )
@@ -41,6 +42,7 @@ import           Data.Time.Clock.POSIX                      ( POSIXTime
                                                             , posixSecondsToUTCTime
                                                             , utcTimeToPOSIXSeconds
                                                             )
+import           Data.Time.Clock.Serialize                  ()
 import           Test.QuickCheck                            ( Arbitrary
                                                             , arbitrary
                                                             )
@@ -57,6 +59,8 @@ newtype Timestamp = Timestamp { unTimestamp :: UTCTime }
 
 instance FromHttpApiData Timestamp where
   parseQueryParam = first Text.pack . eitherDecode . LTextE.encodeUtf8 . LText.fromStrict
+
+instance Serialize Timestamp
 
 instance ToField Timestamp where
   toField = encodeUtf8 . toSlackTimeText

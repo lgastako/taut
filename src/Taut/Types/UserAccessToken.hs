@@ -12,18 +12,18 @@ module Taut.Types.UserAccessToken
      , unUserAccessToken
      ) where
 
-import Taut.Prelude    hiding ( null )
+import Taut.Prelude           hiding ( null )
 
-import Data.Text              ( null
-                              , strip
-                              )
-import Taut.Constants         ( botTokenPrefix )
-import Taut.Types.AccessToken ( AccessToken
-                              , accessTokenText
-                              )
-import Test.QuickCheck        ( Arbitrary
-                              , arbitrary
-                              )
+import Data.Text                     ( null
+                                     , strip
+                                     )
+import Taut.Constants                ( botTokenPrefix )
+import Taut.Types.AccessToken        ( AccessToken
+                                     , accessTokenText
+                                     )
+import Test.QuickCheck               ( Arbitrary
+                                     , arbitrary
+                                     )
 
 newtype UserAccessToken = UserAccessToken { unUserAccessToken :: Text }
   deriving (Data, Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)

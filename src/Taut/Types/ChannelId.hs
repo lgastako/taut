@@ -28,6 +28,8 @@ import Data.Csv                  ( ToField
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
+import Data.Serialize            ( Serialize )
+import Data.Serialize.Text       ()
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
@@ -40,6 +42,8 @@ import Web.HttpApiData           ( FromHttpApiData
 
 newtype ChannelId = ChannelId { unChannelId :: Text }
   deriving (Data, Eq, FromJSON, FromJSONKey, Generic, Ord, Read, Show, ToJSON)
+
+instance Serialize ChannelId
 
 instance ToJSONKey ChannelId where
   toJSONKey = toJSONKeyText unChannelId

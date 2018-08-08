@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable #-}
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
+{-# LANGUAGE TemplateHaskell    #-}
 
 module Taut.Types.EditInfo
      ( EditInfo
@@ -19,6 +19,7 @@ import Data.Aeson.TH               ( defaultOptions
 import Data.DeriveTH               ( derive
                                    , makeArbitrary
                                    )
+import Data.Serialize              ( Serialize )
 import Taut.Types.Timestamp        ( Timestamp )
 import Taut.Types.UserId           ( UserId )
 import Test.QuickCheck             ( Arbitrary
@@ -31,6 +32,8 @@ data EditInfo = EditInfo
   } deriving (Data, Eq, Generic, Ord, Read, Show)
 
 makeLenses ''EditInfo -- TODO: rename user to userId
+
+instance Serialize EditInfo
 
 from :: (Timestamp, UserId) -> EditInfo
 from = uncurry EditInfo

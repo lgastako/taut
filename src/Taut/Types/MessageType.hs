@@ -26,6 +26,8 @@ import Data.Default              ( Default( def ) )
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
+import Data.Serialize            ( Serialize )
+import Data.Serialize.Text       ()
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
@@ -33,6 +35,8 @@ import Test.QuickCheck.Instances ()
 
 newtype MessageType = MessageType { unMessageType :: Text }
   deriving (Data, Eq, FromJSON, Generic, Ord, Read, Show, ToJSON)
+
+instance Serialize MessageType
 
 instance ToField MessageType where
   toField (MessageType t) = encodeUtf8 t

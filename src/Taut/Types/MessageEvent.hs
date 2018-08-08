@@ -1,5 +1,5 @@
-{-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveAnyClass     #-}
+{-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveFunctor      #-}
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE DeriveTraversable  #-}
@@ -48,6 +48,7 @@ import qualified Data.Csv               as Csv
 import           Data.DeriveTH                             ( derive
                                                            , makeArbitrary
                                                            )
+import           Data.Serialize                            ( Serialize )
 import           Data.String                               ( String )
 import           Data.Text                                 ( intercalate )
 import           Language.Haskell.TH                       ( mkName
@@ -112,6 +113,8 @@ instance ToJSON (MessageEvent Text) where
 
 instance FromJSON (MessageEvent Text) where
   parseJSON = genericParseJSON defaultOptions { fieldLabelModifier = fromField }
+
+instance Serialize a => Serialize (MessageEvent a)
 
 instance ToNamedRecord (MessageEvent Text) where
   toNamedRecord (MessageEvent chanId _ _ _ _ payload' _ _ subType' ts' type_' userId') =
