@@ -26,6 +26,8 @@ import Data.Csv                  ( ToField
 import Data.DeriveTH             ( derive
                                  , makeArbitrary
                                  )
+import Data.Serialize            ( Serialize )
+import Data.Serialize.Text       ()
 import Test.QuickCheck           ( Arbitrary
                                  , arbitrary
                                  )
@@ -38,6 +40,8 @@ import Web.HttpApiData           ( FromHttpApiData
 
 newtype UserId = UserId { unUserId :: Text }
   deriving (Data, Eq, FromJSON, FromJSONKey, Generic, Ord, Read, Show, ToJSON, ToJSONKey)
+
+instance Serialize UserId
 
 instance ToField UserId where
   toField = encodeUtf8 . unUserId

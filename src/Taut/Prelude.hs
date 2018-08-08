@@ -4,8 +4,8 @@ module Taut.Prelude ( module Exports ) where
 
 import Taut.Prelude.Extras as Exports
 
-import Control.Lens        as Exports ( (^.)
-                                      , (.~)
+import Control.Lens        as Exports ( (.~)
+                                      , (^.)
                                       , makeLenses
                                       , view
                                       )

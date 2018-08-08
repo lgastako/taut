@@ -16,16 +16,18 @@ module Taut.Types.Reaction
 
 import Taut.Prelude
 
-import Data.Aeson.TH     ( defaultOptions
-                         , deriveJSON
-                         )
-import Data.DeriveTH     ( derive
-                         , makeArbitrary
-                         )
-import Taut.Types.UserId ( UserId )
-import Test.QuickCheck   ( Arbitrary
-                         , arbitrary
-                         )
+import Data.Aeson.TH       ( defaultOptions
+                           , deriveJSON
+                           )
+import Data.DeriveTH       ( derive
+                           , makeArbitrary
+                           )
+import Data.Serialize      ( Serialize )
+import Data.Serialize.Text ()
+import Taut.Types.UserId   ( UserId )
+import Test.QuickCheck     ( Arbitrary
+                           , arbitrary
+                           )
 
 data Reaction = Reaction
   { _name  :: ReactionName
@@ -36,6 +38,8 @@ data Reaction = Reaction
 type ReactionName = Text
 
 makeLenses ''Reaction
+
+instance Serialize Reaction
 
 make :: ReactionName -> Int -> [UserId] -> Reaction
 make = Reaction
